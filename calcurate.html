@@ -1,0 +1,2712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Calcurate — Creative Services Pricing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script>
+// ============================================================
+//  CALCURATE — Pricing Configuration
+//  Joe Davis Arts & Media
+//  Update prices, labels, and options here without touching
+//  index.html or any core logic.
+// ============================================================
+
+const CALCURATE_CONFIG = {
+
+  // ── Brand ──────────────────────────────────────────────────
+  brand: {
+    name: "Calcurate",
+    tagline: "Creative Services · Instant Estimates",
+    defaultCurrency: "USD",
+    disclaimer: "This is an estimate only. Final pricing confirmed after consultation. All productions and arrangements include writing and production credits for Joe Davis. Royalty agreements are handled separately via contract.",
+  },
+
+  // ── Currencies ─────────────────────────────────────────────
+  currencies: [
+    { code: "USD", symbol: "$",   label: "USD — US Dollar",       rate: 1.0   },
+    { code: "JMD", symbol: "J$",  label: "JMD — Jamaican Dollar", rate: 157.0 },
+    { code: "GBP", symbol: "£",   label: "GBP — British Pound",   rate: 0.79  },
+    { code: "EUR", symbol: "€",   label: "EUR — Euro",            rate: 0.92  },
+    { code: "CAD", symbol: "CA$", label: "CAD — Canadian Dollar", rate: 1.36  },
+  ],
+
+  // ── Service Categories ─────────────────────────────────────
+  categories: [
+
+    // ── Live Performance ──────────────────────────────────────
+    {
+      id: "performance",
+      label: "Live Performance",
+      icon: "♪",
+      urlParam: "performance",
+      description: "Live instrumentation for shows, events, concerts, and performances. Price is per 45-minute set. A 10-minute grace period applies per set. After 5 sets, each additional set is discounted.",
+      durationLabel: "Number of Sets",
+      categoryNote: "Transportation and catering are provided by the client and are not included in this estimate.",
+      // Piano solo uses its own flat duration pricing
+      baseOptions: [
+        { id: "perf_bass", estimateDesc: "Live bass performance. Price is per 45-minute set with a 10-minute grace period. Transportation and catering provided by client.",     label: "Bass",                    price: 300 },
+        { id: "perf_keys", estimateDesc: "Live keys performance. Price is per 45-minute set with a 10-minute grace period. Transportation and catering provided by client.",     label: "Keys",                    price: 400 },
+        { id: "perf_guitar", estimateDesc: "Live guitar performance. Price is per 45-minute set with a 10-minute grace period. Transportation and catering provided by client.",   label: "Guitar",                  price: 300 },
+        { id: "perf_melodica", estimateDesc: "Live melodica performance. Price is per 45-minute set with a 10-minute grace period. Transportation and catering provided by client.", label: "Melodica",                price: 200 },
+        { id: "perf_piano", estimateDesc: "Piano solo for corporate events, weddings, and private functions. Pricing is by duration. Transportation and catering provided by client.",    label: "Piano (Solo / Corporate / Wedding)", price: 0, isPianoSolo: true },
+      ],
+      // Sets — after 5 sets, 0.75x per set
+      durations: [
+        { id: "1set",  label: "1 Set (45 min)",   sets: 1  },
+        { id: "2sets", label: "2 Sets (90 min)",   sets: 2  },
+        { id: "3sets", label: "3 Sets (135 min)",  sets: 3  },
+        { id: "4sets", label: "4 Sets (180 min)",  sets: 4  },
+        { id: "5sets", label: "5 Sets (225 min)",  sets: 5  },
+        { id: "6sets", label: "6 Sets (270 min)",  sets: 6  },
+        { id: "7sets", label: "7 Sets (315 min)",  sets: 7  },
+      ],
+      // Piano solo flat prices
+      pianoDurations: [
+        { id: "piano_30",  label: "30 Minutes",  flatPrice: 500  },
+        { id: "piano_60",  label: "1 Hour",      flatPrice: 700  },
+        { id: "piano_90",  label: "1.5 Hours",   flatPrice: 1000 },
+        { id: "piano_120", label: "2 Hours",     flatPrice: 1250 },
+      ],
+      // Rehearsal add-on
+      rehearsalPrice: 30,
+      addons: [
+        // MD add-on with sub-addons
+        {
+          id: "perf_md",
+          label: "Music Direction",
+          price: 250,
+          hasQty: false,
+          isMD: true,
+          subAddons: [
+            { id: "perf_md_programming", label: "Song Programming (per song)", price: 80,  hasQty: true, qtyStep: 1, qtyMin: 1 },
+            { id: "perf_md_playback",    label: "Fly Playback",                price: 50,  hasQty: false },
+            { id: "perf_md_speakers",    label: "Bring Own Speakers",          price: 250, hasQty: false },
+          ],
+        },
+        // In-person add-on — reveals bring own instrument sub-addon
+        {
+          id: "perf_inperson",
+          label: "In-Person / Live (not remote)",
+          price: 0,
+          hasQty: false,
+          isInPerson: true,
+          subAddons: [
+            { id: "perf_instrument", label: "Bring Own Instrument", price: 80, hasQty: false },
+          ],
+        },
+        // Rehearsals stepper — qty = number of rehearsals
+        {
+          id: "perf_rehearsal",
+          label: "Rehearsals",
+          price: 30,
+          hasQty: true,
+          qtyStep: 1,
+          qtyMin: 1,
+          isRehearsal: true,
+        },
+      ],
+    },
+
+    // ── Arrangements ──────────────────────────────────────────
+    {
+      id: "arrangements",
+      label: "Arrangements",
+      icon: "𝄞",
+      urlParam: "arrangements",
+      description: "Professionally produced live arrangements for acoustic acts, tracks, and full bands.",
+      durationLabel: "Number of Songs",
+      baseOptions: [
+        {
+          id: "arr_acoustic",
+          label: "Live Arrangement — Acoustic",
+          price: 160,
+          priceAfter: 130,
+          tierAfter: 5,
+          description: "A stripped-down, professionally produced arrangement for acoustic acts. Up to 2 instruments (piano, bass, or guitar). Delivered as a single audio file. Can be used as a backing track or played by your own musicians. Perfect for intimate shows and unplugged sessions.",
+          estimateDesc: "Acoustic arrangement: up to 2 instruments, delivered as a single audio file. First 5 songs at $160, additional songs at $130. 50% deposit required on signing.",
+        },
+        {
+          id: "arr_track",
+          label: "Live Arrangement — Track",
+          price: 300,
+          priceAfter: 270,
+          tierAfter: 5,
+          description: "A fully programmed arrangement designed to sound like a live band performing with you on stage. Includes carefully crafted production elements, dynamic transitions, layered instrumentation, and vibrant soundscapes. Delivered as a single audio file. Perfect for rappers who use DJs or venues that do not accommodate bands.",
+          estimateDesc: "Track arrangement: fully programmed, full-band sound. Delivered as a single audio file. First 5 songs at $300, additional at $270. 50% deposit required on signing.",
+        },
+        {
+          id: "arr_band",
+          label: "Live Arrangement — Band",
+          price: 340,
+          priceAfter: 290,
+          tierAfter: 5,
+          description: "A professionally arranged and produced track designed for live bands to play in real time on stage. Includes full stems (drums, keys, guitars, etc.), a stereo reference track, and an optional click and cue track. A pre-consultation is available to tailor the arrangement to your band's gear and setup.",
+          estimateDesc: "Band arrangement: full stems, stereo reference, optional click and cue track. First 5 songs at $340, additional at $290. Pre-consultation recommended. 50% deposit required on signing.",
+          hasBandFlag: true,
+        },
+      ],
+      // Songs quantity — tiered pricing handled in calcTotal
+      durations: [
+        { id: "1song",   label: "1 Song",      songs: 1  },
+        { id: "3songs",  label: "3 Songs",     songs: 3  },
+        { id: "5songs",  label: "5 Songs",     songs: 5  },
+        { id: "8songs",  label: "8 Songs",     songs: 8  },
+        { id: "10songs", label: "10 Songs",    songs: 10 },
+        { id: "album",   label: "Album (12+)", songs: 12 },
+      ],
+      addons: [
+        { id: "arr_rush",    label: "Rush Delivery (+$100 per song)", price: 100, hasQty: false, isPerSong: true },
+        { id: "arr_consult", label: "Pre-Consultation Call",          price: 20,  hasQty: false },
+        // Band-only flag — shows note, no price
+        { id: "arr_nontrack", label: "Non-Track Arrangement (Band only — custom setup)", price: 0, hasQty: false, bandOnly: true, isFlag: true },
+      ],
+    },
+
+    // ── Session Work ──────────────────────────────────────────
+    {
+      id: "session",
+      label: "Session Work",
+      icon: '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;"><rect x="4.5" y="1" width="5" height="8" rx="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 7.5C2 10.261 4.239 12.5 7 12.5s5-2.239 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="7" y1="12.5" x2="7" y2="14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>',
+      urlParam: "session",
+      description: "Remote or in-person session recording. First 5 songs at full rate, additional songs discounted by one third.",
+      durationLabel: "Number of Tracks",
+      baseOptions: [
+        { id: "sess_bass", estimateDesc: "Remote bass session recording. Includes up to 4 revisions. First 5 tracks at full rate, additional tracks at a discounted rate.",     label: "Bass",    price: 150, priceAfter: 100, tierAfter: 5 },
+        { id: "sess_keys", estimateDesc: "Remote keys session recording. Includes up to 4 revisions. First 5 tracks at full rate, additional tracks at a discounted rate.",     label: "Keys",    price: 150, priceAfter: 100, tierAfter: 5 },
+        { id: "sess_guitar", estimateDesc: "Remote guitar session recording. Includes up to 4 revisions. First 5 tracks at full rate, additional tracks at a discounted rate.",   label: "Guitar",  price: 150, priceAfter: 100, tierAfter: 5 },
+        { id: "sess_organ", estimateDesc: "Remote organ session recording. Includes up to 4 revisions. First 5 tracks at full rate, additional tracks at a discounted rate.",    label: "Organ",   price: 150, priceAfter: 100, tierAfter: 5 },
+        { id: "sess_melodica", estimateDesc: "Remote melodica session recording. Includes up to 4 revisions. First 5 tracks at full rate, additional tracks at a discounted rate.", label: "Melodica",price: 100, priceAfter: 67,  tierAfter: 5 },
+      ],
+      durations: [
+        { id: "1trk",   label: "1 Track",      songs: 1  },
+        { id: "3trk",   label: "3 Tracks",     songs: 3  },
+        { id: "5trk",   label: "5 Tracks",     songs: 5  },
+        { id: "8trk",   label: "8 Tracks",     songs: 8  },
+        { id: "10trk",  label: "10 Tracks",    songs: 10 },
+        { id: "album",  label: "Album (12+)",  songs: 12 },
+      ],
+      defaultRevisions: 4,
+      revisionPrice: 40,
+      addons: [
+        {
+          id: "sess_inperson",
+          label: "In-Person Recording",
+          price: 0,
+          displayPrice: "To be confirmed",
+          hasQty: false,
+          isInPerson: true,
+          subAddons: [
+            { id: "sess_instrument", label: "Bring Own Instrument", price: 80, hasQty: false },
+          ],
+        },
+        { id: "sess_revisions", label: "Additional Revisions (beyond 4)", price: 40, hasQty: true, qtyStep: 1, qtyMin: 1, isRevision: true },
+        { id: "sess_rush",      label: "Rush Delivery (+$100 per track)",  price: 100, hasQty: false, isPerSong: true },
+      ],
+    },
+
+    // ── Production ────────────────────────────────────────────
+    {
+      id: "production",
+      label: "Production",
+      icon: "◈",
+      urlParam: "production",
+      description: "Original beats, full production, and co-production. All work includes writing and production credits for Joe Davis. Royalty agreements handled separately via BMI.",
+      durationLabel: "Project Scope",
+      baseOptions: [
+        {
+          id: "prod_beat", estimateDesc: "A finished, mixdown-ready instrumental track. Non-exclusive license by default. Joe retains writing credit, publishing rights, and royalties via BMI.",
+          label: "Beat / Instrumental",
+          price: 300,
+          description: "A finished, mixdown-ready instrumental. Non-exclusive by default — you license the beat, Joe retains rights and royalties.",
+        },
+        {
+          id: "prod_full", estimateDesc: "Full creative production around your performance. Arrangement, instrumentation, programming, and sound design. Joe is producer of record and retains publishing royalties via BMI.",
+          label: "Full Production",
+          price: 800,
+          description: "Full creative production around your performance — arrangement, instrumentation, programming, sound design. Joe is producer of record and retains publishing royalties.",
+        },
+        {
+          id: "prod_co", estimateDesc: "Joe joins your existing project as a collaborator, elevating and refining what is already there. Writing and production credits shared.",
+          label: "Co-Production",
+          price: 400,
+          description: "Joe joins your existing project as a collaborator — elevating, arranging, and adding his touch to what's already there.",
+        },
+        {
+          id: "prod_jingle", estimateDesc: "Custom jingle or brand sound. Select your track length below. Writing and production credits retained by Joe Davis Arts and Media.",
+          label: "Jingle / Brand Sound",
+          price: 0,
+          isJingle: true,
+        },
+      ],
+      durations: [
+        { id: "1trk",  label: "1 Track",   songs: 1 },
+        { id: "3trk",  label: "3 Tracks",  songs: 3 },
+        { id: "5trk",  label: "5 Tracks",  songs: 5 },
+        { id: "ep",    label: "EP (6–8)",  songs: 7 },
+        { id: "album", label: "Album",     songs: 12 },
+      ],
+      jingleDurations: [
+        { id: "jingle_short", label: "Short Track (15s–30s)", flatPrice: 650  },
+        { id: "jingle_long",  label: "Long Track (30s–60s)",  flatPrice: 900  },
+        { id: "jingle_full",  label: "Full Song (60s+)",      flatPrice: 1200 },
+      ],
+      defaultRevisions: 4,
+      revisionPrice: 50,
+      addons: [
+        { id: "prod_exclusive", label: "Exclusive License / Buyout",         price: 350, hasQty: false },
+        { id: "prod_revisions", label: "Additional Revisions (beyond 4)",    price: 50,  hasQty: true, qtyStep: 1, qtyMin: 1, isRevision: true },
+        { id: "prod_rush",      label: "Rush Delivery (+$150 per track)",    price: 150, hasQty: false, isPerSong: true },
+        { id: "prod_writing",   label: "Original Songwriting",               price: 0.4, hasQty: false, isMultiplier: true, jingleOnly: true },
+        { id: "prod_vocal",     label: "Vocal Talent",                       price: 0.8, hasQty: false, isMultiplier: true, jingleOnly: true },
+        { id: "prod_cc_license",label: "Exclusive License (Jingle)",         price: 300, hasQty: false, jingleOnly: true },
+      ],
+    },
+
+    // ── Content Creation ──────────────────────────────────────
+    {
+      id: "content",
+      label: "Content Creation",
+      icon: "▶",
+      urlParam: "content",
+      description: "Music-driven content, branded reels, campaigns, and custom sound.",
+      durationLabel: "Format",
+      baseOptions: [
+        { id: "cc_standard", estimateDesc: "Clean, natural product integration with minimal editing. Best for quick brand exposure and simple product features.", label: "Standard Content", price: 200, description: "Simple, clean content with natural product integration and minimal production. Best for quick brand exposure and simple product features." },
+        { id: "cc_concept", estimateDesc: "Idea-driven content built around a clear concept or storyline. Strong focus on storytelling with enhanced editing.", label: "Concept-Based Content", price: 350, description: "Creative, idea-driven content built around a clear concept or storyline. Strong focus on storytelling with multiple shots and enhanced editing." },
+        { id: "cc_music", estimateDesc: "High-production content built around performance and custom sound design. Best for high-impact campaigns and culturally relevant content.", label: "Music-Based Content", price: 500, description: "High-production content built around performance and custom sound design. Fully customised creative execution. Best for high-impact campaigns and culturally relevant content." },
+        { id: "cc_jingle", estimateDesc: "Custom jingle or brand sound for your campaign. Select your track length below.", label: "Jingle / Brand Sound", price: 0, isJingle: true, description: "Original music created specifically for your brand. A jingle or brand sound gives your campaign a unique sonic identity that can be reused across all your content." },
+      ],
+      durations: [
+        { id: "shortform", label: "Short-Form", multiplier: 1.0 },
+        { id: "longform",  label: "Long-Form",  multiplier: 1.5 },
+      ],
+      jingleDurations: [
+        { id: "jingle_short", label: "Short Track (15s–30s)", flatPrice: 650  },
+        { id: "jingle_long",  label: "Long Track (30s–60s)",  flatPrice: 900  },
+        { id: "jingle_full",  label: "Full Song (60s+)",      flatPrice: 1200 },
+      ],
+      addons: [
+        { id: "cc_license",     label: "Exclusive License",    price: 300, hasQty: false },
+        { id: "cc_writing",     label: "Original Songwriting", price: 0.4, hasQty: false, isMultiplier: true, jingleOnly: true },
+        { id: "cc_vocal",       label: "Vocal Talent",         price: 0.8, hasQty: false, isMultiplier: true, jingleOnly: true },
+        {
+          id: "cc_ph_studio",
+          label: "Product Photography — White Background / Studio",
+          price: 150, hasQty: true, qtyStep: 5, qtyMin: 5, isPhoto: true,
+          subAddons: [
+            { id: "cc_ph_studio_rush",    label: "Rush Delivery (48 hrs)",       price: 150 },
+            { id: "cc_ph_studio_license", label: "Exclusive Commercial License", price: 300 },
+          ],
+        },
+        {
+          id: "cc_ph_hero",
+          label: "Product Photography — Hero Shot / In-the-Element",
+          price: 250, hasQty: true, qtyStep: 5, qtyMin: 5, isPhoto: true,
+          subAddons: [
+            { id: "cc_ph_hero_rush",    label: "Rush Delivery (48 hrs)",       price: 150 },
+            { id: "cc_ph_hero_license", label: "Exclusive Commercial License", price: 300 },
+          ],
+        },
+        {
+          id: "cc_ph_lifestyle",
+          label: "Product Photography — Model / Lifestyle",
+          price: 350, hasQty: true, qtyStep: 5, qtyMin: 5, isPhoto: true,
+          subAddons: [
+            { id: "cc_ph_lifestyle_rush",    label: "Rush Delivery (48 hrs)",       price: 150 },
+            { id: "cc_ph_lifestyle_license", label: "Exclusive Commercial License", price: 300 },
+          ],
+        },
+      ],
+    },
+
+  ],
+
+  // ── Global Add-ons ──────────────────────────────────────────
+  globalAddons: [],
+
+};
+
+</script>
+
+  <style>
+    /* ── Reset & Tokens ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent:       #c9a92a;
+      --accent-2:     #dab322;
+      --accent-dim:   #7a6210;
+      --accent-glow:  rgba(218,179,34,0.15);
+      --accent-glow2: rgba(218,179,34,0.07);
+      --grad-accent:  linear-gradient(135deg, #c9a92a 0%, #f0d060 100%);
+      --grad-total:   linear-gradient(135deg, #dab322 0%, #f0d060 100%);
+      --radius:       6px;
+      --radius-lg:    12px;
+      --font-display: 'Inter', system-ui, sans-serif;
+      --font-ui:      'Inter', system-ui, sans-serif;
+      --font-mono:    'DM Mono', monospace;
+      --ease:         cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    /* ── Dark mode (default) ───────────────────────────────── */
+    :root, html[data-theme="dark"] {
+      --bg:           #080810;
+      --surface:      #0f0f1a;
+      --surface2:     #13131f;
+      --surface3:     #191926;
+      --border:       #1e1e2e;
+      --border2:      #272738;
+      --grad-card:    linear-gradient(160deg, #13131f 0%, #0f0f1a 100%);
+      --text:         #e2e2f0;
+      --text-dim:     #4a4a6a;
+      --text-mid:     #8888aa;
+      --shadow:       0 2px 12px rgba(0,0,0,0.4);
+    }
+
+    /* ── Light mode ────────────────────────────────────────── */
+    html[data-theme="light"] {
+      --bg:           #FFFCF5;
+      --surface:      #F5F0E8;
+      --surface2:     #EDE8DE;
+      --surface3:     #E5DFD4;
+      --border:       #D8D1C4;
+      --border2:      #C8C0B0;
+      --grad-card:    linear-gradient(160deg, #F5F0E8 0%, #EDE8DE 100%);
+      --text:         #0E0E0E;
+      --text-dim:     #8C8070;
+      --text-mid:     #5A5040;
+      --shadow:       0 2px 12px rgba(0,0,0,0.08);
+      --accent-dim:   #9A7A10;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    html {
+      transition: background-color 0.3s var(--ease), color 0.3s var(--ease);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background-color 0.3s var(--ease);
+    }
+
+    /* ── Gradient background orbs ──────────────────────────── */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(218,179,34,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      transition: opacity 0.3s;
+    }
+
+    html[data-theme="light"] body::after {
+      opacity: 0.4;
+    }
+
+    /* ── Noise texture overlay ─────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ── Layout ────────────────────────────────────────────── */
+    .app {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Header ────────────────────────────────────────────── */
+    header {
+      padding: 56px 0 48px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+      animation: fadeUp 0.7s var(--ease) both;
+    }
+
+    .header-left {}
+
+    .wordmark {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .wordmark span {
+      background: var(--grad-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tagline {
+      font-family: var(--font-ui);
+      font-size: 15px;
+      color: var(--text-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    .header-badge {
+      font-family: var(--font-ui);
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-dim);
+    }
+
+    /* ── Main Grid ─────────────────────────────────────────── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    @media (max-width: 780px) {
+      .main-grid { grid-template-columns: 1fr; }
+      .estimate-panel { position: static !important; }
+    }
+
+    /* ── Theme toggle ─────────────────────────────────────── */
+    .theme-toggle-btn {
+      padding: 7px 18px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 20px;
+      font-family: var(--font-ui);
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-mid);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+      user-select: none;
+    }
+    .theme-toggle-btn:hover {
+      border-color: var(--accent-dim);
+      color: var(--text);
+    }
+
+    /* ── Estimate Generator label ───────────────────────────── */
+    .header-badge {
+      font-family: var(--font-ui);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    /* ── Section Label ─────────────────────────────────────── */
+    .section-label {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Category Tabs ─────────────────────────────────────── */
+    .category-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.7s var(--ease) 0.1s both;
+    }
+
+    .cat-tab {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: var(--font-ui);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-mid);
+      transition: all 0.2s var(--ease);
+      user-select: none;
+      letter-spacing: -0.01em;
+    }
+
+    .cat-tab .cat-icon {
+      font-size: 20px;
+      opacity: 0.7;
+    }
+
+    .cat-tab:hover {
+      border-color: var(--border2);
+      color: var(--text);
+      background: var(--surface2);
+    }
+
+    .cat-tab.active {
+      border-color: var(--accent-dim);
+      color: var(--accent-2);
+      background: var(--accent-glow2);
+    }
+
+    .cat-tab.active .cat-icon {
+      opacity: 1;
+    }
+
+    /* ── Card ──────────────────────────────────────────────── */
+    .card {
+      background: var(--grad-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 16px;
+      animation: fadeUp 0.5s var(--ease) both;
+      position: relative;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    /* subtle top-edge gradient highlight */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 20px; right: 20px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(218,179,34,0.25), transparent);
+      border-radius: 1px;
+    }
+
+    .card-title { font-size: 28px !important; font-weight: 700 !important;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+      letter-spacing: -0.2px;
+    }
+
+    .card-desc {
+      font-family: var(--font-ui);
+      font-size: 17px;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+    }
+
+    /* ── Option Grid ───────────────────────────────────────── */
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 8px;
+    }
+
+    .option-btn {
+      display: flex;
+      flex-direction: column;
+      padding: 12px 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s var(--ease);
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .option-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent-glow);
+      opacity: 0;
+      transition: opacity 0.2s;
+      border-radius: var(--radius);
+    }
+
+    .option-btn:hover {
+      border-color: var(--border2);
+      background: var(--surface3);
+    }
+
+    .option-btn:hover::after { opacity: 1; }
+
+    .option-btn.selected {
+      border-color: var(--accent-dim);
+      background: var(--accent-glow2);
+    }
+
+    .option-btn.selected::after { opacity: 1; }
+
+    .option-name { font-size: 18px !important;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .option-price {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      color: var(--text-dim);
+    }
+
+    .option-btn.selected .option-price {
+      color: var(--accent-2);
+    }
+
+    .option-check {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 16px;
+      height: 16px;
+      border: 1px solid var(--border2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      color: transparent;
+      transition: all 0.15s;
+    }
+
+    .option-btn.selected .option-check {
+      background: var(--grad-accent);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    /* ── Duration Selector ─────────────────────────────────── */
+    .duration-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .dur-btn {
+      padding: 7px 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-family: var(--font-ui);
+      font-size: 16px;
+      color: var(--text-mid);
+      transition: all 0.2s var(--ease);
+      user-select: none;
+    }
+
+    .dur-btn:hover {
+      border-color: var(--border2);
+      color: var(--text);
+    }
+
+    .dur-btn.selected {
+      border-color: var(--accent-dim);
+      color: var(--accent-2);
+      background: var(--accent-glow2);
+    }
+
+    /* ── Addon Toggles ─────────────────────────────────────── */
+    .addon-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .addon-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.2s var(--ease);
+      user-select: none;
+    }
+
+    .addon-row:hover {
+      border-color: var(--border2);
+      background: var(--surface3);
+    }
+
+    .addon-row.selected {
+      border-color: var(--accent-dim);
+      background: var(--accent-glow2);
+    }
+
+    .addon-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .addon-toggle {
+      width: 30px;
+      height: 16px;
+      background: var(--surface3);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      position: relative;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .addon-toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 10px;
+      height: 10px;
+      background: var(--text-dim);
+      border-radius: 50%;
+      transition: all 0.2s var(--ease);
+    }
+
+    .addon-row.selected .addon-toggle {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .addon-row.selected .addon-toggle::after {
+      left: 16px;
+      background: #fff;
+    }
+
+    .addon-name {
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .addon-price {
+      font-family: var(--font-mono);
+      font-size: 17px;
+      color: var(--text-dim);
+    }
+
+    .addon-row.selected .addon-price {
+      color: var(--accent-2);
+      font-size: 17px;
+    }
+    /* Addon quantity stepper */
+    .addon-qty {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: 8px;
+    }
+
+    .qty-btn {
+      width: 22px;
+      height: 22px;
+      background: var(--surface3);
+      border: 1px solid var(--border2);
+      border-radius: 2px;
+      color: var(--text-mid);
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .qty-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    .qty-val {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      color: var(--text);
+      min-width: 16px;
+      text-align: center;
+    }
+
+    /* ── Estimate Panel ─────────────────────────────────────── */
+    .estimate-panel {
+      position: sticky;
+      top: 32px;
+      animation: fadeUp 0.7s var(--ease) 0.2s both;
+    }
+
+    .estimate-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      box-shadow: var(--shadow);
+    }
+
+    /* gradient border top on estimate card */
+    .estimate-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--grad-accent);
+    }
+
+    .estimate-header {
+      padding: 24px 22px 18px;
+      border-bottom: 1px solid var(--border);
+      background: var(--grad-card);
+    }
+
+    .estimate-header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .currency-select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: var(--surface3);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      color: var(--text-mid);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      padding: 5px 24px 5px 10px;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238888aa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+    }
+
+    .currency-select:hover {
+      border-color: var(--accent-dim);
+      color: var(--text);
+    }
+
+    .currency-select:focus {
+      border-color: var(--accent-dim);
+      color: var(--text);
+    }
+
+    .currency-select option {
+      background: #13131f;
+      color: var(--text);
+    }
+
+    .estimate-title {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .estimate-total {
+      font-family: var(--font-display);
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -2px;
+      background: var(--grad-total);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: all 0.3s var(--ease);
+    }
+
+    .estimate-total .currency {
+      font-size: 24px;
+      vertical-align: top;
+      margin-top: 8px;
+      display: inline-block;
+    }
+
+    .estimate-total .cents {
+      font-size: 24px;
+      vertical-align: bottom;
+      margin-bottom: 4px;
+      opacity: 0.5;
+      display: inline-block;
+    }
+
+    .estimate-note {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      color: var(--text-dim);
+      margin-top: 8px;
+    }
+
+    .estimate-body {
+      padding: 18px 22px;
+    }
+
+    .line-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      margin-bottom: 16px;
+    }
+
+    .line-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      animation: fadeIn 0.3s var(--ease);
+    }
+
+    .line-item:last-child { border-bottom: none; }
+
+    .li-name {
+      font-size: 16px;
+      color: var(--text-mid);
+      max-width: 180px;
+      line-height: 1.3;
+    }
+
+    .li-amount {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      color: var(--text);
+      white-space: nowrap;
+      margin-left: 8px;
+    }
+
+    .li-multiplier {
+      font-size: 10px;
+      color: var(--text-dim);
+      margin-left: 4px;
+    }
+
+    .estimate-divider {
+      height: 1px;
+      background: var(--border2);
+      margin: 12px 0;
+    }
+
+    .estimate-subtotal {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 15px;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+
+    .estimate-grand {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-ui);
+      font-size: 16px;
+      font-weight: 600;
+      padding-top: 8px;
+      border-top: 1px solid var(--border2);
+      background: var(--grad-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 32px 0;
+    }
+
+    .empty-icon {
+      font-size: 28px;
+      opacity: 0.2;
+      margin-bottom: 8px;
+    }
+
+    .empty-text {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      color: var(--text-dim);
+    }
+
+    /* ── CTA ───────────────────────────────────────────────── */
+    .cta-section {
+      margin-top: 20px;
+    }
+
+    .btn-clear {
+      display: block;
+      width: 100%;
+      margin-top: 8px;
+      padding: 10px;
+      background: transparent;
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      color: var(--text-dim);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .btn-clear:hover {
+      border-color: #f87171;
+      color: #f87171;
+    }
+
+    .btn-primary {
+      display: block;
+      width: 100%;
+      padding: 13px 20px;
+      background: var(--grad-accent);
+      border: none;
+      border-radius: var(--radius);
+      color: #0a0a0a;
+      font-family: var(--font-ui);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.1px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.2s var(--ease);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(218,179,34,0.28);
+    }
+
+    .btn-secondary {
+      display: block;
+      width: 100%;
+      margin-top: 8px;
+      padding: 11px 20px;
+      background: transparent;
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      color: var(--text-mid);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--text-dim);
+      color: var(--text);
+    }
+
+    .disclaimer {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      color: var(--text-dim);
+      text-align: center;
+      margin-top: 14px;
+      line-height: 1.5;
+      opacity: 0.7;
+    }
+
+    /* ── Category Panel ─────────────────────────────────────── */
+    .category-panel {
+      display: none;
+    }
+
+    .category-panel.active {
+      display: block;
+    }
+
+    /* ── Divider ────────────────────────────────────────────── */
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 24px 0;
+    }
+
+    /* ── Animations ─────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ── Number pulse ───────────────────────────────────────── */
+    .pulse {
+      animation: numPulse 0.3s var(--ease);
+    }
+
+    @keyframes numPulse {
+      0%   { color: var(--gold); transform: scale(1.02); }
+      100% { color: var(--text); transform: scale(1); }
+    }
+
+    /* ── Big Song/Track Counter ─────────────────────────────── */
+    .big-counter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+    }
+
+    .big-counter-controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .big-counter-btn {
+      width: 40px;
+      height: 40px;
+      background: var(--surface3);
+      border: 1px solid var(--border2);
+      border-radius: 50%;
+      color: var(--text-mid);
+      cursor: pointer;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s var(--ease);
+      user-select: none;
+      line-height: 1;
+    }
+
+    .big-counter-btn:hover {
+      border-color: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    .big-counter-num {
+      font-family: var(--font-display);
+      font-size: 56px;
+      font-weight: 700;
+      letter-spacing: -2px;
+      background: var(--grad-total);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      min-width: 80px;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .big-counter-label {
+      font-family: var(--font-ui);
+      font-size: 15px;
+      color: var(--text-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .big-counter-rate {
+      font-family: var(--font-ui);
+      font-size: 16px;
+      color: var(--accent);
+      text-align: center;
+      min-height: 18px;
+      transition: all 0.2s;
+    }
+
+    .big-counter-rate.discounted {
+      color: #4ade80;
+    }
+
+    /* ── List view for arrangements ─────────────────────────── */
+    .option-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .option-btn-list {
+      display: flex;
+      flex-direction: column;
+      padding: 14px 16px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s var(--ease);
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .option-btn-list::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent-glow);
+      opacity: 0;
+      transition: opacity 0.2s;
+      border-radius: var(--radius);
+    }
+
+    .option-btn-list:hover { border-color: var(--border2); background: var(--surface3); }
+    .option-btn-list:hover::after { opacity: 1; }
+    .option-btn-list.selected { border-color: var(--accent-dim); background: var(--accent-glow2); }
+    .option-btn-list.selected::after { opacity: 1; }
+
+    .option-btn-list-header { font-size: 20px !important;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .option-btn-list .option-name { font-size: 20px !important; margin-bottom: 0; font-weight: 600; }
+
+    .option-btn-list .option-desc {
+      font-family: var(--font-ui);
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+
+    .option-btn-list.selected .option-desc { color: var(--text-mid); }
+    .option-btn-list .option-check { display: none; }
+
+    /* ── Estimate line item description ─────────────────────── */
+    .li-desc {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      color: var(--text-dim);
+      line-height: 1.5;
+      margin-top: 3px;
+      grid-column: 1 / -1;
+    }
+
+    .line-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .line-item:last-child { border-bottom: none; }
+
+    /* ── Scrollbar ──────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+    /* ── Footer ─────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 40px 0 0;
+      border-top: 1px solid var(--border);
+      margin-top: 60px;
+    }
+
+    .footer-text {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── Print / Share summary ──────────────────────────────── */
+    .summary-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .summary-modal.open {
+      display: flex;
+    }
+
+    .summary-box {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      max-width: 480px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .summary-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 18px;
+      padding: 4px 8px;
+      transition: color 0.2s;
+    }
+
+    .summary-close:hover { color: var(--text); }
+
+    .summary-title {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 300;
+      margin-bottom: 4px;
+    }
+
+    .summary-subtitle {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .summary-content {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      color: var(--text-mid);
+      white-space: pre-wrap;
+      line-height: 1.8;
+      background: var(--surface2);
+      padding: 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .copy-btn {
+      display: block;
+      width: 100%;
+      margin-top: 16px;
+      padding: 11px;
+      background: transparent;
+      border: 1px solid var(--accent-dim);
+      border-radius: var(--radius);
+      color: var(--accent-2);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover { background: var(--accent-glow); }
+  
+  [data-theme="light"] header a { color: rgba(0,0,0,0.5) !important; }
+  [data-theme="light"] header a:hover { color: #DAB322 !important; }
+  [data-theme="light"] .header-badge { color: rgba(0,0,0,0.4) !important; }
+  [data-theme="light"] .header-badge span { color: rgba(0,0,0,0.4) !important; }
+  /* "by" text visible in both modes */
+  [data-theme="dark"] header div[style*="rgba(180"] { color: rgba(200,180,100,0.85) !important; }
+  [data-theme="light"] header div[style*="rgba(180"] { color: rgba(100,80,0,0.7) !important; }
+</style>
+
+  <style media="print">
+    @page { size: A4; margin: 20mm 16mm; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    /* Force light mode for printing regardless of current theme */
+    :root, [data-theme="dark"], [data-theme="light"] {
+      --bg: #ffffff; --text: #0D0D0B; --text-mid: #333; --text-dim: #666;
+      --surface: #f5f5f5; --surface2: #efefef; --border: #ddd;
+      --accent-2: #DAB322;
+    }
+    header, .category-tabs, .config-col, nav, #js-print-btns,
+    .est-action-btn, .theme-toggle-btn,
+    button[onclick="window.print()"] { display: none !important; }
+    body { background: #fff !important; color: #0D0D0B !important; font-size: 13px; }
+    .main-grid { grid-template-columns: 1fr !important; }
+    .estimate-col { width: 100% !important; max-width: 100% !important; position: static !important; }
+    .estimate-panel { background: #fff !important; border: 1px solid #ddd !important; box-shadow: none !important; }
+    .estimate-amount { color: #DAB322 !important; }
+    .li-name { color: #0D0D0B !important; }
+    .li-amount { color: #0D0D0B !important; }
+    .est-total-num { color: #DAB322 !important; }
+    .est-grand-total { color: #DAB322 !important; }
+    .est-grand-label { color: #0D0D0B !important; font-weight: 700 !important; }
+    .est-disclaimer { color: #888 !important; font-size: 11px !important; }
+
+    /* Print header */
+    .estimate-col::before {
+      content: "ESTIMATE — Joe Davis Arts & Media";
+      display: block;
+      font-family: Arial, sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #0D0D0B;
+      border-bottom: 3px solid #DAB322;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    .estimate-col::after {
+      content: "contact@joedavisarts.com  ·  +1 (876) 897-2446  ·  joedavisarts.com";
+      display: block;
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      color: #888;
+      border-top: 1px solid #ddd;
+      padding-top: 10px;
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Header -->
+  <header style="display:flex; align-items:flex-start; justify-content:space-between;">
+    <div style="display:flex; flex-direction:column; align-items:flex-start; gap:12px;">
+      <a href="partnerships.html" style="font-family:inherit; font-size:13px; font-weight:600; color:rgba(255,255,255,0.4); text-decoration:none; letter-spacing:0.06em; text-transform:uppercase; transition:color 0.2s;" onmouseover="this.style.color='#DAB322'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">← Exit App</a>
+      <div style="display:flex; align-items:flex-end; gap:20px;">
+        <div class="wordmark" style="font-size:60px; line-height:1;">Calcu<span>rate</span></div>
+        <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:rgba(180,160,100,0.9); letter-spacing:0.08em; text-transform:uppercase; padding-bottom:6px;">by <img src="assets/images/LogoType_Gold.png" alt="Joe Davis Arts &amp; Media" style="height:44px; width:auto; opacity:0.95;"></div>
+      </div>
+    </div>
+    <button class="theme-toggle-btn" id="js-theme-btn">☀ Light Mode →</button>
+  </header>
+
+  <!-- Main -->
+  <div class="main-grid">
+
+    <!-- Left: Configuration -->
+    <div class="config-col">
+
+      <!-- Category Tabs -->
+      <div class="section-label">Service Category</div>
+      <div class="category-tabs" id="js-category-tabs"></div>
+
+      <!-- Dynamic category panels -->
+      <div id="js-panels"></div>
+
+    </div>
+    <!-- Right: Estimate -->
+    <div class="estimate-panel">
+      <div class="estimate-card">
+        <div class="estimate-header">
+          <div class="estimate-header-top">
+            <div class="estimate-title">Your Estimate</div>
+            <select class="currency-select" id="js-currency-select"></select>
+          </div>
+          <div class="estimate-total" id="js-total">
+            <span class="currency" id="js-currency-symbol">$</span><span id="js-total-int">0</span>
+          </div>
+          <div class="estimate-note" id="js-estimate-note">Select services to see a breakdown</div>
+        </div>
+        <div class="estimate-body">
+          <div id="js-line-items">
+            <div class="empty-state">
+              <div class="empty-icon">◎</div>
+              <div class="empty-text">No services selected yet</div>
+            </div>
+          </div>
+          <div class="cta-section">
+            <button class="btn-primary" id="js-btn-inquiry">Get in Touch →</button>
+            <button class="btn-secondary" id="js-btn-summary">Copy Estimate Summary</button>
+            <button class="btn-secondary" onclick="window.print()" style="margin-top:4px;">🖨 Print / Save as PDF</button>
+            <button class="btn-clear" id="js-btn-clear">Clear Cart</button>
+            <div class="disclaimer" id="js-disclaimer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-text">Powered by Calcurate · All estimates are non-binding</div>
+  </footer>
+
+</div>
+
+<!-- Summary Modal -->
+<div class="summary-modal" id="js-modal">
+  <div class="summary-box">
+    <button class="summary-close" id="js-modal-close">✕</button>
+    <div class="summary-title">Estimate Summary</div>
+    <div class="summary-subtitle" id="js-modal-date"></div>
+    <div class="summary-content" id="js-modal-content"></div>
+    <button class="copy-btn" id="js-copy-btn">Copy to Clipboard</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  Calcurate — Core Calculator Logic
+//  This file reads from CALCURATE_CONFIG defined in pricing.js
+// ═══════════════════════════════════════════════════════════
+
+(function () {
+  const C = CALCURATE_CONFIG;
+
+  // ── Currency state ───────────────────────────────────────
+  let activeCurrency = C.currencies.find(c => c.code === C.brand.defaultCurrency) || C.currencies[0];
+
+  function sym() { return activeCurrency.symbol; }
+  function convert(usdAmount) { return Math.round(usdAmount * activeCurrency.rate); }
+
+  // ── State ────────────────────────────────────────────────
+  const state = {
+    activeCat: C.categories[0].id,
+    // Per category: { baseId, durationId, addons: { id: qty } }
+    selections: {},
+    globalAddons: {},
+  };
+
+  // Initialise state structure
+  C.categories.forEach(cat => {
+    state.selections[cat.id] = {
+      baseId: null,
+      durationId: cat.durations[0].id,
+      jingleDurationId: cat.jingleDurations ? cat.jingleDurations[0].id : null,
+      pianoDurationId: cat.pianoDurations ? cat.pianoDurations[0].id : null,
+      addons: {},
+      subAddons: {},
+    };
+  });
+
+  // ── DOM Refs ─────────────────────────────────────────────
+  const $catTabs   = document.getElementById('js-category-tabs');
+  const $panels    = document.getElementById('js-panels');
+  const $totalInt    = document.getElementById('js-total-int');
+  const $currencySym = document.getElementById('js-currency-symbol');
+  const $note      = document.getElementById('js-estimate-note');
+  const $lineItems = document.getElementById('js-line-items');
+  const $modal     = document.getElementById('js-modal');
+  const $modalDate = document.getElementById('js-modal-date');
+  const $modalContent = document.getElementById('js-modal-content');
+
+  // ── Utils ────────────────────────────────────────────────
+  function fmt(n) {
+    return n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  }
+
+  function el(tag, attrs = {}, ...children) {
+    const e = document.createElement(tag);
+    Object.entries(attrs).forEach(([k, v]) => {
+      if (k === 'class') e.className = v;
+      else if (k === 'html') e.innerHTML = v;
+      else if (k.startsWith('on')) e.addEventListener(k.slice(2), v);
+      else e.setAttribute(k, v);
+    });
+    children.forEach(c => c && e.appendChild(typeof c === 'string' ? document.createTextNode(c) : c));
+    return e;
+  }
+
+  // ── Refresh displayed prices on currency switch ──────────
+  function refreshPriceLabels() {
+    // Update option button prices
+    document.querySelectorAll('.option-btn').forEach(btn => {
+      const catId = btn.closest('.category-panel').dataset.catId;
+      const cat = C.categories.find(c => c.id === catId);
+      const opt = cat && cat.baseOptions.find(o => o.id === btn.dataset.optId);
+      if (opt) {
+        const priceEl = btn.querySelector('.option-price');
+        if (priceEl) priceEl.textContent = `${sym()}${fmt(convert(opt.price))}`;
+      }
+    });
+    // Update addon prices
+    document.querySelectorAll('.addon-row').forEach(row => {
+      const addonId = row.dataset.addonId;
+      const priceEl = row.querySelector('.addon-price');
+      if (!priceEl) return;
+      // search all categories + global
+      let addon = C.globalAddons.find(a => a.id === addonId);
+      if (!addon) {
+        for (const cat of C.categories) {
+          addon = cat.addons.find(a => a.id === addonId);
+          if (addon) break;
+        }
+      }
+      if (addon) {
+        if (addon.isPhoto) {
+          priceEl.textContent = `${sym()}${fmt(convert(addon.price))} / image`;
+        } else if (addon.displayPrice) {
+          priceEl.textContent = addon.displayPrice;
+        } else {
+          priceEl.textContent = addon.price === 0 ? 'Free' :
+            addon.isMultiplier ? `+ ${Math.round(addon.price * 100)}% of base` :
+            `+ ${sym()}${fmt(convert(addon.price))}`;
+        }
+      }
+    });
+  }
+
+  // ── Build Currency Dropdown ─────────────────────────────
+  function buildCurrencySelect() {
+    const $sel = document.getElementById('js-currency-select');
+    C.currencies.forEach(cur => {
+      const opt = document.createElement('option');
+      opt.value = cur.code;
+      opt.textContent = cur.code;
+      opt.title = cur.label;
+      if (cur.code === activeCurrency.code) opt.selected = true;
+      $sel.appendChild(opt);
+    });
+    $sel.addEventListener('change', () => {
+      activeCurrency = C.currencies.find(c => c.code === $sel.value);
+      $currencySym.textContent = sym();
+      // Re-render big counters so rate labels update with new currency
+      C.categories.forEach(cat => {
+        if (cat.durations && cat.durations[0] && cat.durations[0].songs !== undefined) {
+          const panel = $panels.querySelector(`.category-panel[data-cat-id="${cat.id}"]`);
+          const card = panel && panel.querySelector(`[data-dur-card="${cat.id}"]`);
+          if (card) renderBigCounter(cat, card);
+        }
+      });
+      refreshPriceLabels();
+      updateTotal();
+    });
+  }
+
+  // ── Build Category Tabs ──────────────────────────────────
+  function buildTabs() {
+    C.categories.forEach(cat => {
+      const tab = el('button', {
+        class: 'cat-tab' + (cat.id === state.activeCat ? ' active' : ''),
+        onclick: () => switchCategory(cat.id),
+      });
+      tab.dataset.catId = cat.id;
+      tab.innerHTML = `<span class="cat-icon" style="display:inline-flex;align-items:center;">${cat.icon}</span>${cat.label}`;
+      $catTabs.appendChild(tab);
+    });
+  }
+
+  function switchCategory(catId) {
+    state.activeCat = catId;
+    // Update tabs
+    $catTabs.querySelectorAll('.cat-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.catId === catId);
+    });
+    // Update panels
+    $panels.querySelectorAll('.category-panel').forEach(p => {
+      p.classList.toggle('active', p.dataset.catId === catId);
+    });
+  }
+
+  // ── Build Category Panels ────────────────────────────────
+  function buildPanels() {
+    C.categories.forEach((cat, i) => {
+      const panel = el('div', { class: 'category-panel' + (cat.id === state.activeCat ? ' active' : '') });
+      panel.dataset.catId = cat.id;
+      panel.style.animationDelay = `${0.1 + i * 0.05}s`;
+
+      // 1. Base options card
+      const baseCard = buildBaseCard(cat);
+      panel.appendChild(baseCard);
+
+      // 2. Duration card
+      const durCard = buildDurationCard(cat);
+      panel.appendChild(durCard);
+
+      // 3. Add-ons card
+      const addonCard = buildAddonCard(cat);
+      panel.appendChild(addonCard);
+
+      // Hide jingleOnly addons on initial render
+      if (cat.jingleDurations) {
+        updateAddonVisibility(cat, panel, false);
+      }
+
+      $panels.appendChild(panel);
+    });
+  }
+
+  function buildBaseCard(cat) {
+    const card = el('div', { class: 'card' });
+    card.innerHTML = `<div class="card-title">${cat.label}</div><div class="card-desc">${cat.description}</div>`;
+
+    const useList = cat.id === 'arrangements' || cat.id === 'content';
+    const container = el('div', { class: useList ? 'option-list' : 'option-grid' });
+
+    cat.baseOptions.forEach(opt => {
+      if (useList) {
+        const btn = el('button', { class: 'option-btn-list', onclick: () => selectBase(cat.id, opt.id) });
+        btn.dataset.optId = opt.id;
+        const priceStr = opt.isJingle ? '' :
+          opt.priceAfter ? `${sym()}${fmt(convert(opt.price))} / song` :
+          opt.price === 0 ? '' : `${sym()}${fmt(convert(opt.price))}`;
+        btn.innerHTML = `
+          <div class="option-check">✓</div>
+          <div class="option-btn-list-header">
+            <div class="option-name">${opt.label}</div>
+            <div class="option-price">${priceStr}</div>
+          </div>
+          ${opt.description ? `<div class="option-desc">${opt.description}</div>` : ''}
+        `;
+        container.appendChild(btn);
+      } else {
+        const btn = el('button', { class: 'option-btn', onclick: () => selectBase(cat.id, opt.id) });
+        btn.dataset.optId = opt.id;
+        const priceStr = opt.isJingle || opt.isPianoSolo || opt.price === 0 ? 'See below' :
+          opt.priceAfter ? `${sym()}${fmt(convert(opt.price))} / unit` :
+          `${sym()}${fmt(convert(opt.price))}`;
+        btn.innerHTML = `
+          <div class="option-check">✓</div>
+          <div class="option-name">${opt.label}</div>
+          <div class="option-price">${priceStr}</div>
+        `;
+        container.appendChild(btn);
+      }
+    });
+
+    card.appendChild(container);
+    return card;
+  }
+
+  function buildDurationCard(cat) {
+    const card = el('div', { class: 'card' });
+    card.dataset.durCard = cat.id;
+    // Qty-type categories get big counter; others get pill buttons
+    const isQtyType = cat.durations && cat.durations[0] && cat.durations[0].songs !== undefined;
+    if (isQtyType) {
+      renderBigCounter(cat, card);
+    } else {
+      renderDurationCard(cat, null, 'default', card);
+    }
+    return card;
+  }
+
+  // ── Big Counter for song/track quantity durations ───────────
+  function renderBigCounter(cat, card) {
+    const durLabel = cat.durationLabel || 'Quantity';
+    card.innerHTML = `<div class="card-title">${durLabel}</div>`;
+
+    // State: track current count independently of dur buttons
+    if (!cat._counterQty) cat._counterQty = 1;
+
+    const wrapper = el('div', { class: 'big-counter' });
+
+    const controls = el('div', { class: 'big-counter-controls' });
+
+    const numEl = el('div', { class: 'big-counter-num' }, String(cat._counterQty));
+    numEl.id = `counter-${cat.id}`;
+
+    const unitLabel = cat.id === 'arrangements' ? 'song' :
+                      cat.id === 'session' || cat.id === 'production' ? 'track' : 'unit';
+
+    const rateEl = el('div', { class: 'big-counter-rate' });
+    const labelEl = el('div', { class: 'big-counter-label' }, `${unitLabel}${cat._counterQty !== 1 ? 's' : ''}`);
+
+    function getCurrentBasePrice() {
+      const sel = state.selections[cat.id];
+      if (!sel || !sel.baseId) return null;
+      const opt = cat.baseOptions.find(o => o.id === sel.baseId);
+      return opt && opt.priceAfter ? opt : null;
+    }
+
+    function updateRateDisplay(qty) {
+      const opt = getCurrentBasePrice();
+      if (!opt) { rateEl.textContent = ''; rateEl.className = 'big-counter-rate'; return; }
+      const tier = opt.tierAfter || 5;
+      if (qty <= tier) {
+        rateEl.textContent = `${sym()}${fmt(convert(opt.price))} / ${unitLabel}`;
+        rateEl.className = 'big-counter-rate';
+      } else {
+        rateEl.textContent = `${sym()}${fmt(convert(opt.priceAfter))} / ${unitLabel} (discount applied)`;
+        rateEl.className = 'big-counter-rate discounted';
+      }
+    }
+
+    function setQty(newQty) {
+      if (newQty < 1) return;
+      cat._counterQty = newQty;
+      numEl.textContent = String(newQty);
+      labelEl.textContent = `${unitLabel}${newQty !== 1 ? 's' : ''}`;
+      // Sync to closest duration slot or store raw count
+      state.selections[cat.id]._rawQty = newQty;
+      updateRateDisplay(newQty);
+      updateTotal();
+    }
+
+    const minusBtn = el('button', { class: 'big-counter-btn', onclick: () => setQty(cat._counterQty - 1) }, '−');
+    const plusBtn  = el('button', { class: 'big-counter-btn', onclick: () => setQty(cat._counterQty + 1) }, '+');
+
+    controls.appendChild(minusBtn);
+    controls.appendChild(numEl);
+    controls.appendChild(plusBtn);
+
+    wrapper.appendChild(controls);
+    wrapper.appendChild(labelEl);
+    wrapper.appendChild(rateEl);
+    card.appendChild(wrapper);
+
+    updateRateDisplay(cat._counterQty);
+  }
+
+  // mode: 'default' | 'jingle' | 'piano'
+  function renderDurationCard(cat, panel, mode, existingCard) {
+    const card = existingCard || (panel && panel.querySelector(`[data-dur-card="${cat.id}"]`));
+    if (!card) return;
+
+    const durLabel = cat.durationLabel || 'Duration';
+    let durations, selectedId, onSelect;
+
+    if (mode === 'jingle') {
+      durations   = cat.jingleDurations;
+      selectedId  = state.selections[cat.id].jingleDurationId;
+      onSelect    = (id) => selectJingleDuration(cat.id, id);
+    } else if (mode === 'piano') {
+      durations   = cat.pianoDurations;
+      selectedId  = state.selections[cat.id].pianoDurationId;
+      onSelect    = (id) => selectPianoDuration(cat.id, id);
+    } else {
+      durations   = cat.durations;
+      selectedId  = state.selections[cat.id].durationId;
+      onSelect    = (id) => selectDuration(cat.id, id);
+    }
+
+    card.innerHTML = `<div class="card-title">${durLabel}</div>`;
+    const row = el('div', { class: 'duration-row' });
+
+    durations.forEach(d => {
+      const btn = el('button', {
+        class: 'dur-btn' + (selectedId === d.id ? ' selected' : ''),
+        onclick: () => onSelect(d.id),
+      });
+      btn.dataset.durId = d.id;
+      // Show flat price for jingle/piano durations
+      if (d.flatPrice !== undefined) {
+        btn.innerHTML = `${d.label} <span style="font-size:10px;opacity:0.7;margin-left:4px;">${sym()}${fmt(convert(d.flatPrice))}</span>`;
+      } else {
+        btn.textContent = d.label;
+      }
+      row.appendChild(btn);
+    });
+
+    card.appendChild(row);
+  
+
+    // For jingle mode, append a big quantity counter below the length pills
+    if (mode === 'jingle') {
+      if (!cat._jingleQty) cat._jingleQty = 1;
+      const qtyWrap = el('div', { style: 'margin-top:20px;' });
+      const qtyLabel = el('div', { class: 'card-title', style: 'margin-bottom:12px;font-size:13px;' }, 'Number of Jingles');
+      const qtyControls = el('div', { class: 'big-counter-controls', style: 'justify-content:center;' });
+      const jNumEl = el('div', { class: 'big-counter-num', style: 'font-size:40px;' }, String(cat._jingleQty));
+      const jMinus = el('button', { class: 'big-counter-btn', onclick: () => {
+        if (cat._jingleQty <= 1) return;
+        cat._jingleQty--;
+        jNumEl.textContent = String(cat._jingleQty);
+        state.selections[cat.id]._jingleQty = cat._jingleQty;
+        updateTotal();
+      }}, '−');
+      const jPlus = el('button', { class: 'big-counter-btn', onclick: () => {
+        cat._jingleQty++;
+        jNumEl.textContent = String(cat._jingleQty);
+        state.selections[cat.id]._jingleQty = cat._jingleQty;
+        updateTotal();
+      }}, '+');
+      qtyControls.appendChild(jMinus);
+      qtyControls.appendChild(jNumEl);
+      qtyControls.appendChild(jPlus);
+      qtyWrap.appendChild(qtyLabel);
+      qtyWrap.appendChild(qtyControls);
+      card.appendChild(qtyWrap);
+      state.selections[cat.id]._jingleQty = cat._jingleQty;
+    }
+  }
+
+  function buildAddonCard(cat) {
+    const card = el('div', { class: 'card' });
+    card.innerHTML = `<div class="card-title">Add-ons</div>`;
+    const list = el('div', { class: 'addon-list' });
+
+    cat.addons.forEach(addon => {
+      const row = buildAddonRow(addon, false, (id, qty) => {
+        if (qty < 1) {
+          delete state.selections[cat.id].addons[id];
+        } else {
+          state.selections[cat.id].addons[id] = qty;
+        }
+        updateTotal();
+      }, cat.id);
+      row.dataset.addonId = addon.id;
+      list.appendChild(row);
+    });
+
+    card.appendChild(list);
+    return card;
+  }
+
+  function buildAddonRow(addon, isGlobal, onChange, catId) {
+    // Rich builders for complex addon types
+    if (addon.isPhoto)     return buildPhotoAddonRow(addon, catId);
+    if (addon.isMD || addon.isInPerson) return buildSubAddonRow(addon, catId);
+
+    const hasQty = addon.hasQty === true;
+    const row = el('div', { class: 'addon-row' });
+    row.dataset.addonId = addon.id;
+
+    const left = el('div', { class: 'addon-left' });
+    const toggle = el('div', { class: 'addon-toggle' });
+    const name = el('span', { class: 'addon-name' }, addon.label);
+    left.appendChild(toggle);
+    left.appendChild(name);
+
+    const right = el('div', { style: 'display:flex;align-items:center;gap:8px;' });
+    const priceEl = el('span', { class: 'addon-price' },
+      addon.displayPrice ? addon.displayPrice :
+      addon.price === 0 ? 'Free' :
+      addon.isMultiplier ? `+ ${Math.round(addon.price * 100)}% of base` :
+      `+ ${sym()}${fmt(convert(addon.price))}`);
+    right.appendChild(priceEl);
+
+    if (hasQty) {
+      const qty = el('div', { class: 'addon-qty' });
+      const minus = el('button', { class: 'qty-btn', onclick: (e) => { e.stopPropagation(); changeQty(addon.id, catId, isGlobal, -1); } }, '−');
+      const val = el('span', { class: 'qty-val' }, '1');
+      val.dataset.qtyDisplay = addon.id;
+      const plus = el('button', { class: 'qty-btn', onclick: (e) => { e.stopPropagation(); changeQty(addon.id, catId, isGlobal, 1); } }, '+');
+      qty.appendChild(minus);
+      qty.appendChild(val);
+      qty.appendChild(plus);
+      right.appendChild(qty);
+    }
+
+    row.appendChild(left);
+    row.appendChild(right);
+
+    row.addEventListener('click', () => {
+      const storeSrc = isGlobal ? state.globalAddons : state.selections[catId].addons;
+      const current = storeSrc[addon.id] || 0;
+      if (current > 0) {
+        delete storeSrc[addon.id];
+        row.classList.remove('selected');
+      } else {
+        storeSrc[addon.id] = 1;
+        row.classList.add('selected');
+      }
+      updateTotal();
+    });
+
+    return row;
+  }
+
+  // ── Generic Sub-Addon Row (MD, In-Person, etc.) ──────────
+  // For addons that reveal collapsible sub-options when selected
+  function buildSubAddonRow(addon, catId) {
+    const wrapper = el('div', { style: 'display:flex;flex-direction:column;gap:4px;' });
+
+    const row = el('div', { class: 'addon-row' });
+    row.dataset.addonId = addon.id;
+
+    const left = el('div', { class: 'addon-left' });
+    const toggle = el('div', { class: 'addon-toggle' });
+    const name = el('span', { class: 'addon-name' }, addon.label);
+    left.appendChild(toggle);
+    left.appendChild(name);
+
+    const right = el('div');
+    const priceEl = el('span', { class: 'addon-price' },
+      addon.displayPrice ? addon.displayPrice :
+      addon.price === 0 ? 'Free' : `+ ${sym()}${fmt(convert(addon.price))}`);
+    right.appendChild(priceEl);
+
+    row.appendChild(left);
+    row.appendChild(right);
+
+    const subPanel = el('div', { style: 'display:none;flex-direction:column;gap:4px;padding-left:16px;' });
+
+    (addon.subAddons || []).forEach(sa => {
+      const saRow = el('div', { class: 'addon-row', style: 'background:var(--surface3);' });
+      saRow.dataset.addonId = sa.id;
+
+      const saLeft = el('div', { class: 'addon-left' });
+      const saToggle = el('div', { class: 'addon-toggle' });
+      const saName = el('span', { class: 'addon-name', style: 'font-size:12px;' }, sa.label);
+      saLeft.appendChild(saToggle);
+      saLeft.appendChild(saName);
+
+      const saRight = el('div', { style: 'display:flex;align-items:center;gap:8px;' });
+      const saPrice = el('span', { class: 'addon-price' }, `+ ${sym()}${fmt(convert(sa.price))}`);
+      saRight.appendChild(saPrice);
+
+      // Qty stepper for sub-addons that need it (e.g. programming per song)
+      if (sa.hasQty) {
+        const step = sa.qtyStep || 1;
+        const min  = sa.qtyMin  || 1;
+        const qtyDiv = el('div', { class: 'addon-qty' });
+        const saValEl = el('span', { class: 'qty-val' }, String(min));
+        saValEl.dataset.qtyDisplay = sa.id;
+        const saMinus = el('button', { class: 'qty-btn', onclick: (e) => {
+          e.stopPropagation();
+          const cur = state.selections[catId].subAddons[sa.id] || min;
+          const nv = Math.max(min, cur - step);
+          state.selections[catId].subAddons[sa.id] = nv;
+          saValEl.textContent = nv;
+          updateTotal();
+        }}, '−');
+        const saPlus = el('button', { class: 'qty-btn', onclick: (e) => {
+          e.stopPropagation();
+          const cur = state.selections[catId].subAddons[sa.id] || min;
+          const nv = cur + step;
+          state.selections[catId].subAddons[sa.id] = nv;
+          saValEl.textContent = nv;
+          updateTotal();
+        }}, '+');
+        qtyDiv.appendChild(saMinus);
+        qtyDiv.appendChild(saValEl);
+        qtyDiv.appendChild(saPlus);
+        saRight.appendChild(qtyDiv);
+      }
+
+      saRow.appendChild(saLeft);
+      saRow.appendChild(saRight);
+
+      saRow.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOn = !!state.selections[catId].subAddons[sa.id];
+        if (isOn) {
+          delete state.selections[catId].subAddons[sa.id];
+          saRow.classList.remove('selected');
+        } else {
+          state.selections[catId].subAddons[sa.id] = sa.hasQty ? (sa.qtyMin || 1) : true;
+          saRow.classList.add('selected');
+        }
+        updateTotal();
+      });
+
+      subPanel.appendChild(saRow);
+    });
+
+    row.addEventListener('click', () => {
+      const store = state.selections[catId].addons;
+      const cur = store[addon.id] || 0;
+      if (cur > 0) {
+        delete store[addon.id];
+        if (addon.subAddons) addon.subAddons.forEach(sa => delete state.selections[catId].subAddons[sa.id]);
+        row.classList.remove('selected');
+        subPanel.style.display = 'none';
+      } else {
+        store[addon.id] = 1;
+        row.classList.add('selected');
+        subPanel.style.display = 'flex';
+      }
+      updateTotal();
+    });
+
+    wrapper.appendChild(row);
+    wrapper.appendChild(subPanel);
+    return wrapper;
+  }
+
+  // ── Photo Addon Row ──────────────────────────────────────
+  function buildPhotoAddonRow(addon, catId) {
+    const step = addon.qtyStep || 5;
+    const min  = addon.qtyMin  || 5;
+
+    // Wrapper — includes main row + collapsible sub-addons
+    const wrapper = el('div', { style: 'display:flex;flex-direction:column;gap:4px;' });
+    wrapper.dataset.photoWrapper = addon.id;
+
+    // Main row
+    const row = el('div', { class: 'addon-row' });
+    row.dataset.addonId = addon.id;
+
+    const left = el('div', { class: 'addon-left' });
+    const toggle = el('div', { class: 'addon-toggle' });
+    const name = el('span', { class: 'addon-name' }, addon.label);
+    left.appendChild(toggle);
+    left.appendChild(name);
+
+    const right = el('div', { style: 'display:flex;align-items:center;gap:8px;' });
+
+    // Price display — shows per-image rate × qty
+    const priceEl = el('span', { class: 'addon-price' });
+    priceEl.dataset.photoPriceEl = addon.id;
+    priceEl.textContent = `${sym()}${fmt(convert(addon.price))} / image`;
+    right.appendChild(priceEl);
+
+    // Stepper
+    const qtyDiv = el('div', { class: 'addon-qty' });
+    const minus = el('button', { class: 'qty-btn', onclick: (e) => {
+      e.stopPropagation();
+      const cur = state.selections[catId].addons[addon.id] || 0;
+      if (cur <= min) return;
+      const nv = cur - step;
+      if (nv < min) return;
+      state.selections[catId].addons[addon.id] = nv;
+      valEl.textContent = nv;
+      updatePhotoPrice(addon, catId, priceEl, nv);
+      updateTotal();
+    }}, '−');
+    const valEl = el('span', { class: 'qty-val' }, String(min));
+    valEl.dataset.qtyDisplay = addon.id;
+    const plus = el('button', { class: 'qty-btn', onclick: (e) => {
+      e.stopPropagation();
+      const cur = state.selections[catId].addons[addon.id] || min;
+      const nv = cur + step;
+      state.selections[catId].addons[addon.id] = nv;
+      valEl.textContent = nv;
+      updatePhotoPrice(addon, catId, priceEl, nv);
+      updateTotal();
+    }}, '+');
+    qtyDiv.appendChild(minus);
+    qtyDiv.appendChild(valEl);
+    qtyDiv.appendChild(plus);
+    right.appendChild(qtyDiv);
+
+    row.appendChild(left);
+    row.appendChild(right);
+
+    // Toggle selection on click
+    row.addEventListener('click', () => {
+      const cur = state.selections[catId].addons[addon.id] || 0;
+      if (cur > 0) {
+        delete state.selections[catId].addons[addon.id];
+        // Clear sub-addons
+        addon.subAddons.forEach(sa => delete state.selections[catId].subAddons[sa.id]);
+        row.classList.remove('selected');
+        subPanel.style.display = 'none';
+      } else {
+        state.selections[catId].addons[addon.id] = min;
+        valEl.textContent = min;
+        row.classList.add('selected');
+        subPanel.style.display = 'flex';
+      }
+      updateTotal();
+    });
+
+    wrapper.appendChild(row);
+
+    // Sub-addons panel — hidden until selected
+    const subPanel = el('div', { style: 'display:none;flex-direction:column;gap:4px;padding-left:16px;' });
+
+    addon.subAddons.forEach(sa => {
+      const saRow = el('div', { class: 'addon-row', style: 'background:var(--surface3);' });
+      saRow.dataset.addonId = sa.id;
+
+      const saLeft = el('div', { class: 'addon-left' });
+      const saToggle = el('div', { class: 'addon-toggle' });
+      const saName = el('span', { class: 'addon-name', style: 'font-size:12px;' }, sa.label);
+      saLeft.appendChild(saToggle);
+      saLeft.appendChild(saName);
+
+      const saRight = el('div');
+      const saPrice = el('span', { class: 'addon-price' }, `+ ${sym()}${fmt(convert(sa.price))}`);
+      saRight.appendChild(saPrice);
+
+      saRow.appendChild(saLeft);
+      saRow.appendChild(saRight);
+
+      saRow.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOn = !!state.selections[catId].subAddons[sa.id];
+        if (isOn) {
+          delete state.selections[catId].subAddons[sa.id];
+          saRow.classList.remove('selected');
+        } else {
+          state.selections[catId].subAddons[sa.id] = true;
+          saRow.classList.add('selected');
+        }
+        updateTotal();
+      });
+
+      subPanel.appendChild(saRow);
+    });
+
+    wrapper.appendChild(subPanel);
+    return wrapper;
+  }
+
+  function updatePhotoPrice(addon, catId, priceEl, qty) {
+    priceEl.textContent = `${sym()}${fmt(convert(addon.price * qty))} (${qty} images)`;
+  }
+
+  function changeQty(addonId, catId, isGlobal, delta) {
+    const store = isGlobal ? state.globalAddons : state.selections[catId].addons;
+    const current = store[addonId] || 0;
+    const newQty = Math.max(0, current + delta);
+
+    // Find the row and update display
+    const rows = isGlobal
+      ? document.querySelectorAll('#js-global-addons .addon-row')
+      : document.querySelectorAll(`.category-panel[data-cat-id="${catId}"] .addon-row`);
+
+    rows.forEach(row => {
+      if (row.dataset.addonId === addonId) {
+        const valEl = row.querySelector('[data-qty-display]');
+        if (valEl) valEl.textContent = Math.max(1, newQty);
+        if (newQty < 1) {
+          delete store[addonId];
+          row.classList.remove('selected');
+        } else {
+          store[addonId] = newQty;
+          row.classList.add('selected');
+        }
+      }
+    });
+
+    updateTotal();
+  }
+
+  // ── Build Global Add-ons ─────────────────────────────────
+  function buildGlobalAddons() { /* removed */ }
+
+  // ── Selection Handlers ───────────────────────────────────
+  function selectBase(catId, optId) {
+    const prev = state.selections[catId].baseId;
+    state.selections[catId].baseId = prev === optId ? null : optId;
+
+    const panel = $panels.querySelector(`.category-panel[data-cat-id="${catId}"]`);
+    panel.querySelectorAll('.option-btn, .option-btn-list').forEach(btn => {
+      btn.classList.toggle('selected', btn.dataset.optId === state.selections[catId].baseId);
+    });
+
+    const cat = C.categories.find(c => c.id === catId);
+    const sel = state.selections[catId];
+    const baseOpt = cat && sel.baseId ? cat.baseOptions.find(o => o.id === sel.baseId) : null;
+    const isJingle  = baseOpt && baseOpt.isJingle;
+    const isPiano   = baseOpt && baseOpt.isPianoSolo;
+    const isQtyType = cat && cat.durations && cat.durations[0] && cat.durations[0].songs !== undefined;
+
+    if (cat) {
+      const durCard = panel.querySelector(`[data-dur-card="${catId}"]`);
+      if (durCard) {
+        durCard.innerHTML = '';
+        if (isJingle) {
+          renderDurationCard(cat, panel, 'jingle', durCard);
+        } else if (isPiano) {
+          renderDurationCard(cat, panel, 'piano', durCard);
+        } else if (isQtyType) {
+          renderBigCounter(cat, durCard);
+        } else {
+          renderDurationCard(cat, panel, 'default', durCard);
+        }
+      }
+      if (cat.jingleDurations) updateAddonVisibility(cat, panel, isJingle);
+    }
+
+    updateTotal();
+  }
+
+  function selectDuration(catId, durId) {
+    state.selections[catId].durationId = durId;
+    const panel = $panels.querySelector(`.category-panel[data-cat-id="${catId}"]`);
+    panel.querySelectorAll('.dur-btn').forEach(btn => {
+      btn.classList.toggle('selected', btn.dataset.durId === durId);
+    });
+    updateTotal();
+  }
+
+  function selectJingleDuration(catId, durId) {
+    state.selections[catId].jingleDurationId = durId;
+    const panel = $panels.querySelector(`.category-panel[data-cat-id="${catId}"]`);
+    panel.querySelectorAll('.dur-btn').forEach(btn => {
+      btn.classList.toggle('selected', btn.dataset.durId === durId);
+    });
+    updateTotal();
+  }
+
+  function selectPianoDuration(catId, durId) {
+    state.selections[catId].pianoDurationId = durId;
+    const panel = $panels.querySelector(`.category-panel[data-cat-id="${catId}"]`);
+    panel.querySelectorAll('.dur-btn').forEach(btn => {
+      btn.classList.toggle('selected', btn.dataset.durId === durId);
+    });
+    updateTotal();
+  }
+
+  // Show/hide jingleOnly add-ons based on whether jingle is selected
+  function updateAddonVisibility(cat, panel, isJingle) {
+    if (!panel) panel = $panels.querySelector(`.category-panel[data-cat-id="${cat.id}"]`);
+    if (!panel) return;
+    panel.querySelectorAll('.addon-row').forEach(row => {
+      const addonId = row.dataset.addonId;
+      const addon = cat.addons.find(a => a.id === addonId);
+      if (addon && addon.jingleOnly) {
+        row.style.display = isJingle ? '' : 'none';
+      }
+    });
+  }
+
+  // ── Calculate ────────────────────────────────────────────
+  function calcTotal() {
+    let grand = 0;
+    const lines = [];
+
+    C.categories.forEach(cat => {
+      const sel = state.selections[cat.id];
+      if (!sel.baseId) return;
+
+      const baseOpt = cat.baseOptions.find(o => o.id === sel.baseId);
+      if (!baseOpt) return;
+
+      let baseTotal = 0, durDetail = '';
+
+      if (baseOpt.isJingle) {
+        // Jingle: flat price by track length x quantity
+        const jDur = cat.jingleDurations && cat.jingleDurations.find(d => d.id === sel.jingleDurationId);
+        if (!jDur) return;
+        const jQty = sel._jingleQty || 1;
+        baseTotal = jDur.flatPrice * jQty;
+        durDetail = jQty > 1 ? `${jQty} × ${jDur.label}` : jDur.label;
+
+      } else if (baseOpt.isPianoSolo) {
+        // Piano solo: flat price by duration
+        const pDur = cat.pianoDurations && cat.pianoDurations.find(d => d.id === sel.pianoDurationId);
+        if (!pDur) return;
+        baseTotal = pDur.flatPrice;
+        durDetail = pDur.label;
+
+      } else if (cat.id === 'performance') {
+        // Live performance: per-set pricing, 0.75x after 5 sets
+        const dur = cat.durations.find(d => d.id === sel.durationId);
+        if (!dur) return;
+        const sets = dur.sets;
+        const ratePerSet = baseOpt.price;
+        if (sets <= 5) {
+          baseTotal = ratePerSet * sets;
+        } else {
+          baseTotal = ratePerSet * 5 + ratePerSet * 0.75 * (sets - 5);
+        }
+        durDetail = dur.label;
+
+      } else if (baseOpt.priceAfter !== undefined) {
+        // Tiered pricing with big counter
+        const songs = sel._rawQty || 1;
+        const tier  = baseOpt.tierAfter || 5;
+        if (songs <= tier) {
+          baseTotal = baseOpt.price * songs;
+        } else {
+          baseTotal = baseOpt.price * tier + baseOpt.priceAfter * (songs - tier);
+        }
+        durDetail = `${songs} ${songs === 1 ? 'song' : 'songs'}`;
+
+      } else if (cat.durations[0] && cat.durations[0].songs !== undefined) {
+        // Song/track count with big counter (production, session)
+        const songs = sel._rawQty || 1;
+        baseTotal = baseOpt.price * songs;
+        durDetail = `${songs} ${songs === 1 ? 'track' : 'tracks'}`;
+
+      } else {
+        // Standard multiplier (content creation)
+        const dur = cat.durations.find(d => d.id === sel.durationId);
+        if (!dur) return;
+        baseTotal = baseOpt.price * dur.multiplier;
+        durDetail = dur.multiplier !== 1 ? dur.label : '';
+      }
+
+      grand += baseTotal;
+      lines.push({
+        name: baseOpt.label,
+        detail: durDetail,
+        amount: baseTotal,
+        cat: cat.label,
+        desc: baseOpt.estimateDesc || '',
+      });
+
+      // Category note (e.g. transport disclaimer for live performance)
+      if (cat.categoryNote && !lines.find(l => l.isNote && l.cat === cat.label)) {
+        lines.push({ name: cat.categoryNote, detail: '', amount: -1, isNote: true, cat: cat.label });
+      }
+
+      // Category add-ons
+      Object.entries(sel.addons).forEach(([id, qty]) => {
+        const addon = cat.addons.find(a => a.id === id);
+        if (!addon) return;
+
+        // Flag-only addons (no price, just a note)
+        if (addon.isFlag) {
+          lines.push({ name: `📋 ${addon.label}`, detail: 'Confirm with Joe after booking', amount: 0, isAddon: true, cat: cat.label });
+          return;
+        }
+
+        let aTotal;
+        if (addon.isPhoto) {
+          aTotal = addon.price * qty;
+        } else if (addon.isMultiplier) {
+          aTotal = baseTotal * addon.price;
+        } else if (addon.isPerSong) {
+          // Rush per song/track — multiply by counter quantity
+          const qty = cat._counterQty || 1;
+          aTotal = addon.price * qty;
+        } else {
+          aTotal = addon.price * qty;
+        }
+
+        if (aTotal > 0) grand += aTotal;
+        lines.push({
+          name: addon.isPhoto ? `${addon.label} (${qty} images)` : addon.label + (qty > 1 ? ` ×${qty}` : ''),
+          detail: addon.isMultiplier ? `${Math.round(addon.price * 100)}% of base` : '',
+          amount: aTotal,
+          cat: cat.label,
+          isAddon: true,
+        });
+      });
+
+      // Sub-addons (photo, MD, in-person, etc.)
+      if (sel.subAddons) {
+        Object.entries(sel.subAddons).forEach(([saId, saVal]) => {
+          let saAddon = null;
+          cat.addons.forEach(a => {
+            if (a.subAddons) {
+              const found = a.subAddons.find(sa => sa.id === saId);
+              if (found) saAddon = found;
+            }
+          });
+          if (!saAddon) return;
+          const qty = typeof saVal === 'number' ? saVal : 1;
+          const saTotal = saAddon.price * qty;
+          grand += saTotal;
+          lines.push({
+            name: saAddon.label + (qty > 1 ? ` ×${qty}` : ''),
+            detail: '',
+            amount: saTotal,
+            cat: cat.label,
+            isAddon: true,
+          });
+        });
+      }
+    });
+
+    // Global add-ons
+    Object.entries(state.globalAddons).forEach(([id, qty]) => {
+      const addon = C.globalAddons.find(a => a.id === id);
+      if (!addon) return;
+      if (addon.price === 0) {
+        lines.push({ name: addon.label, detail: '', amount: 0, isAddon: true, isFree: true });
+        return;
+      }
+      const aTotal = addon.price * qty;
+      grand += aTotal;
+      lines.push({ name: addon.label + (qty > 1 ? ` ×${qty}` : ''), detail: '', amount: aTotal, isAddon: true });
+    });
+
+    return { grand, lines };
+  }
+
+  function updateTotal() {
+    const { grand, lines } = calcTotal();
+
+    // Animate total
+    const prev = parseInt($totalInt.textContent.replace(/,/g, '')) || 0;
+    animateNumber($totalInt, prev, convert(grand), 400);
+
+    if (lines.length === 0) {
+      $lineItems.innerHTML = `<div class="empty-state"><div class="empty-icon">◎</div><div class="empty-text">No services selected yet</div></div>`;
+      $note.textContent = 'Select services to see a breakdown';
+      return;
+    }
+
+    $note.textContent = `${lines.length} item${lines.length !== 1 ? 's' : ''} selected`;
+
+    // Build line items
+    const frag = document.createDocumentFragment();
+    const container = el('div', { class: 'line-items' });
+
+    lines.forEach(line => {
+      const row = el('div', { class: 'line-item' });
+      const nameEl = el('span', { class: 'li-name' }, line.name);
+      if (line.detail) {
+        nameEl.appendChild(el('span', { class: 'li-multiplier' }, ` ${line.detail}`));
+      }
+      const amtEl = el('span', { class: 'li-amount' },
+        line.isNote ? '' :
+        line.amount === 0 ? 'Note' :
+        line.isFree ? 'Free' :
+        `${sym()}${fmt(convert(line.amount))}`);
+      row.appendChild(nameEl);
+      row.appendChild(amtEl);
+      // Dynamic description under line item
+      if (line.desc) {
+        const descEl = el('span', { class: 'li-desc' }, line.desc);
+        row.appendChild(descEl);
+      }
+      container.appendChild(row);
+    });
+
+    const divider = el('div', { class: 'estimate-divider' });
+    const grandRow = el('div', { class: 'estimate-grand' });
+    grandRow.innerHTML = `<span>Estimated Total</span><span>${sym()}${fmt(convert(grand))}</span>`;
+
+    frag.appendChild(container);
+    frag.appendChild(divider);
+    frag.appendChild(grandRow);
+
+    $lineItems.innerHTML = '';
+    $lineItems.appendChild(frag);
+  }
+
+  function animateNumber(el, from, to, duration) {
+    const start = performance.now();
+    const diff = to - from;
+    function step(now) {
+      const elapsed = Math.min(now - start, duration);
+      const progress = elapsed / duration;
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = fmt(Math.round(from + diff * ease));
+      if (elapsed < duration) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // ── Summary Modal ────────────────────────────────────────
+  function openSummary() {
+    const { grand, lines } = calcTotal();
+    if (lines.length === 0) {
+      alert('Select at least one service to generate a summary.');
+      return;
+    }
+
+    const now = new Date();
+    $modalDate.textContent = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    let text = `CALCURATE ESTIMATE\n`;
+    text += `Generated: ${now.toLocaleDateString()}\n`;
+    text += `─────────────────────────────\n\n`;
+
+    lines.forEach(line => {
+      const amt = line.isFree ? 'Free' : `${sym()}${fmt(convert(line.amount))}`;
+      text += `${line.name}${line.detail ? ' (' + line.detail + ')' : ''}\n  ${amt}\n\n`;
+    });
+
+    text += `─────────────────────────────\n`;
+    text += `Currency: ${activeCurrency.code}\n`;
+    text += `TOTAL ESTIMATE: ${sym()}${fmt(convert(grand))}\n\n`;
+    text += C.brand.disclaimer;
+
+    $modalContent.textContent = text;
+    $modal.classList.add('open');
+  }
+
+  // ── Wiring ───────────────────────────────────────────────
+  document.getElementById('js-btn-summary').addEventListener('click', openSummary);
+
+  document.getElementById('js-btn-clear').addEventListener('click', () => {
+    C.categories.forEach(cat => {
+      state.selections[cat.id] = {
+        baseId: null,
+        durationId: cat.durations[0].id,
+        jingleDurationId: cat.jingleDurations ? cat.jingleDurations[0].id : null,
+        pianoDurationId: cat.pianoDurations ? cat.pianoDurations[0].id : null,
+        addons: {},
+        subAddons: {},
+        _rawQty: null,
+        _jingleQty: null,
+      };
+      cat._counterQty = 1;
+      cat._jingleQty  = 1;
+    });
+    state.globalAddons = {};
+    $panels.innerHTML = '';
+    buildPanels();
+    updateTotal();
+  });
+  document.getElementById('js-modal-close').addEventListener('click', () => $modal.classList.remove('open'));
+  $modal.addEventListener('click', e => { if (e.target === $modal) $modal.classList.remove('open'); });
+
+  document.getElementById('js-copy-btn').addEventListener('click', () => {
+    navigator.clipboard.writeText($modalContent.textContent).then(() => {
+      const btn = document.getElementById('js-copy-btn');
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => btn.textContent = 'Copy to Clipboard', 2000);
+    });
+  });
+
+  document.getElementById('js-btn-inquiry').addEventListener('click', () => {
+    // Update this href to your contact page / email
+    window.location.href = 'mailto:hello@yourdomain.com?subject=Calcurate Inquiry';
+  });
+
+  // ── Init ─────────────────────────────────────────────────
+  // ── Theme toggle ────────────────────────────────────────
+  let currentTheme = 'dark';
+  document.documentElement.setAttribute('data-theme', 'dark');
+
+  document.getElementById('js-theme-btn').addEventListener('click', function() {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    this.textContent = currentTheme === 'dark' ? '☀ Light Mode →' : '☾ Dark Mode →';
+  });
+
+  document.getElementById('js-currency-symbol').textContent = sym();
+  document.getElementById('js-disclaimer').textContent = C.brand.disclaimer;
+
+  buildCurrencySelect();
+  buildTabs();
+  buildPanels();
+  updateTotal();
+
+  // ── URL param tab switching ──────────────────────────────
+  // Share direct links like: estimate.joedavisarts.com?tab=content
+  // Valid tab values: musicdirection, arrangements, content, photography
+  (function applyDeepLink() {
+    const params = new URLSearchParams(window.location.search);
+    const tabParam = params.get('tab');
+    if (tabParam) {
+      const match = C.categories.find(c => c.urlParam === tabParam || c.id === tabParam);
+      if (match) { switchCategory(match.id); return; }
+    }
+    // ── Referrer fallback ──────────────────────────────────
+    // If no URL param, try to infer from where they came from
+    const ref = document.referrer;
+    if (ref) {
+      if (ref.includes('/partnerships')) { switchCategory('content'); return; }
+      if (ref.includes('/arrangements')) { switchCategory('arrangements'); return; }
+      if (ref.includes('/music-direction') || ref.includes('/musicdirection')) { switchCategory('musicdirection'); return; }
+      if (ref.includes('/photography'))  { switchCategory('photography'); return; }
+    }
+  })();
+
+})();
+</script>
+
+</body>
+</html>

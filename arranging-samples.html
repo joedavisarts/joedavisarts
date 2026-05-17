@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arrangement Samples — Joe Davis</title>
+  <script>(function(){ var t=localStorage.getItem('jdam-theme')||'light'; document.documentElement.setAttribute('data-theme',t); })();</script>
+  <link rel="icon" type="image/png" href="assets/images/Logo_Head_Gold_Icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ── Audio Player ── */
+    .player-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px 22px; margin-bottom: 12px;
+      transition: border-color 0.2s ease;
+    }
+    .player-card.active { border-color: var(--gold); }
+    .player-top { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+    .play-btn {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--near-black); border: 1px solid var(--border);
+      color: var(--gold); cursor: pointer; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: all 0.2s ease; font-size: 16px;
+    }
+    [data-theme="dark"] .play-btn { background: rgba(218,179,34,0.1); }
+    .play-btn:hover { background: var(--gold); color: var(--near-black); border-color: var(--gold); }
+    .play-btn.playing { background: var(--gold); color: var(--near-black); border-color: var(--gold); }
+    .track-info { flex: 1; min-width: 0; }
+    .track-title { font-family: var(--font-heading); font-size: 28px; letter-spacing: 0.02em; color: var(--heading-color); line-height: 1; margin-bottom: 6px; }
+    .track-artist { font-size: 16px; color: var(--text-muted); }
+    .track-time { font-size: 15px; color: var(--text-muted); font-family: 'Plus Jakarta Sans', sans-serif; flex-shrink: 0; }
+    .progress-bar { width: 100%; height: 4px; background: var(--border); border-radius: 2px; cursor: pointer; position: relative; }
+    .progress-fill { height: 100%; background: var(--gold); border-radius: 2px; width: 0%; transition: width 0.1s linear; pointer-events: none; }
+    .progress-bar:hover .progress-fill { background: var(--gold); }
+
+    /* ── YouTube grid ── */
+    .yt-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    @media(max-width:700px){ .yt-grid { grid-template-columns: 1fr; } }
+    .yt-item { }
+    .yt-embed { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; border: 1px solid var(--border); }
+    .yt-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    .yt-label { margin-top: 10px; }
+    .yt-title { font-family: var(--font-heading); font-size: 18px; color: var(--heading-color); letter-spacing: 0.02em; line-height: 1.1; }
+    .yt-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+
+    .note-bar { background: rgba(218,179,34,0.06); border: 1px solid rgba(218,179,34,0.15); border-radius: 10px; padding: 14px 20px; font-size: 13px; color: var(--text-muted); margin-bottom: 40px; }
+    .note-bar strong { color: var(--gold); }
+    .dm-cta { display: inline-flex; align-items: center; gap: 8px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 14px; color: var(--gold); text-decoration: none; border: 1px solid var(--gold); border-radius: 8px; padding: 10px 20px; transition: all 0.2s; }
+    .dm-cta:hover { background: var(--gold); color: var(--near-black); }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/images/Logo_head_Black.png" alt="Joe Davis" class="logo-icon logo-light-show" style="height:36px;width:auto;" onerror="this.style.display='none'">
+        <img src="assets/images/Logo_head_Gold.png" alt="Joe Davis" class="logo-icon logo-dark-show" style="height:36px;width:auto;display:none;" onerror="this.style.display='none'">
+        <img src="assets/images/LogoType_Black.png" alt="Joe Davis Arts &amp; Media" class="logo-type logo-light-show" style="height:32px;width:auto;margin-left:10px;" onerror="this.style.display='none'">
+        <img src="assets/images/LogoType_Gold.png" alt="Joe Davis Arts &amp; Media" class="logo-type logo-dark-show" style="height:32px;width:auto;margin-left:10px;display:none;" onerror="this.style.display='none'">
+      </a>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="services.html" class="nav-link">Services</a></li>
+      <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+      <li><a href="epk.html" class="nav-link">EPK</a></li>
+      <li><a href="store.html" class="nav-link">Store</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div style="background:var(--near-black); padding:100px 44px 72px; text-align:center; position:relative;">
+  <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--dark-gold));"></div>
+  <h1 style="font-family:var(--font-heading); font-size:clamp(52px,8vw,96px); line-height:0.88; color:#F0EDE6; margin-bottom:20px;">ARRANGEMENT<br><span style="color:var(--gold);">SAMPLES.</span></h1>
+  <p style="font-size:17px; color:rgba(250,250,248,0.55); max-width:520px; margin:0 auto 28px; line-height:1.8;">All arrangements were created and performed by Joe Davis unless otherwise stated. Like what you hear? Let's work.</p>
+  <a href="https://www.instagram.com/joedavismusic" target="_blank" class="dm-cta">DM Joe on Instagram →</a>
+</div>
+
+<!-- MP3 SECTION -->
+<section class="section" style="padding-top:64px;">
+  <div class="container">
+    <h2 style="font-family:var(--font-heading); font-size:clamp(28px,4vw,48px); letter-spacing:0.02em; margin-bottom:8px;" class="animate-on-scroll">Audio Samples</h2>
+    <p style="font-size:16px; color:var(--text-muted); margin-bottom:32px;">Live arrangements. Press play.</p>
+
+    <div class="note-bar"><strong>Note:</strong> These are live performance arrangements — not studio recordings. The energy is intentional.</div>
+
+    <!-- Track 1 -->
+    <div class="player-card" id="card-0">
+      <div class="player-top">
+        <button class="play-btn" onclick="togglePlay(0)" id="btn-0">▶</button>
+        <div class="track-info">
+          <div class="track-title">Sean Paul — Get Busy</div>
+          <div class="track-artist">Live Arrangement · Joe Davis</div>
+        </div>
+        <div class="track-time" id="time-0">0:00 / 0:00</div>
+      </div>
+      <div class="progress-bar" onclick="seek(event, 0)" id="prog-0">
+        <div class="progress-fill" id="fill-0"></div>
+      </div>
+      <audio id="audio-0" src="assets/audio/sean-paul-get-busy.mp3" preload="none"></audio>
+    </div>
+
+    <!-- Track 2 -->
+    <div class="player-card" id="card-1">
+      <div class="player-top">
+        <button class="play-btn" onclick="togglePlay(1)" id="btn-1">▶</button>
+        <div class="track-info">
+          <div class="track-title">Sevana — Need Me</div>
+          <div class="track-artist">Live Arrangement · Joe Davis</div>
+        </div>
+        <div class="track-time" id="time-1">0:00 / 0:00</div>
+      </div>
+      <div class="progress-bar" onclick="seek(event, 1)" id="prog-1">
+        <div class="progress-fill" id="fill-1"></div>
+      </div>
+      <audio id="audio-1" src="assets/audio/sevana-need-me.mp3" preload="none"></audio>
+    </div>
+
+    <!-- Track 3 -->
+    <div class="player-card" id="card-2">
+      <div class="player-top">
+        <button class="play-btn" onclick="togglePlay(2)" id="btn-2">▶</button>
+        <div class="track-info">
+          <div class="track-title">Liyah — Don't Waste My Time</div>
+          <div class="track-artist">Live Arrangement · Joe Davis</div>
+        </div>
+        <div class="track-time" id="time-2">0:00 / 0:00</div>
+      </div>
+      <div class="progress-bar" onclick="seek(event, 2)" id="prog-2">
+        <div class="progress-fill" id="fill-2"></div>
+      </div>
+      <audio id="audio-2" src="assets/audio/liyah-dont-waste-my-time.mp3" preload="none"></audio>
+    </div>
+
+    <!-- Track 4 -->
+    <div class="player-card" id="card-3">
+      <div class="player-top">
+        <button class="play-btn" onclick="togglePlay(3)" id="btn-3">▶</button>
+        <div class="track-info">
+          <div class="track-title">Ron Kenoly Medley</div>
+          <div class="track-artist">Arrangement · Joe Davis</div>
+        </div>
+        <div class="track-time" id="time-3">0:00 / 0:00</div>
+      </div>
+      <div class="progress-bar" onclick="seek(event, 3)" id="prog-3">
+        <div class="progress-fill" id="fill-3"></div>
+      </div>
+      <audio id="audio-3" src="assets/audio/ron-kenoly-medley.mp3" preload="none"></audio>
+    </div>
+  </div>
+</section>
+
+<!-- YOUTUBE SECTION -->
+<section class="section section-dark">
+  <div class="container">
+    <h2 style="font-family:var(--font-heading); font-size:clamp(28px,4vw,48px); letter-spacing:0.02em; color:#FAFAF8; margin-bottom:8px;" class="animate-on-scroll">Video Arrangements</h2>
+    <p style="font-size:16px; color:rgba(250,250,248,0.45); margin-bottom:36px;">Watch the arrangements in action.</p>
+
+    <div class="yt-grid">
+      <div class="yt-item">
+        <div class="yt-embed"><iframe src="https://www.youtube.com/embed/srPXe-fPLJQ" title="Tyla - Water Live Arrangement" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="yt-sub">Live Arrangement</div></div>
+      </div>
+      <div class="yt-item">
+        <div class="yt-embed"><iframe src="https://www.youtube.com/embed/28tapQNgoq4" title="Arrangement" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="yt-sub">Joe Davis</div></div>
+      </div>
+      <div class="yt-item">
+        <div class="yt-embed"><iframe src="https://www.youtube.com/embed/xU8sCMsJeWM" title="Arrangement" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="yt-sub">Joe Davis</div></div>
+      </div>
+      <div class="yt-item">
+        <div class="yt-embed"><iframe src="https://www.youtube.com/embed/GLE_Hu5UU4w" title="Arrangement" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="yt-sub">Joe Davis</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section" style="text-align:center; padding:72px 44px;">
+  <div class="container">
+    <h2 style="font-family:var(--font-heading); font-size:clamp(36px,5vw,64px); letter-spacing:0.02em; margin-bottom:14px;">WANT AN<br>ARRANGEMENT?</h2>
+    <p style="font-size:17px; color:var(--text-muted); margin-bottom:32px; max-width:400px; margin-left:auto; margin-right:auto; line-height:1.7;">Get in touch and let's talk about bringing your vision to life.</p>
+    <a href="contact.html" class="btn btn-dark">Get in touch →</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-row">
+          <img src="assets/images/Logo_head_Gold.png" alt="" style="height:32px;width:auto;" onerror="this.style.display='none'">
+          <img src="assets/images/LogoType_Gold.png" alt="Joe Davis Arts &amp; Media" style="height:28px;width:auto;margin-left:10px;" onerror="this.style.display='none'">
+        </div>
+        <p class="footer-tagline">Musical Director · Arranger · Multi-Instrumentalist<br>Kingston, Jamaica · Globally Available</p>
+      </div>
+      <div class="footer-col"><h4>Pages</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="epk.html">EPK</a><a href="store.html">Store</a><a href="contact.html">Contact</a></div>
+      <div class="footer-col"><h4>Socials</h4><a href="https://www.instagram.com/joedavismusic" target="_blank">Instagram</a><a href="https://www.youtube.com/@joedavismusic" target="_blank">YouTube</a><a href="https://www.tiktok.com/@joedavismusic" target="_blank">TikTok</a><a href="https://twitter.com/joedavismusicja" target="_blank">Twitter</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Joe Davis Arts &amp; Media. All rights reserved.</span><div class="footer-contact-row"><a href="mailto:contact@joedavisarts.com">contact@joedavisarts.com</a><a href="tel:+18768972446">+1 (876) 897-2446</a></div></div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+let currentTrack = null;
+const audios = [0,1,2,3].map(i => document.getElementById('audio-'+i));
+
+function fmt(s) {
+  if(isNaN(s)) return '0:00';
+  const m = Math.floor(s/60), sec = Math.floor(s%60);
+  return m + ':' + (sec<10?'0':'') + sec;
+}
+
+audios.forEach((audio, i) => {
+  audio.addEventListener('timeupdate', () => {
+    const pct = audio.duration ? (audio.currentTime/audio.duration)*100 : 0;
+    document.getElementById('fill-'+i).style.width = pct + '%';
+    document.getElementById('time-'+i).textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+  });
+  audio.addEventListener('ended', () => {
+    document.getElementById('btn-'+i).textContent = '▶';
+    document.getElementById('btn-'+i).classList.remove('playing');
+    document.getElementById('card-'+i).classList.remove('active');
+    currentTrack = null;
+  });
+  audio.addEventListener('loadedmetadata', () => {
+    document.getElementById('time-'+i).textContent = '0:00 / ' + fmt(audio.duration);
+  });
+});
+
+function togglePlay(i) {
+  const audio = audios[i];
+  const btn = document.getElementById('btn-'+i);
+  const card = document.getElementById('card-'+i);
+
+  if(currentTrack !== null && currentTrack !== i) {
+    audios[currentTrack].pause();
+    document.getElementById('btn-'+currentTrack).textContent = '▶';
+    document.getElementById('btn-'+currentTrack).classList.remove('playing');
+    document.getElementById('card-'+currentTrack).classList.remove('active');
+  }
+
+  if(audio.paused) {
+    audio.play();
+    btn.textContent = '⏸';
+    btn.classList.add('playing');
+    card.classList.add('active');
+    currentTrack = i;
+  } else {
+    audio.pause();
+    btn.textContent = '▶';
+    btn.classList.remove('playing');
+    card.classList.remove('active');
+    currentTrack = null;
+  }
+}
+
+function seek(e, i) {
+  const audio = audios[i];
+  const bar = document.getElementById('prog-'+i);
+  const rect = bar.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  if(audio.duration) audio.currentTime = pct * audio.duration;
+}
+</script>
+</body>
+</html>

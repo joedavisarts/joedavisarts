@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Links — Joe Davis</title>
+  <script>(function(){ document.documentElement.setAttribute('data-theme','dark'); })();</script>
+  <link rel="icon" type="image/png" href="assets/images/Logo_Head_Gold_Icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { background: #0D0D0B; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+    .links-wrap { width: 100%; max-width: 480px; display: flex; flex-direction: column; align-items: center; gap: 0; }
+    .links-avatar { width: 96px; height: 96px; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold); margin-bottom: 16px; }
+    .links-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+    .links-name { font-family: var(--font-heading); font-size: 32px; color: #FAFAF8; letter-spacing: 0.04em; margin-bottom: 4px; }
+    .links-sub { font-size: 13px; color: rgba(250,250,248,0.45); margin-bottom: 36px; letter-spacing: 0.04em; text-align: center; }
+    .link-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; padding: 16px 24px; margin-bottom: 12px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; text-decoration: none;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 600;
+      color: #FAFAF8; letter-spacing: 0.01em;
+      transition: all 0.2s ease; position: relative;
+    }
+    .link-btn:hover { background: rgba(218,179,34,0.08); border-color: rgba(218,179,34,0.3); color: var(--gold); transform: translateY(-2px); }
+    .link-btn.gold { background: var(--gold); border-color: var(--gold); color: #0D0D0B; }
+    .link-btn.gold:hover { background: #c9a420; border-color: #c9a420; color: #0D0D0B; transform: translateY(-2px); }
+    .link-btn.urgent { background: rgba(220,50,50,0.12); border-color: rgba(220,50,50,0.3); }
+    .link-btn.urgent:hover { background: rgba(220,50,50,0.2); border-color: rgba(220,50,50,0.5); color: #ff6b6b; }
+    .link-icon { position: absolute; left: 18px; font-size: 18px; }
+    .links-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.06); margin: 8px 0 20px; }
+    .links-footer { margin-top: 32px; font-size: 12px; color: rgba(250,250,248,0.25); text-align: center; }
+    .links-footer a { color: var(--gold); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="links-wrap">
+    <div class="links-avatar">
+      <img src="assets/images/hero.jpg" alt="Joe Davis">
+    </div>
+    <img src="assets/images/LogoType_White.png" alt="Joe Davis Arts &amp; Media" style="height:28px;width:auto;margin-bottom:4px;" onerror="this.style.display='none'">
+    <div class="links-sub">Musical Director · Arranger · Multi-Instrumentalist</div>
+
+    <a href="store.html" class="link-btn gold">
+      <span class="link-icon">🛒</span>
+      Store
+    </a>
+
+    <a href="partnerships.html" class="link-btn">
+      <span class="link-icon">🤝</span>
+      Brand Partnerships
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=sWCeI5LcFYQ" target="_blank" class="link-btn">
+      <span class="link-icon">▶</span>
+      Latest YouTube
+    </a>
+
+    <a href="http://supportjamaica.gov.jm/" target="_blank" class="link-btn">
+      <span class="link-icon">🇯🇲</span>
+      Hurricane Melissa — Support Jamaica
+    </a>
+
+    <a href="arranging-samples.html" class="link-btn">
+      <span class="link-icon">🎵</span>
+      Arrangement Samples
+    </a>
+
+    <a href="donate.html" class="link-btn">
+      <span class="link-icon">💛</span>
+      Donate to Joe
+    </a>
+
+    <div class="links-divider"></div>
+
+    <a href="index.html" class="link-btn" style="font-size:17px; padding:12px 24px;">
+      Visit full website →
+    </a>
+
+    <div class="links-footer">
+      © 2026 <a href="index.html">Joe Davis Arts & Media</a>
+    </div>
+  </div>
+</body>
+</html>

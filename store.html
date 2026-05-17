@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store — Joe Davis Arts &amp; Media</title>
+  <script>
+    (function(){ var t=localStorage.getItem('jdam-theme')||'light'; document.documentElement.setAttribute('data-theme',t); })();
+  </script>
+  <link rel="icon" type="image/png" href="assets/images/Logo_Head_Gold_Icon.png">
+  <link rel="apple-touch-icon" href="assets/images/Logo_Head_Gold_Icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    .store-hero {
+      background: #1a1a1a;
+      position: relative;
+      overflow: hidden;
+      padding: 80px 44px 64px;
+    }
+    .store-hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, #1e1808 0%, #1a1a1a 60%, #0D0D0B 100%);
+    }
+    .store-hero-gbar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #DAB322, #77600B);
+    }
+    .store-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 640px;
+    }
+    .store-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 900px) { .store-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .store-grid { grid-template-columns: 1fr; } }
+
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(218,179,34,0.1);
+      border-color: rgba(218,179,34,0.3);
+    }
+    .product-img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      object-position: center;
+      background: linear-gradient(145deg, #1a1a1a, #111);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 48px;
+      color: rgba(218,179,34,0.15);
+    }
+    .product-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .product-body {
+      padding: 22px 22px 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .product-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .product-title {
+      font-family: var(--font-heading);
+      font-size: 34px;
+      letter-spacing: 0.02em;
+      color: var(--heading-color);
+      margin-bottom: 8px;
+      line-height: 1.0;
+    }
+    .product-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: auto;
+    }
+    .product-price {
+      font-family: var(--font-heading);
+      font-size: 28px;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+    }
+    .product-price.free {
+      color: #4CAF50;
+    }
+    .btn-buy {
+      font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      background: #1a1a1a;
+      color: #DAB322;
+      border: none;
+      border-radius: 8px;
+      padding: 11px 22px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    [data-theme="dark"] .btn-buy {
+      background: #DAB322;
+      color: #0D0D0B;
+    }
+    .btn-buy:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+    .btn-free {
+      font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      background: rgba(76,175,80,0.12);
+      color: #4CAF50;
+      border: 1px solid rgba(76,175,80,0.3);
+      border-radius: 8px;
+      padding: 11px 22px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-free:hover {
+      background: rgba(76,175,80,0.2);
+    }
+    /* List view */
+    .store-list {
+      display: flex !important;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .store-list .product-card {
+      flex-direction: row;
+      align-items: stretch;
+    }
+    .store-list .product-img {
+      width: 180px;
+      min-width: 180px;
+      aspect-ratio: 1;
+      border-radius: 0;
+      flex-shrink: 0;
+    }
+    .store-list .product-body {
+      flex-direction: row;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .store-list .product-body > *:not(.product-footer) {
+      flex: 1;
+      min-width: 200px;
+    }
+    .store-list .product-footer {
+      flex-shrink: 0;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      margin-top: 0;
+    }
+    .store-list .product-desc {
+      margin-bottom: 0;
+    }
+    @media (max-width: 700px) {
+      .store-list .product-card { flex-direction: column; }
+      .store-list .product-img { width: 100%; min-width: unset; }
+    }
+    .view-btn-active {
+      background: #1a1a1a !important;
+      color: #DAB322 !important;
+      border-color: transparent !important;
+    }
+    [data-theme="dark"] .view-btn-active {
+      background: #DAB322 !important;
+      color: #0D0D0B !important;
+    }
+      border: 1px solid rgba(218,179,34,0.15);
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+    }
+    .store-note strong {
+      color: var(--gold);
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/images/Logo_head_Black.png" alt="Joe Davis" class="logo-icon logo-light-show" style="height:36px;width:auto;" onerror="this.style.display='none'">
+        <img src="assets/images/Logo_head_Gold.png" alt="Joe Davis" class="logo-icon logo-dark-show" style="height:36px;width:auto;display:none;" onerror="this.style.display='none'">
+        <img src="assets/images/LogoType_Black.png" alt="Joe Davis Arts &amp; Media" class="logo-type logo-light-show" style="height:32px;width:auto;margin-left:10px;" onerror="this.style.display='none'">
+        <img src="assets/images/LogoType_Gold.png" alt="Joe Davis Arts &amp; Media" class="logo-type logo-dark-show" style="height:32px;width:auto;margin-left:10px;display:none;" onerror="this.style.display='none'">
+      </a>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="services.html" class="nav-link">Services</a></li>
+      <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+      <li><a href="epk.html" class="nav-link">EPK</a></li>
+      <li><a href="store.html" class="nav-link active">Store</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="store-hero">
+  <div class="store-hero-gbar"></div>
+  <div class="store-hero-bg"></div>
+  <div class="store-hero-content">
+    <h1 style="font-family:var(--font-heading); font-size:clamp(52px,7vw,88px); line-height:0.88; letter-spacing:0.02em; color:#F0EDE6; margin-bottom:16px;">THE<br><span style="color:#DAB322;">STORE.</span></h1>
+    <p style="font-size:17px; color:rgba(250,250,248,0.55); line-height:1.75; max-width:480px;">Stems, templates, resources, and tools — built from real work, for real musicians and creators. Instant digital delivery after purchase.</p>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="section" style="padding-top:56px;">
+  <div class="container">
+
+    <div class="store-note">
+      <strong>Instant delivery.</strong> All purchases are digital and delivered immediately after checkout. Questions? Email <a href="mailto:contact@joedavisarts.com" style="color:var(--gold);">contact@joedavisarts.com</a>
+    </div>
+
+    <!-- View toggle -->
+    <div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:24px;">
+      <button id="btn-list" onclick="setView('list')" style="background:#1a1a1a; color:#DAB322; border:none; border-radius:8px; padding:8px 16px; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        List
+      </button>
+      <button id="btn-grid" onclick="setView('grid')" style="background:var(--bg-card); color:var(--text-muted); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Grid
+      </button>
+    </div>
+
+    <div class="store-grid store-list" id="store-products">
+
+      <!-- Photoshop Banner Pack -->
+      <div class="product-card stagger-item">
+        <div class="product-img" id="img-photoshop"><img src="assets/images/store/ps_banner_pack.avif" alt="Photoshop Banner Pack" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="product-body">
+          <div class="product-title">Photoshop Banner Pack</div>
+          <p class="product-desc">Create flawless 3-post and multi-post Instagram banners with precise, ready-to-use Photoshop templates. Drag, drop, done.</p>
+          <div class="product-footer">
+            <span class="product-price">£9.99</span>
+            <a href="https://buy.stripe.com/4gMeVd0T46cNamB0LLabK02" class="btn-buy" target="_blank">Buy now →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4:5 / 3:4 Overlay Pack — FREE -->
+      <div class="product-card stagger-item">
+        <div class="product-img" id="img-overlay"><img src="assets/images/store/overlay_pack.avif" alt="4:5 3:4 Overlay Pack" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="product-body">
+          <div class="product-title">4:5 — 3:4 Overlay Pack</div>
+          <p class="product-desc">Perfectly sized overlays to keep your reels, photos, and carousels aligned across Instagram's layout. Free, no strings attached.</p>
+          <div class="product-footer">
+            <span class="product-price free">FREE</span>
+            <a href="assets/downloads/JDA_-_4-5_3-4_Overlay_Pack.zip" class="btn-free" download>Download →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tyla Stems — Musicians -->
+      <div class="product-card stagger-item">
+        <div class="product-img" id="img-stems"><img src="assets/images/store/tyla_stems.avif" alt="Tyla Water Stems" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="product-body">
+          <div class="product-title">Tyla — "Water" Stems for Musicians</div>
+          <p class="product-desc">The full mixed arrangement of "Water" by Tyla, exactly as heard in my video — delivered as individual stems for musicians. Bass, keys, drums, pads, and more, all separated and ready to use.</p>
+          <div class="product-footer">
+            <span class="product-price">£44.99</span>
+            <a href="https://buy.stripe.com/6oUcN59pA44FeCR9ihabK00" class="btn-buy" target="_blank">Buy now →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tyla Instrumental — Vocalists -->
+      <div class="product-card stagger-item">
+        <div class="product-img" id="img-inst"><img src="assets/images/store/tyla_inst.avif" alt="Tyla Water Instrumental" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="product-body">
+          <div class="product-title">Tyla — "Water" Instrumental for Vocalists</div>
+          <p class="product-desc">The full mixed instrumental of my arrangement of "Water" by Tyla, exactly as heard in my video. Perfect for vocalists who want to perform or record over it.</p>
+          <div class="product-footer">
+            <span class="product-price">£19.99</span>
+            <a href="https://buy.stripe.com/6oU00jeJUat3amBgKJabK01" class="btn-buy" target="_blank">Buy now →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PDF Resources -->
+      <div class="product-card stagger-item">
+        <div class="product-img" id="img-pdf"><img src="assets/images/store/pdf.avif" alt="PDF Resources" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="product-body">
+          <div class="product-title">PDF Resources</div>
+          <p class="product-desc">All the PDF resources referenced across my YouTube channel and Instagram — charts, templates, and guides. £3.99 per file.</p>
+          <div class="product-footer">
+            <span class="product-price">£3.99</span>
+            <a href="https://buy.stripe.com/3cIfZhfNYgRr7ap7a9abK03" class="btn-buy" target="_blank">Buy now →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section section-dark" style="text-align:center; padding:72px 44px;">
+  <div class="container">
+    <h2 style="font-family:var(--font-heading); font-size:clamp(36px,5vw,56px); color:#F0EDE6; margin-bottom:14px; letter-spacing:0.02em;">CUSTOM WORK<br>IS AVAILABLE.</h2>
+    <p style="font-size:17px; color:rgba(250,250,248,0.5); margin-bottom:32px; max-width:440px; margin-left:auto; margin-right:auto; line-height:1.7;">Need an arrangement, production, or session work that's built specifically for you? That's what the services page is for.</p>
+    <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+      <a href="services.html" class="btn btn-gold">View services →</a>
+      <a href="contact.html" class="btn btn-outline-light">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-row">
+          <img src="assets/images/Logo_head_Gold.png" alt="" style="height:32px;width:auto;" onerror="this.style.display='none'">
+          <img src="assets/images/LogoType_Gold.png" alt="Joe Davis Arts &amp; Media" style="height:28px;width:auto;margin-left:10px;" onerror="this.style.display='none'">
+        </div>
+        <p class="footer-tagline">Musical Director · Arranger · Multi-Instrumentalist<br>Kingston, Jamaica · Globally Available</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="epk.html">EPK</a>
+        <a href="store.html">Store</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Socials</h4>
+        <a href="#">Instagram</a>
+        <a href="#">YouTube</a>
+        <a href="#">LinkedIn</a>
+        <a href="https://twitter.com/joedavismusicja" target="_blank">Twitter</a>
+        <a href="https://twitter.com/joedavismusicja" target="_blank">Twitter</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Joe Davis Arts &amp; Media. All rights reserved.</span>
+      <div class="footer-contact-row">
+        <a href="mailto:contact@joedavisarts.com">contact@joedavisarts.com</a>
+        <a href="tel:+18768972446">+1 (876) 897-2446</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script>
+  function setView(view) {
+    const grid = document.getElementById('store-products');
+    const btnList = document.getElementById('btn-list');
+    const btnGrid = document.getElementById('btn-grid');
+    if (view === 'list') {
+      grid.classList.add('store-list');
+      grid.classList.remove('store-grid');
+      btnList.classList.add('view-btn-active');
+      btnGrid.classList.remove('view-btn-active');
+    } else {
+      grid.classList.add('store-grid');
+      grid.classList.remove('store-list');
+      btnGrid.classList.add('view-btn-active');
+      btnList.classList.remove('view-btn-active');
+    }
+    localStorage.setItem('store-view', view);
+  }
+  // Default to list view
+  const savedView = localStorage.getItem('store-view') || 'list';
+  setView(savedView);
+</script>
+</html>

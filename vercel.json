@@ -1,0 +1,18 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "store.joedavisarts.com" }],
+      "destination": "https://joedavisarts.com/store",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "calcurate.joedavisarts.com" }],
+      "destination": "https://joedavisarts.com/calcurate",
+      "permanent": false
+    }
+  ]
+}

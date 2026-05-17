@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — Joe Davis Arts &amp; Media</title>
+  <script>(function(){ var t=localStorage.getItem('jdam-theme')||'light'; document.documentElement.setAttribute('data-theme',t); })();</script>
+    <link rel="icon" type="image/png" href="assets/images/Logo_Head_Gold_Icon.png">
+  <link rel="apple-touch-icon" href="assets/images/Logo_Head_Gold_Icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/images/Logo_head_Black.png" alt="Joe Davis" class="logo-icon logo-light-show" style="height:36px;width:auto;" onerror="this.style.display='none'">
+        <img src="assets/images/Logo_head_Gold.png" alt="Joe Davis" class="logo-icon logo-dark-show" style="height:36px;width:auto;display:none;" onerror="this.style.display='none'">
+        <img src="assets/images/LogoType_Black.png" alt="Joe Davis Arts &amp; Media" class="logo-type logo-light-show" style="height:32px;width:auto;margin-left:10px;" onerror="this.style.display='none'">
+        <img src="assets/images/LogoType_Gold.png" alt="Joe Davis Arts &amp; Media" class="logo-type logo-dark-show" style="height:32px;width:auto;margin-left:10px;display:none;" onerror="this.style.display='none'">
+      </a></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="services.html" class="nav-link">Services</a></li>
+      <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
+      <li><a href="epk.html" class="nav-link">EPK</a></li>
+      <li><a href="store.html" class="nav-link">Store</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section style="background:var(--near-black); padding:130px 0 72px;">
+  <div class="container">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;">
+      <div>
+        <h1 style="font-family:var(--font-heading); font-size:clamp(52px,7vw,96px); color:#FAFAF8; line-height:0.88; letter-spacing:0.02em; margin-bottom:20px;" class="animate-on-scroll">THE WORK.</h1>
+        <p style="font-size:17px; color:rgba(250,250,248,0.5); line-height:1.7; max-width:440px;" class="animate-on-scroll">Live shows, studio sessions, arrangements, photography, and content — a growing archive of everything Joe puts his hands to.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:14px;" class="animate-on-scroll">
+        <div style="background:rgba(218,179,34,0.06); border:1px solid rgba(218,179,34,0.15); border-radius:10px; padding:18px 22px;">
+          <div style="font-family:var(--font-heading); font-size:48px; color:var(--gold); line-height:0.88;">3M+</div>
+          <div style="font-size:12px; color:rgba(250,250,248,0.45); text-transform:uppercase; letter-spacing:0.08em;">Views online</div>
+        </div>
+        <div style="background:rgba(218,179,34,0.06); border:1px solid rgba(218,179,34,0.15); border-radius:10px; padding:18px 22px;">
+          <div style="font-family:var(--font-heading); font-size:48px; color:var(--gold); line-height:0.88;">30K+</div>
+          <div style="font-size:12px; color:rgba(250,250,248,0.45); text-transform:uppercase; letter-spacing:0.08em;">Followers across platforms</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PROJECT -->
+<section class="section" style="padding-top:64px; padding-bottom:0;">
+  <div class="container">
+    <div style="display:grid; grid-template-columns:1.3fr 1fr; gap:0; background:var(--bg-card); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-top:16px;" class="animate-on-scroll">
+      <div style="height:380px; overflow:hidden;"><img src="assets/images/portfolio/playlistretreat.jpeg" alt="PLAYLIST Retreat" style="width:100%;height:100%;object-fit:cover;object-position:center;"></div>
+      <div style="padding:48px 40px; display:flex; flex-direction:column; justify-content:center;">
+        <span class="pc-badge badge-live" style="margin-bottom:16px;">Collaboration · Press · Rolling Stone</span>
+        <h2 style="font-family:var(--font-heading); font-size:clamp(32px,3.5vw,48px); letter-spacing:0.02em; margin-bottom:12px;">PLAYLIST Retreat</h2>
+        <p style="font-size:16px; color:var(--text-muted); line-height:1.7; margin-bottom:24px;">Personally invited by DJ Jazzy Jeff to the exclusive PLAYLIST Retreat — twice. Collaborated with De La Soul, Kaelin Ellis, Steve McKie, The Pocket Queen, Yaahn Hunter, and others. Featured in Rolling Stone magazine for it.</p>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px;">
+          <span class="tag">DJ Jazzy Jeff</span>
+          <span class="tag">De La Soul</span>
+          <span class="tag">Rolling Stone</span>
+          <span class="tag">2024</span>
+        </div>
+        <a href="contact.html" class="btn btn-dark btn-sm">Work with Joe →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTER + GRID -->
+<section class="section">
+  <div class="container">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:32px; flex-wrap:wrap; gap:16px;">
+
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="live">Live</button>
+        <button class="filter-btn" data-filter="arrangements">Arrangements</button>
+        <button class="filter-btn" data-filter="session">Session</button>
+        <button class="filter-btn" data-filter="photography">Photography</button>
+      </div>
+    </div>
+    <div class="portfolio-grid">
+
+      <div class="port-card port-card-wide stagger-item" data-category="arrangements">
+        <div class="pc-img" style="height:300px; overflow:hidden;"><img src="assets/images/portfolio/kirk.jpg" alt="Kirk Franklin" style="width:100%;height:100%;object-fit:cover;object-position:center top;"></div>
+        <div class="pc-body">
+          <span class="pc-badge badge-arrangements">Production · Arrangement</span>
+          <div class="pc-title">Kirk Franklin — Church Music</div>
+          <div class="pc-subtitle">Produced &amp; arranged for Kirk Franklin's live album recording · December 2025</div>
+        </div>
+      </div>
+
+      <div class="port-card stagger-item" data-category="arrangements">
+        <div class="pc-img" style="overflow:hidden;"><img src="assets/images/portfolio/glorilla.png" alt="GloRilla SNL" style="width:100%;height:100%;object-fit:cover;object-position:center;"></div>
+        <div class="pc-body">
+          <span class="pc-badge badge-arrangements">Arrangement · TV</span>
+          <div class="pc-title">GloRilla — Saturday Night Live</div>
+          <div class="pc-subtitle">Co-arranger &amp; MD · NBC Studio 8H · January 2025</div>
+        </div>
+      </div>
+
+      <div class="port-card stagger-item" data-category="live">
+        <div class="pc-img" style="overflow:hidden;"><img src="assets/images/portfolio/respeachdrop.jpg" alt="RES Atlanta Peach Drop" style="width:100%;height:100%;object-fit:cover;object-position:center;"></div>
+        <div class="pc-body">
+          <span class="pc-badge badge-live">Live · Bass</span>
+          <div class="pc-title">RES — Atlanta Peach Drop</div>
+          <div class="pc-subtitle">Bassist &amp; co-arranger · Centennial Olympic Park · NYE 2024–25</div>
+        </div>
+      </div>
+
+      <div class="port-card port-card-wide stagger-item" data-category="live">
+        <div class="pc-img" style="height:300px; overflow:hidden;"><img src="assets/images/portfolio/tessellatedneedmetour.jpg" alt="Tessellated Need Me Tour" style="width:100%;height:100%;object-fit:cover;object-position:center;"></div>
+        <div class="pc-body">
+          <span class="pc-badge badge-live">MD · Arrangements</span>
+          <div class="pc-title">Tessellated — Need Me UK Tour</div>
+          <div class="pc-subtitle">Musical Director &amp; Arranger · Kingston, JM &amp; UK</div>
+        </div>
+      </div>
+
+      <div class="port-card stagger-item" data-category="live">
+        <div class="pc-img" style="overflow:hidden;"><img src="assets/images/portfolio/verlando.jpg" alt="Verlando Small" style="width:100%;height:100%;object-fit:cover;object-position:center;"></div>
+        <div class="pc-body">
+          <span class="pc-badge badge-live">MD</span>
+          <div class="pc-title">Verlando Small — Reimagined</div>
+          <div class="pc-subtitle">Musical Director · Kingston, JM · 2025</div>
+        </div>
+      </div>
+
+      <div class="port-card stagger-item" data-category="arrangements">
+        <div class="pc-img" style="overflow:hidden;"><img src="assets/images/portfolio/marymary.jpg" alt="Mary Mary" style="width:100%;height:100%;object-fit:cover;object-position:center;"></div>
+        <div class="pc-body">
+          <span class="pc-badge badge-arrangements">Arrangement</span>
+          <div class="pc-title">Mary Mary</div>
+          <div class="pc-subtitle">Live Arrangement</div>
+        </div>
+      </div>
+
+      <div class="port-card stagger-item" data-category="live">
+        <div class="pc-img" style="overflow:hidden;"><img src="assets/images/portfolio/lilaikeperformance.png" alt="Lila Ike" style="width:100%;height:100%;object-fit:cover;object-position:center;"></div>
+        <div class="pc-body">
+          <span class="pc-badge badge-live">Live Performance</span>
+          <div class="pc-title">Lila Iké</div>
+          <div class="pc-subtitle">Live Performance · Jamaica</div>
+        </div>
+      </div>
+
+      <div class="port-card stagger-item" data-category="session">
+        <div class="pc-img" style="overflow:hidden;"><img src="assets/images/portfolio/sevananeedmestudio.jpg" alt="Sevana Need Me" style="width:100%;height:100%;object-fit:cover;object-position:center;"></div>
+        <div class="pc-body">
+          <span class="pc-badge badge-session">Production</span>
+          <div class="pc-title">Sevana — Need Me</div>
+          <div class="pc-subtitle">Producer · Kingston, JM</div>
+        </div>
+      </div>
+
+      <div class="port-card stagger-item" data-category="live">
+        <div class="pc-img" style="overflow:hidden;"><img src="assets/images/portfolio/sxswtessellated.jpg" alt="SXSW Tessellated" style="width:100%;height:100%;object-fit:cover;object-position:center;"></div>
+        <div class="pc-body">
+          <span class="pc-badge badge-live">Live Performance</span>
+          <div class="pc-title">SXSW — Tessellated &amp; Jaz Elise</div>
+          <div class="pc-subtitle">Live performance · Austin, TX · 2022</div>
+        </div>
+      </div>
+
+      <div class="port-card stagger-item" data-category="live">
+        <div class="pc-img" style="overflow:hidden;"><img src="assets/images/portfolio/tuesday_service_wide.jpg" alt="Tuesday Service at The Compound" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;"></div>
+        <div class="pc-body">
+          <span class="pc-badge badge-live">Live · Recurring</span>
+          <div class="pc-title">Tuesday Service — The Compound</div>
+          <div class="pc-subtitle">Weekly live band residency · Kingston, JM · Headlined twice</div>
+        </div>
+      </div>
+
+      <div class="port-card stagger-item" data-category="live">
+        <div class="pc-img" style="overflow:hidden;"><img src="assets/images/portfolio/berkleeperformancecenter.jpg" alt="Berklee Performance Center" style="width:100%;height:100%;object-fit:cover;object-position:center top;"></div>
+        <div class="pc-body">
+          <span class="pc-badge badge-live">Live · Headliner</span>
+          <div class="pc-title">Joe Davis &amp; Friends — Berklee Performance Center</div>
+          <div class="pc-subtitle">Sold-out headline show · Boston, MA · 2023</div>
+        </div>
+      </div>
+
+      <div class="port-card stagger-item" data-category="live">
+        <div class="pc-img" style="overflow:hidden;"><img src="assets/images/portfolio/starspangledbanner.jpeg" alt="Star Spangled Banner VP Harris" style="width:100%;height:100%;object-fit:cover;object-position:center top;"></div>
+        <div class="pc-body">
+          <span class="pc-badge badge-live">Special Performance</span>
+          <div class="pc-title">Star-Spangled Banner — VP Kamala Harris</div>
+          <div class="pc-subtitle">Vocal arrangement · "A Golden State Celebration"</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- YOUTUBE SECTION -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-heading animate-on-scroll">
+      <h2 style="color:#FAFAF8;">Featured Videos</h2>
+      <p style="color:rgba(250,250,248,0.5);">Live performances, music videos, and arrangements — straight from the source.</p>
+    </div>
+    <div class="grid-2 stagger-group" style="gap:20px;">
+      <div class="stagger-item animate-on-scroll">
+        <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+          <iframe src="https://www.youtube.com/embed/q1Rs8EWnhwc" title="Joe Davis & Friends — Berklee Performance Center" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+        </div>
+        <div style="margin-top:12px;">
+        </div>
+      </div>
+      <div class="stagger-item animate-on-scroll">
+        <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+          <iframe src="https://www.youtube.com/embed/q8M0CEPeLvo" title="Jamaica Jazz and Blues Festival" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+        </div>
+        <div style="margin-top:12px;">
+        </div>
+      </div>
+      <div class="stagger-item animate-on-scroll">
+        <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+          <iframe src="https://www.youtube.com/embed/353u-gV88Nc" title="Silent Night Music Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+        </div>
+        <div style="margin-top:12px;">
+        </div>
+      </div>
+      <div class="stagger-item animate-on-scroll">
+        <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+          <iframe src="https://www.youtube.com/embed/srPXe-fPLJQ" title="Tyla Water Live Arrangement" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+        </div>
+        <div style="margin-top:12px;">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHROMATICS STRIP -->
+<section class="chromatics-strip section-warm">
+  <div class="container">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;">
+      <div class="animate-on-scroll">
+        <h2 style="font-family:var(--font-heading); font-size:clamp(34px,4vw,56px); letter-spacing:0.02em; margin-bottom:14px; color:var(--near-black);">Music through<br>a different lens.</h2>
+        <p style="font-size:16px; color:var(--text-muted); line-height:1.75; margin-bottom:24px;">Chromatics is Joe's documentary photography and visual content project — an ongoing archive of music culture, live moments, and the human stories that live between the notes.</p>
+        <a href="contact.html" class="btn btn-dark">Enquire about Chromatics →</a>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;" class="animate-on-scroll">
+        <div style="border-radius:10px; overflow:hidden; aspect-ratio:2/1; grid-column:span 2;"><img src="assets/images/portfolio/tuesday_service_wide.jpg" alt="Tuesday Service Live Band" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;"></div>
+        <div style="border-radius:10px; overflow:hidden; aspect-ratio:1;"><img src="assets/images/portfolio/chromatics_butterfly.jpg" alt="Chromatics Portrait" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;"></div>
+        <div style="border-radius:10px; overflow:hidden; aspect-ratio:1;"><img src="assets/images/portfolio/chromatics_lipstick.jpg" alt="Chromatics Beauty" style="width:100%;height:100%;object-fit:cover;object-position:center top;"></div>
+        <div style="border-radius:10px; overflow:hidden; aspect-ratio:1;"><img src="assets/images/portfolio/chromatics_carnival.jpg" alt="Chromatics Carnival" style="width:100%;height:100%;object-fit:cover;object-position:center top;"></div>
+        <div style="border-radius:10px; overflow:hidden; aspect-ratio:1;"><img src="assets/images/portfolio/tuesday_service_bw.jpg" alt="Tuesday Service" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;"></div>
+        <div style="border-radius:10px; overflow:hidden; aspect-ratio:1; grid-column:span 3;"><img src="assets/images/portfolio/brianmcknightchromatics.jpg" alt="Brian McKnight and Dru Hill" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-strip cta-strip-dark">
+  <div class="container">
+    <h2 style="color:#FAFAF8;">Your project<br>could be here.</h2>
+    <p>MD, session work, arrangements, or a Chromatics collab — the portfolio grows one great project at a time.</p>
+    <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+      <a href="contact.html" class="btn btn-primary btn-lg">Start a project</a>
+      <a href="epk.html" class="btn btn-outline-light btn-lg">View EPK</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="footer-logo-row">
+          <img src="assets/images/Logo_head_Gold.png" alt="" style="height:32px;width:auto;" onerror="this.style.display='none'">
+          <img src="assets/images/LogoType_Gold.png" alt="Joe Davis Arts &amp; Media" style="height:28px;width:auto;margin-left:10px;" onerror="this.style.display='none'">
+        </div>
+        <p class="footer-tagline">Musical Director · Arranger · Multi-Instrumentalist<br>Kingston, Jamaica · Globally Available</p></div>
+      <div class="footer-col"><h4>Pages</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="epk.html">EPK</a><a href="contact.html">Contact</a></div>
+      <div class="footer-col"><h4>Socials</h4><a href="https://www.instagram.com/joedavismusic" target="_blank">Instagram</a><a href="https://www.youtube.com/@joedavismusic" target="_blank">YouTube</a><a href="https://www.linkedin.com/in/joedavisarts" target="_blank">LinkedIn</a><a href="https://www.tiktok.com/@joedavismusic" target="_blank">TikTok</a><a href="https://twitter.com/joedavismusicja" target="_blank">Twitter</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Joe Davis Arts &amp; Media. All rights reserved.</span><div class="footer-contact-row"><a href="mailto:contact@joedavisarts.com">contact@joedavisarts.com</a><a href="tel:+18768972446">+1 (876) 897-2446</a></div></div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/portfolio.js"></script>
+</body>
+</html>

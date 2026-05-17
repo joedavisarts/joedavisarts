@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donate — Joe Davis</title>
+  <script>(function(){ var t=localStorage.getItem('jdam-theme')||'light'; document.documentElement.setAttribute('data-theme',t); })();</script>
+  <link rel="icon" type="image/png" href="assets/images/Logo_Head_Gold_Icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .donate-hero { background: var(--near-black); padding: 100px 44px 72px; text-align: center; position: relative; }
+    .donate-hero::after { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--gold),var(--dark-gold)); }
+    .donate-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 560px; margin: 0 auto; }
+    @media(max-width:600px){ .donate-grid { grid-template-columns: 1fr; } }
+    .donate-btn {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 28px 20px; border-radius: 14px; text-decoration: none;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 17px;
+      transition: all 0.25s ease; border: none; cursor: pointer; gap: 10px;
+    }
+    .donate-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
+    .donate-btn .d-icon { font-size: 36px; }
+    .donate-btn.venmo { background: #3D95CE; color: #fff; }
+    .donate-btn.cashapp { background: #00C244; color: #fff; }
+    .donate-btn.paypal { background: #003087; color: #fff; }
+    .donate-btn.zelle { background: #6D1ED4; color: #fff; cursor: pointer; }
+    .donate-note { background: rgba(218,179,34,0.08); border: 1px solid rgba(218,179,34,0.2); border-radius: 10px; padding: 18px 22px; max-width: 560px; margin: 0 auto 40px; font-size: 13.5px; color: var(--text-muted); line-height: 1.7; }
+    .donate-note strong { color: var(--gold); }
+
+    /* Zelle modal */
+    .zelle-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center; }
+    .zelle-overlay.active { display:flex; }
+    .zelle-modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 40px 36px; max-width: 420px; width: 90%; text-align: center; position: relative; }
+    .zelle-modal .z-logo { font-size: 40px; margin-bottom: 16px; }
+    .zelle-modal h3 { font-family: var(--font-heading); font-size: 26px; margin-bottom: 12px; color: var(--heading-color); }
+    .zelle-modal p { font-size: 14px; color: var(--text-muted); line-height: 1.75; margin-bottom: 20px; }
+    .zelle-modal .z-email { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 15px; color: #6D1ED4; background: rgba(109,30,212,0.08); border: 1px solid rgba(109,30,212,0.2); border-radius: 8px; padding: 12px 20px; display: inline-block; margin-bottom: 24px; }
+    .zelle-close { position:absolute; top:16px; right:20px; font-size:22px; cursor:pointer; color:var(--text-muted); background:none; border:none; }
+    .zelle-close:hover { color: var(--heading-color); }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/images/Logo_head_Black.png" alt="Joe Davis" class="logo-icon logo-light-show" style="height:36px;width:auto;" onerror="this.style.display='none'">
+        <img src="assets/images/Logo_head_Gold.png" alt="Joe Davis" class="logo-icon logo-dark-show" style="height:36px;width:auto;display:none;" onerror="this.style.display='none'">
+        <img src="assets/images/LogoType_Black.png" alt="Joe Davis Arts &amp; Media" class="logo-type logo-light-show" style="height:32px;width:auto;margin-left:10px;" onerror="this.style.display='none'">
+        <img src="assets/images/LogoType_Gold.png" alt="Joe Davis Arts &amp; Media" class="logo-type logo-dark-show" style="height:32px;width:auto;margin-left:10px;display:none;" onerror="this.style.display='none'">
+      </a>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="services.html" class="nav-link">Services</a></li>
+      <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+      <li><a href="epk.html" class="nav-link">EPK</a></li>
+      <li><a href="store.html" class="nav-link">Store</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="donate-hero">
+  <h1 style="font-family:var(--font-heading); font-size:clamp(52px,8vw,96px); line-height:0.88; color:#F0EDE6; margin-bottom:20px;">DONATE<br><span style="color:var(--gold);">TO JOE.</span></h1>
+  <p style="font-size:17px; color:rgba(250,250,248,0.55); max-width:480px; margin:0 auto; line-height:1.8;">Thank you so much for donating. Any amount is greatly appreciated, and I assure you that all the proceeds are going towards a good cause. You are all in my heart forever, peace and love. 🖤💛</p>
+</div>
+
+<section class="section" style="padding-top:56px;">
+  <div class="container">
+    <div class="donate-note">
+      <strong>Please note:</strong> When donating, to avoid confusion please label it as <strong>'gift'</strong> or <strong>'donation'</strong>, or leave a comment saying 'gift' or 'donation'. This ensures that it doesn't get mixed up with other transactions.
+    </div>
+
+    <div class="donate-grid">
+      <a href="https://account.venmo.com/u/joedavismusic" target="_blank" class="donate-btn venmo">
+        <span class="d-icon">V</span>
+        Venmo
+      </a>
+      <a href="https://cash.app/$joedavismusic" target="_blank" class="donate-btn cashapp">
+        <span class="d-icon">$</span>
+        Cash App
+      </a>
+      <button onclick="document.getElementById('zelleOverlay').classList.add('active')" class="donate-btn zelle">
+        <span class="d-icon">Z</span>
+        Zelle
+      </button>
+      <a href="http://paypal.me/joedavisartsnew" target="_blank" class="donate-btn paypal">
+        <span class="d-icon">P</span>
+        PayPal
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Zelle Modal -->
+<div class="zelle-overlay" id="zelleOverlay" onclick="if(event.target===this)this.classList.remove('active')">
+  <div class="zelle-modal">
+    <button class="zelle-close" onclick="document.getElementById('zelleOverlay').classList.remove('active')">✕</button>
+    <div class="z-logo">💜</div>
+    <h3>Send via Zelle</h3>
+    <p>Zelle requires your phone number or email address. Please log into Zelle and send to:</p>
+    <div class="z-email">josephdavismusic@gmail.com</div>
+    <p style="font-size:12px; color:var(--text-muted);">Remember to label your payment as <strong>'gift'</strong> or <strong>'donation'</strong>. Thank you! 🖤</p>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-row">
+          <img src="assets/images/Logo_head_Gold.png" alt="" style="height:32px;width:auto;" onerror="this.style.display='none'">
+          <img src="assets/images/LogoType_Gold.png" alt="Joe Davis Arts &amp; Media" style="height:28px;width:auto;margin-left:10px;" onerror="this.style.display='none'">
+        </div>
+        <p class="footer-tagline">Musical Director · Arranger · Multi-Instrumentalist<br>Kingston, Jamaica · Globally Available</p>
+      </div>
+      <div class="footer-col"><h4>Pages</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="epk.html">EPK</a><a href="store.html">Store</a><a href="contact.html">Contact</a></div>
+      <div class="footer-col"><h4>Socials</h4><a href="https://www.instagram.com/joedavismusic" target="_blank">Instagram</a><a href="https://www.youtube.com/@joedavismusic" target="_blank">YouTube</a><a href="https://www.tiktok.com/@joedavismusic" target="_blank">TikTok</a><a href="https://twitter.com/joedavismusicja" target="_blank">Twitter</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Joe Davis Arts &amp; Media. All rights reserved.</span><div class="footer-contact-row"><a href="mailto:contact@joedavisarts.com">contact@joedavisarts.com</a><a href="tel:+18768972446">+1 (876) 897-2446</a></div></div>
+  </div>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>

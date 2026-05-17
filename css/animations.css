@@ -1,0 +1,122 @@
+/* animations.css — Joe Davis Arts & Media */
+
+/* ── Keyframes ── */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+
+@keyframes breathe {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 20% 50%; }
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(218,179,34,0.45); }
+  50% { transform: scale(1.25); box-shadow: 0 0 0 7px rgba(218,179,34,0); }
+}
+
+/* ── Hero entrance ── */
+.hero-tag { opacity: 0; animation: fadeIn 0.5s ease-out 0ms forwards; }
+.hero-line { display: block; opacity: 0; transform: translateY(40px); }
+.hero-line:nth-child(1) { animation: fadeInUp 0.6s ease-out 0ms forwards; }
+.hero-line:nth-child(2) { animation: fadeInUp 0.6s ease-out 120ms forwards; }
+.hero-line:nth-child(3) { animation: fadeInUp 0.6s ease-out 240ms forwards; }
+.hero-subtitle { opacity: 0; animation: fadeIn 0.6s ease-out 400ms forwards; }
+.hero-actions { opacity: 0; animation: fadeIn 0.6s ease-out 600ms forwards; }
+
+/* ── Scroll animations ── */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.animate-on-scroll.in-view { opacity: 1; transform: translateY(0); }
+
+.animate-slide-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.animate-slide-left.in-view { opacity: 1; transform: translateX(0); }
+
+.stagger-item {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.stagger-item.in-view { opacity: 1; transform: translateY(0); }
+
+/* ── Hero gradient breathe ── */
+.hero-gradient-breathe {
+  background-size: 130% 130%;
+  animation: breathe 12s ease-in-out infinite;
+}
+
+/* ── Ticker ── */
+.ticker-track {
+  display: flex;
+  white-space: nowrap;
+  animation: ticker 32s linear infinite;
+}
+.ticker-track:hover { animation-play-state: paused; }
+
+/* ── Pulse dot (always on) ── */
+.pulse-dot { animation: pulseDot 2s ease-in-out infinite; }
+
+/* ── Nav underline ── */
+.nav-link::after {
+  content: '';
+  display: block;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 250ms ease;
+  margin-top: 2px;
+}
+.nav-link:hover::after,
+.nav-link.active::after { transform: scaleX(1); }
+
+/* ── Hover effects ── */
+.svc-card {
+  transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
+}
+.svc-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(218,179,34,0.12);
+  border-color: rgba(218,179,34,0.3) !important;
+}
+
+.port-card .pc-img img {
+  transition: transform 400ms ease;
+}
+.port-card:hover .pc-img img { transform: scale(1.04); }
+
+.port-card .pc-title { transition: transform 300ms ease; }
+.port-card:hover .pc-title { transform: translateY(-4px); }
+
+.tl-dot {
+  transition: width 200ms ease, height 200ms ease, margin-left 200ms ease, margin-top 200ms ease, box-shadow 200ms ease;
+}
+.tl-dot:hover {
+  width: 14px !important;
+  height: 14px !important;
+  margin-left: -2px;
+  margin-top: -2px;
+  box-shadow: 0 0 0 4px rgba(218,179,34,0.3);
+}
+
+.highlight-item { transition: border-color 200ms ease, background 200ms ease; }
+.highlight-item:hover {
+  border-color: rgba(218,179,34,0.2) !important;
+  background: rgba(218,179,34,0.04) !important;
+}
+
+.btn { transition: transform 200ms ease, filter 200ms ease, background-color 200ms ease, color 200ms ease, border-color 200ms ease; }
+.btn:hover { transform: scale(1.02); filter: brightness(1.05); }

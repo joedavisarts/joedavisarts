@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Joe Davis Arts &amp; Media</title>
+  <script>(function(){ var t=localStorage.getItem('jdam-theme')||'light'; document.documentElement.setAttribute('data-theme',t); })();</script>
+    <link rel="icon" type="image/png" href="assets/images/Logo_Head_Gold_Icon.png">
+  <link rel="apple-touch-icon" href="assets/images/Logo_Head_Gold_Icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/images/Logo_head_Black.png" alt="Joe Davis" class="logo-icon logo-light-show" style="height:36px;width:auto;" onerror="this.style.display='none'">
+        <img src="assets/images/Logo_head_Gold.png" alt="Joe Davis" class="logo-icon logo-dark-show" style="height:36px;width:auto;display:none;" onerror="this.style.display='none'">
+        <img src="assets/images/LogoType_Black.png" alt="Joe Davis Arts &amp; Media" class="logo-type logo-light-show" style="height:32px;width:auto;margin-left:10px;" onerror="this.style.display='none'">
+        <img src="assets/images/LogoType_Gold.png" alt="Joe Davis Arts &amp; Media" class="logo-type logo-dark-show" style="height:32px;width:auto;margin-left:10px;display:none;" onerror="this.style.display='none'">
+      </a>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link active">About</a></li>
+      <li><a href="services.html" class="nav-link">Services</a></li>
+      <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+      <li><a href="epk.html" class="nav-link">EPK</a></li>
+      <li><a href="store.html" class="nav-link">Store</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO SPLIT -->
+<section style="display:grid; grid-template-columns:1fr 1fr; min-height:72vh;">
+  <!-- Left: dark photo -->
+  <div style="background:var(--near-black); display:flex; flex-direction:column; justify-content:flex-end; padding:64px 56px; position:relative; overflow:hidden;">
+    <div class="hero-gold-bar"></div>
+    <img src="assets/images/about_hero.jpeg" alt="Joe Davis" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%;opacity:0.85;">
+    <div>
+      <h1 style="font-family:var(--font-heading); font-size:clamp(48px,5vw,72px); color:#FAFAF8; line-height:0.88; letter-spacing:0.02em; margin-bottom:12px;">Joe Davis</h1>
+      <p style="font-size:17px; color:rgba(250,250,248,0.55); line-height:1.6;">Jamaican-British · Kingston, Jamaica · Globally Available</p>
+    </div>
+  </div>
+  <!-- Right: warm gradient + pull quote -->
+  <div class="section-warm hero-gradient-breathe" style="display:flex; flex-direction:column; justify-content:center; padding:80px 64px;">
+    <div class="hero-tag" style="margin-bottom:24px;">
+      <span class="hero-tag-dot"></span>
+      In his own words
+    </div>
+    <blockquote style="font-family:var(--font-heading); font-size:clamp(28px,3.5vw,46px); line-height:0.88; letter-spacing:0.02em; color:var(--near-black); max-width:520px;">
+      "I make music that moves people — and yeah, I'll probably crack a joke while doing it."
+    </blockquote>
+    <p style="margin-top:24px; font-size:16px; color:var(--text-muted);">Joe Davis — Musical Director, Kingston JA</p>
+  </div>
+</section>
+
+<!-- BIO SECTION -->
+<section class="section">
+  <div class="container">
+    <div class="intro-grid" style="gap:80px;">
+      <!-- Left: sticky photo + quick facts -->
+      <div class="bio-sticky">
+        <div style="background:var(--bg-secondary); border-radius:12px; overflow:hidden; margin-bottom:24px; height:340px;"><img src="assets/images/headshot_shades.jpg" alt="Joe Davis" style="width:100%;height:100%;object-fit:cover;object-position:center center;"></div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div class="highlight-item" style="padding:14px 16px;">
+            <div class="highlight-content">
+              <h4 style="font-size:17px; text-transform:uppercase; letter-spacing:0.07em; color:var(--gold);">Based</h4>
+              <p style="margin-top:1px;">Kingston, Jamaica</p>
+            </div>
+          </div>
+          <div class="highlight-item" style="padding:14px 16px;">
+            <div class="highlight-content">
+              <h4 style="font-size:17px; text-transform:uppercase; letter-spacing:0.07em; color:var(--gold);">Nationality</h4>
+              <p style="margin-top:1px;">Jamaican-British (Dual Citizen)</p>
+            </div>
+          </div>
+          <div class="highlight-item" style="padding:14px 16px;">
+            <div class="highlight-content">
+              <h4 style="font-size:17px; text-transform:uppercase; letter-spacing:0.07em; color:var(--gold);">Education</h4>
+              <p style="margin-top:1px;">Berklee College of Music, Boston</p>
+            </div>
+          </div>
+          <div class="highlight-item" style="padding:14px 16px;">
+            <div class="highlight-content">
+              <h4 style="font-size:17px; text-transform:uppercase; letter-spacing:0.07em; color:var(--gold);">Instruments</h4>
+              <p style="margin-top:1px;">Vocals · Drums · Steel Pan · Keys · Bass · Guitar · Melodica · Mixed Percussion</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Right: full bio -->
+      <div>
+        <h2 style="font-family:var(--font-heading); font-size:clamp(32px,3.5vw,50px); letter-spacing:0.02em; margin-bottom:24px;" class="animate-on-scroll">The story so far.</h2>
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <p style="font-size:19px; color:var(--text-muted); line-height:1.85;" class="animate-on-scroll">Joe Davis is a 23-year-old Jamaican-British musical director, arranger, and multi-instrumentalist. Born in England and raised in Jamaica from age 10, he carries two national identities with equal pride — and both are audible in his music.</p>
+          <p style="font-size:19px; color:var(--text-muted); line-height:1.85;" class="animate-on-scroll">By his early teens he had already passed his classical piano diploma exam with distinction, had been transcribing arrangements by ear, and noticed that every sound he heard appeared as colours in his mind. The neurologists call it Chromesthesia. Joe calls it his superpower.</p>
+          <p style="font-size:19px; color:var(--text-muted); line-height:1.85;" class="animate-on-scroll">At 15, Joe became the first — and at the time only — person in Jamaica to receive a distinction in the ARSM Classical Piano Diploma exam. He went on to attend Idyllwild Arts Academy in California, majoring in Jazz Piano and minoring in Songwriting, graduating as "Most Outstanding Artist." He then enrolled at Berklee College of Music in Boston, studying Contemporary Writing &amp; Production, before returning to Kingston to build his career on home turf.</p>
+          <p style="font-size:19px; color:var(--text-muted); line-height:1.85;" class="animate-on-scroll">His credits have taken him from the Berklee Performance Center (sold out) to SXSW, Barcelona (Cumnor House Chorister Tour), from performing the Star-Spangled Banner for VP Kamala Harris to co-arranging GloRilla's Saturday Night Live performance and producing for Kirk Franklin's upcoming album "Church Music." He's been invited to DJ Jazzy Jeff's PLAYLIST Retreat twice and was featured in Rolling Stone for it. He's recognised by Jacob Collier, Questlove, Tori Kelly, Tyla, Willow Smith, Masego, Mahalia, James Poyser, DJ Jazzy Jeff, and Kevin Olusola among others.</p>
+          <p style="font-size:19px; color:var(--text-muted); line-height:1.85;" class="animate-on-scroll">Away from the stage, Joe is a breakdancer, a passionate programmer and developer currently building two apps, and a lover of graphic, web, UI, and UX design. He co-founded The Garden JA (a platform for upcoming Jamaican musicians) and Chromatics Creative Studios. He's also developing The Musician's Digital Encore — a course helping musicians navigate the digital world. He's a man of faith, an admitted goofball, and a firm believer that the best music rooms also laugh the most.</p>
+        </div>
+        <a href="contact.html" class="btn btn-dark btn-lg" style="margin-top:32px;">Work with Joe →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="section-heading animate-on-scroll">
+      <h2 style="color:#FAFAF8;" style="font-size:clamp(40px,5vw,64px);">Career Timeline</h2>
+      <p style="color:rgba(250,250,248,0.5);">From the church pew to the concert hall — the milestones that shaped the sound.</p>
+    </div>
+    <div class="timeline" style="max-width:680px;">
+      <div class="tl-item animate-slide-left">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2008</div>
+        <div class="tl-title">Fell in Love with the Piano</div>
+        <div class="tl-desc">Began playing TV songs by ear on a 37-key keyboard. Nobody taught him — he just figured it out. That instinct never left.</div>
+      </div>
+      <div class="tl-item animate-slide-left">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2011</div>
+        <div class="tl-title">Grade 5 ABRSM — Theory &amp; Practical</div>
+        <div class="tl-desc">Passed Grade 5 ABRSM Theory and Practical. The formal training was catching up with the instinct.</div>
+      </div>
+      <div class="tl-item animate-slide-left">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2013</div>
+        <div class="tl-title">Moves to Jamaica</div>
+        <div class="tl-desc">England to Kingston at age 10. A completely different musical world — and a better one for it.</div>
+      </div>
+      <div class="tl-item animate-slide-left">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2015</div>
+        <div class="tl-title">Campion College</div>
+        <div class="tl-desc">Graduates Mount Alvernia Preparatory School in Montego Bay and heads to Campion College, Kingston.</div>
+      </div>
+      <div class="tl-item animate-slide-left">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2017</div>
+        <div class="tl-title">ARSM Distinction — First in Jamaica</div>
+        <div class="tl-desc">Becomes the first — and at the time only — person in Jamaica to receive a distinction in the ARSM Classical Piano Diploma exam. Age 15. Quietly a very big deal.</div>
+      </div>
+      <div class="tl-item animate-slide-left">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2019</div>
+        <div class="tl-title">Idyllwild Arts Academy, California</div>
+        <div class="tl-desc">Leaves Campion College to pursue music full-time at Idyllwild Arts Academy. Majors in Jazz Piano, minors in Songwriting.</div>
+      </div>
+      <div class="tl-item animate-slide-left">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2021</div>
+        <div class="tl-title">Graduates as "Most Outstanding Artist"</div>
+        <div class="tl-desc">Graduates from Idyllwild with the school's top artistic honour. Enrolls at Berklee College of Music, Boston, in Contemporary Writing &amp; Production.</div>
+      </div>
+      <div class="tl-item animate-slide-left">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2022</div>
+        <div class="tl-title">Jamaica Jazz &amp; Blues + SXSW</div>
+        <div class="tl-desc">Jamaica Jazz &amp; Blues Festival puts him on the map at home. Also performs at SXSW in Austin with Tessellated and Jaz Elise — first major US festival credit.</div>
+      </div>
+      <div class="tl-item animate-slide-left">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2023</div>
+        <div class="tl-title">Berklee Performance Center — Sold Out</div>
+        <div class="tl-desc">Headlined a sold-out show at the Berklee Performance Center with friends. Then returned to Jamaica to build on home turf.</div>
+      </div>
+      <div class="tl-item animate-slide-left">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2024</div>
+        <div class="tl-title">Chromatics Launched + PLAYLIST Retreat</div>
+        <div class="tl-desc">Co-founds Chromatics Creative Studios. Invited to DJ Jazzy Jeff's PLAYLIST Retreat — collaborates with De La Soul, Kaelin Ellis, Steve McKie, and others. Featured in Rolling Stone.</div>
+      </div>
+      <div class="tl-item animate-slide-left">
+        <div class="tl-dot"></div>
+        <div class="tl-year">NYE 2024–25</div>
+        <div class="tl-title">RES — Atlanta Peach Drop</div>
+        <div class="tl-desc">Bassist and co-arranger for RES at Atlanta's flagship New Year's Eve event, Centennial Olympic Park. Tens of thousands ringing in the new year.</div>
+      </div>
+      <div class="tl-item animate-slide-left">
+        <div class="tl-dot"></div>
+        <div class="tl-year">January 2025</div>
+        <div class="tl-title">GloRilla — Saturday Night Live</div>
+        <div class="tl-desc">Co-arranger and MD for GloRilla's SNL performance. NBC Studio 8H, New York City. One of the biggest stages in American television.</div>
+      </div>
+      <div class="tl-item animate-slide-left">
+        <div class="tl-dot"></div>
+        <div class="tl-year">December 2025</div>
+        <div class="tl-title">Kirk Franklin — Church Music</div>
+        <div class="tl-desc">Produces and arranges for Kirk Franklin's live recording of his upcoming album "Church Music." Another Grammy-winning name on the list.</div>
+      </div>
+      <div class="tl-item animate-slide-left">
+        <div class="tl-dot pulse-dot" style="background:var(--gold);"></div>
+        <div class="tl-year">2026</div>
+        <div class="tl-title">Still going.</div>
+        <div class="tl-desc">Active as Musical Director, Arranger, Session Musician, Developer, and Creative Director. The O-1 visa is in the works. Watch this space.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTRUMENTS -->
+<section class="section">
+  <div class="container">
+    <div class="section-heading animate-on-scroll">
+      <h2>Instruments</h2>
+      <p>Eight instruments. One musical director.</p>
+    </div>
+    <div class="grid-4 stagger-group" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="instrument-card stagger-item" style="position:relative;overflow:hidden;cursor:pointer;"
+  onmouseenter="this.querySelector('.inst-gif').style.opacity='1';this.querySelector('.inst-default').style.opacity='0';"
+  onmouseleave="this.querySelector('.inst-gif').style.opacity='0';this.querySelector('.inst-default').style.opacity='1';">
+  <div class="inst-default" style="transition:opacity 0.3s ease;display:flex;flex-direction:column;align-items:center;gap:8px;">
+    <div class="instrument-icon">🎹</div><h4>Keys</h4>
+  </div>
+  <div class="inst-gif" style="position:absolute;inset:0;opacity:0;transition:opacity 0.3s ease;background:#0D0D0B;">
+    <img src="assets/images/instruments/keys.gif" alt="Keys" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:10px;background:linear-gradient(transparent,rgba(0,0,0,0.8));font-family:var(--font-heading);font-size:20px;color:#FAFAF8;letter-spacing:0.03em;">Keys</div>
+  </div>
+</div>
+      <div class="instrument-card stagger-item" style="position:relative;overflow:hidden;cursor:pointer;"
+  onmouseenter="this.querySelector('.inst-gif').style.opacity='1';this.querySelector('.inst-default').style.opacity='0';"
+  onmouseleave="this.querySelector('.inst-gif').style.opacity='0';this.querySelector('.inst-default').style.opacity='1';">
+  <div class="inst-default" style="transition:opacity 0.3s ease;display:flex;flex-direction:column;align-items:center;gap:8px;">
+    <div class="instrument-icon">🎸</div><h4>Bass</h4>
+  </div>
+  <div class="inst-gif" style="position:absolute;inset:0;opacity:0;transition:opacity 0.3s ease;background:#0D0D0B;">
+    <img src="assets/images/instruments/bass.gif" alt="Bass" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:10px;background:linear-gradient(transparent,rgba(0,0,0,0.8));font-family:var(--font-heading);font-size:20px;color:#FAFAF8;letter-spacing:0.03em;">Bass</div>
+  </div>
+</div>
+      <div class="instrument-card stagger-item" style="position:relative;overflow:hidden;cursor:pointer;"
+  onmouseenter="this.querySelector('.inst-gif').style.opacity='1';this.querySelector('.inst-default').style.opacity='0';"
+  onmouseleave="this.querySelector('.inst-gif').style.opacity='0';this.querySelector('.inst-default').style.opacity='1';">
+  <div class="inst-default" style="transition:opacity 0.3s ease;display:flex;flex-direction:column;align-items:center;gap:8px;">
+    <div class="instrument-icon">🎸</div><h4>Guitar</h4>
+  </div>
+  <div class="inst-gif" style="position:absolute;inset:0;opacity:0;transition:opacity 0.3s ease;background:#0D0D0B;">
+    <img src="assets/images/instruments/guitar.gif" alt="Guitar" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:10px;background:linear-gradient(transparent,rgba(0,0,0,0.8));font-family:var(--font-heading);font-size:20px;color:#FAFAF8;letter-spacing:0.03em;">Guitar</div>
+  </div>
+</div>
+      <div class="instrument-card stagger-item" style="position:relative;overflow:hidden;cursor:pointer;"
+  onmouseenter="this.querySelector('.inst-gif').style.opacity='1';this.querySelector('.inst-default').style.opacity='0';"
+  onmouseleave="this.querySelector('.inst-gif').style.opacity='0';this.querySelector('.inst-default').style.opacity='1';">
+  <div class="inst-default" style="transition:opacity 0.3s ease;display:flex;flex-direction:column;align-items:center;gap:8px;">
+    <div class="instrument-icon">🥁</div><h4>Drums</h4>
+  </div>
+  <div class="inst-gif" style="position:absolute;inset:0;opacity:0;transition:opacity 0.3s ease;background:#0D0D0B;">
+    <img src="assets/images/instruments/drums.gif" alt="Drums" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:10px;background:linear-gradient(transparent,rgba(0,0,0,0.8));font-family:var(--font-heading);font-size:20px;color:#FAFAF8;letter-spacing:0.03em;">Drums</div>
+  </div>
+</div>
+    </div>
+    <div class="grid-4 stagger-group" style="margin-top:18px; grid-template-columns: repeat(4, 1fr);">
+      <div class="instrument-card stagger-item" style="position:relative;overflow:hidden;cursor:pointer;"
+  onmouseenter="this.querySelector('.inst-gif').style.opacity='1';this.querySelector('.inst-default').style.opacity='0';"
+  onmouseleave="this.querySelector('.inst-gif').style.opacity='0';this.querySelector('.inst-default').style.opacity='1';">
+  <div class="inst-default" style="transition:opacity 0.3s ease;display:flex;flex-direction:column;align-items:center;gap:8px;">
+    <div class="instrument-icon">🎤</div><h4>Vocals</h4>
+  </div>
+  <div class="inst-gif" style="position:absolute;inset:0;opacity:0;transition:opacity 0.3s ease;background:#0D0D0B;">
+    <img src="assets/images/instruments/vocals.gif" alt="Vocals" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:10px;background:linear-gradient(transparent,rgba(0,0,0,0.8));font-family:var(--font-heading);font-size:20px;color:#FAFAF8;letter-spacing:0.03em;">Vocals</div>
+  </div>
+</div>
+      <div class="instrument-card stagger-item" style="position:relative;overflow:hidden;cursor:pointer;"
+  onmouseenter="this.querySelector('.inst-gif').style.opacity='1';this.querySelector('.inst-default').style.opacity='0';"
+  onmouseleave="this.querySelector('.inst-gif').style.opacity='0';this.querySelector('.inst-default').style.opacity='1';">
+  <div class="inst-default" style="transition:opacity 0.3s ease;display:flex;flex-direction:column;align-items:center;gap:8px;">
+    <div class="instrument-icon">🎵</div><h4>Melodica</h4>
+  </div>
+  <div class="inst-gif" style="position:absolute;inset:0;opacity:0;transition:opacity 0.3s ease;background:#0D0D0B;">
+    <img src="assets/images/instruments/melodica.gif" alt="Melodica" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:10px;background:linear-gradient(transparent,rgba(0,0,0,0.8));font-family:var(--font-heading);font-size:20px;color:#FAFAF8;letter-spacing:0.03em;">Melodica</div>
+  </div>
+</div>
+      <div class="instrument-card stagger-item" style="position:relative;overflow:hidden;cursor:pointer;"
+  onmouseenter="this.querySelector('.inst-gif').style.opacity='1';this.querySelector('.inst-default').style.opacity='0';"
+  onmouseleave="this.querySelector('.inst-gif').style.opacity='0';this.querySelector('.inst-default').style.opacity='1';">
+  <div class="inst-default" style="transition:opacity 0.3s ease;display:flex;flex-direction:column;align-items:center;gap:8px;">
+    <div class="instrument-icon">🥁</div><h4>Steel Pan</h4>
+  </div>
+  <div class="inst-gif" style="position:absolute;inset:0;opacity:0;transition:opacity 0.3s ease;background:#0D0D0B;">
+    <img src="assets/images/instruments/steelpan.gif" alt="Steel Pan" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:10px;background:linear-gradient(transparent,rgba(0,0,0,0.8));font-family:var(--font-heading);font-size:20px;color:#FAFAF8;letter-spacing:0.03em;">Steel Pan</div>
+  </div>
+</div>
+      <div class="instrument-card stagger-item" style="position:relative;overflow:hidden;cursor:pointer;"
+  onmouseenter="this.querySelector('.inst-gif').style.opacity='1';this.querySelector('.inst-default').style.opacity='0';"
+  onmouseleave="this.querySelector('.inst-gif').style.opacity='0';this.querySelector('.inst-default').style.opacity='1';">
+  <div class="inst-default" style="transition:opacity 0.3s ease;display:flex;flex-direction:column;align-items:center;gap:8px;">
+    <div class="instrument-icon">🎶</div><h4>Mixed Percussion</h4>
+  </div>
+  <div class="inst-gif" style="position:absolute;inset:0;opacity:0;transition:opacity 0.3s ease;background:#0D0D0B;">
+    <img src="assets/images/instruments/percussion.gif" alt="Mixed Percussion" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:10px;background:linear-gradient(transparent,rgba(0,0,0,0.8));font-family:var(--font-heading);font-size:20px;color:#FAFAF8;letter-spacing:0.03em;">Mixed Percussion</div>
+  </div>
+</div>
+    </div>
+  </div>
+</section>
+
+<!-- FUN FACTS -->
+<section class="section section-grey">
+  <div class="container">
+    <div class="section-heading animate-on-scroll">
+      <h2>A Few Things You Should Know</h2>
+    </div>
+    <div class="grid-3 stagger-group">
+      <div class="fun-fact-card stagger-item">
+        <span class="fact-emoji">🎨</span>
+        <h4>Chromesthesia</h4>
+        <p>Joe sees music in colour — a rare form of synesthesia where sound triggers automatic, vivid colour experiences. Every chord has a shade. Every key has a temperature. He wouldn't turn it off if he could.</p>
+      </div>
+      <div class="fun-fact-card stagger-item">
+        <span class="fact-emoji">🎯</span>
+        <h4>Perfect Pitch</h4>
+        <p>Absolute pitch — Joe can identify and produce any musical note without a reference tone. Handy in the studio. Insufferable in restaurants with piped music.</p>
+      </div>
+      <div class="fun-fact-card stagger-item">
+        <span class="fact-emoji">💻</span>
+        <h4>Programmer &amp; Developer</h4>
+        <p>Joe loves programming, coding, and UI/UX design. He's currently building two apps — including Cipher, a music chart tool — and designs all his own artwork and digital projects.</p>
+      </div>
+      <div class="fun-fact-card stagger-item">
+        <span class="fact-emoji">🕺</span>
+        <h4>Breakdancer</h4>
+        <p>Yes, really. The musicality that shapes his arrangements is the same thing that drives him to the dancefloor. He moves like he hears — which is to say, very intentionally.</p>
+      </div>
+      <div class="fun-fact-card stagger-item">
+        <span class="fact-emoji">✝️</span>
+        <h4>Faith</h4>
+        <p>Joe is a Christian. His faith is central to who he is and how he works — not a checkbox, not a performance. It shapes how he leads, how he creates, and how he treats people.</p>
+      </div>
+      <div class="fun-fact-card stagger-item">
+        <span class="fact-emoji">😂</span>
+        <h4>Certified Goofball</h4>
+        <p>The rehearsal room has to laugh. Joe brings energy, banter, and the occasional terrible pun to every session — because tense musicians don't play well together.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-strip cta-strip-warm">
+  <div class="container">
+    <h2>Ready when you are.</h2>
+    <p>MD, arranger, session player, or all three — get in touch and let's figure out what your project needs.</p>
+    <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+      <a href="contact.html" class="btn btn-dark btn-lg">Get in touch</a>
+      <a href="services.html" class="btn btn-outline-dark btn-lg">View services</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-row">
+          <img src="assets/images/Logo_head_Gold.png" alt="" style="height:32px;width:auto;" onerror="this.style.display='none'">
+          <img src="assets/images/LogoType_Gold.png" alt="Joe Davis Arts &amp; Media" style="height:28px;width:auto;margin-left:10px;" onerror="this.style.display='none'">
+        </div>
+        <p class="footer-tagline">Musical Director · Arranger · Multi-Instrumentalist<br>Kingston, Jamaica · Globally Available</p>
+      </div>
+      <div class="footer-col"><h4>Pages</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="epk.html">EPK</a><a href="contact.html">Contact</a></div>
+      <div class="footer-col"><h4>Socials</h4><a href="https://www.instagram.com/joedavismusic" target="_blank">Instagram</a><a href="https://www.youtube.com/@joedavismusic" target="_blank">YouTube</a><a href="https://www.linkedin.com/in/joedavisarts" target="_blank">LinkedIn</a><a href="https://www.tiktok.com/@joedavismusic" target="_blank">TikTok</a><a href="https://twitter.com/joedavismusicja" target="_blank">Twitter</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Joe Davis Arts &amp; Media. All rights reserved.</span>
+      <div class="footer-contact-row"><a href="mailto:contact@joedavisarts.com">contact@joedavisarts.com</a><a href="tel:+18768972446">+1 (876) 897-2446</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+</body>
+</html>
