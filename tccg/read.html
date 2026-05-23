@@ -460,8 +460,6 @@
   function updateUI() {
     document.getElementById('pageInput').value = currentPage
     const pct = ((currentPage - 1) / Math.max(totalPages - 1, 1)) * 100
-    document.getElementById('progressFill').style.width = pct + '%'
-    document.getElementById('progressThumb').style.left = pct + '%'
     document.getElementById('prevBtn').disabled = currentPage <= 1
     document.getElementById('firstBtn').disabled = currentPage <= 1
     document.getElementById('nextBtn').disabled = spreadMode
