@@ -28,7 +28,7 @@ export default async function handler(req, res) {
 
     // Set session cookie — HttpOnly so JS can't read it
     res.setHeader('Set-Cookie', [
-      `tccg_session=${data.session.access_token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${60 * 60 * 24 * 7}`
+      `tccg_session=${data.session.access_token}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${60 * 60 * 24 * 7}`
     ])
 
     return res.status(200).json({ ok: true })
