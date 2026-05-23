@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Crowned Confidence Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --burgundy: #3a0d0c;
+      --gold: #cab84c;
+      --gold-light: #e8d483;
+      --cream: #faf8f4;
+      --cream-dark: #f0ebe0;
+      --ink: #1c1c1c;
+      --ink-mid: #555;
+      --ink-light: #999;
+      --border: rgba(58,13,12,0.1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.25rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(250,248,244,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      color: var(--burgundy);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-logo .crown { font-size: 13px; }
+
+    .nav-cta {
+      background: var(--burgundy);
+      color: #faf8f4;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      padding: 10px 22px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 70px;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem 5rem 5rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 6vw, 80px);
+      font-weight: 300;
+      line-height: 1.0;
+      color: var(--burgundy);
+      margin-bottom: 0.25rem;
+      letter-spacing: -1px;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .hero-title strong {
+      font-weight: 600;
+      display: block;
+      font-style: normal;
+      letter-spacing: -2px;
+      font-size: clamp(64px, 8vw, 100px);
+    }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      letter-spacing: 0;
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--ink-mid);
+      font-weight: 300;
+      max-width: 440px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--burgundy);
+      color: #faf8f4;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      padding: 15px 32px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { opacity: 0.85; }
+
+    .btn-ghost {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--ink-mid);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+
+    .btn-ghost:hover { color: var(--burgundy); }
+
+    .hero-price {
+      margin-top: 1.5rem;
+      font-size: 12px;
+      color: var(--ink-light);
+      font-weight: 300;
+    }
+
+    .hero-price strong {
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--ink);
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* HERO RIGHT — book mockup */
+    .hero-right {
+      background: var(--cream-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, rgba(202,184,76,0.08) 0%, transparent 70%);
+    }
+
+    .book-mockup {
+      width: 55%;
+      max-width: 320px;
+      aspect-ratio: 8.5/11;
+      background: var(--burgundy);
+      border-radius: 3px 8px 8px 3px;
+      box-shadow:
+        -4px 0 8px rgba(0,0,0,0.15),
+        0 20px 60px rgba(58,13,12,0.25),
+        0 4px 12px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .book-mockup::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      background: rgba(0,0,0,0.25);
+      border-radius: 3px 0 0 3px;
+    }
+
+    .book-mockup-the {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 18px;
+      color: rgba(255,255,255,0.7);
+      font-weight: 300;
+      margin-bottom: 2px;
+    }
+
+    .book-mockup-crowned {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 3px;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .book-mockup-confidence {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .book-mockup-guide {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 22px;
+      color: rgba(255,255,255,0.6);
+      font-weight: 300;
+    }
+
+    .book-mockup-crown {
+      font-size: 24px;
+      margin: 12px 0;
+    }
+
+    .book-mockup-author {
+      position: absolute;
+      bottom: 1.5rem;
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      font-weight: 400;
+    }
+
+    /* SECTION DIVIDER */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0 5rem;
+      margin: 0;
+    }
+
+    .divider-line { flex: 1; height: 0.5px; background: var(--border); }
+    .divider-icon { color: var(--gold); font-size: 14px; }
+
+    /* WHAT'S INSIDE */
+    .inside {
+      padding: 6rem 5rem;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 300;
+      color: var(--burgundy);
+      line-height: 1.1;
+      margin-bottom: 3rem;
+      max-width: 500px;
+    }
+
+    .sections-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 0.5px solid var(--border);
+    }
+
+    .section-card {
+      background: var(--cream);
+      padding: 2.5rem 2rem;
+      transition: background 0.2s;
+    }
+
+    .section-card:hover { background: var(--cream-dark); }
+
+    .section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--gold);
+      opacity: 0.5;
+      line-height: 1;
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+
+    .section-name {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .section-desc {
+      font-size: 13px;
+      color: var(--ink-mid);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* FOR WHO */
+    .for-who {
+      background: var(--burgundy);
+      padding: 6rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .for-who .section-label { color: var(--gold); }
+    .for-who .section-label::before { background: var(--gold); }
+
+    .for-who .section-title {
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
+
+    .for-who-desc {
+      font-size: 15px;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.6);
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+
+    .for-who-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .for-who-list li {
+      font-size: 14px;
+      color: rgba(255,255,255,0.8);
+      font-weight: 300;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+
+    .for-who-list li::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: 10px;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .for-who-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: rgba(255,255,255,0.08);
+      border: 0.5px solid rgba(255,255,255,0.1);
+    }
+
+    .quote-block {
+      padding: 2.5rem;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .quote-block + .quote-block {
+      border-top: 0.5px solid rgba(255,255,255,0.08);
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
+    }
+
+    .quote-source {
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    /* AUTHOR */
+    .author {
+      padding: 6rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .author-img-wrap {
+      aspect-ratio: 3/4;
+      background: var(--cream-dark);
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .author-img-placeholder {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-style: italic;
+      color: var(--ink-light);
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .author-img-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gold);
+    }
+
+    .author-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .author-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--burgundy);
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+
+    .author-bio {
+      font-size: 15px;
+      line-height: 1.9;
+      color: var(--ink-mid);
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+
+    .author-credential {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--ink-light);
+      font-weight: 300;
+      padding: 0.75rem 0;
+      border-top: 0.5px solid var(--border);
+    }
+
+    .author-credential::before {
+      content: '♛';
+      color: var(--gold);
+      font-size: 12px;
+    }
+
+    /* CTA */
+    .cta-section {
+      background: var(--cream-dark);
+      padding: 7rem 5rem;
+      text-align: center;
+      border-top: 0.5px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(202,184,76,0.07) 0%, transparent 60%);
+    }
+
+    .cta-crown {
+      font-size: 32px;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 5vw, 72px);
+      font-weight: 300;
+      color: var(--burgundy);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .cta-title em { font-style: italic; }
+
+    .cta-sub {
+      font-size: 15px;
+      color: var(--ink-mid);
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+      position: relative;
+    }
+
+    .cta-price-wrap {
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .cta-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 56px;
+      font-weight: 300;
+      color: var(--burgundy);
+      line-height: 1;
+    }
+
+    .cta-price sup {
+      font-size: 24px;
+      vertical-align: super;
+      font-weight: 400;
+    }
+
+    .cta-price-note {
+      font-size: 12px;
+      color: var(--ink-light);
+      margin-top: 4px;
+      font-weight: 300;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--burgundy);
+      color: #faf8f4;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      padding: 18px 52px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .cta-btn:hover { opacity: 0.85; }
+
+    .cta-note {
+      font-size: 12px;
+      color: var(--ink-light);
+      font-weight: 300;
+      position: relative;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--burgundy);
+      padding: 2.5rem 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      font-weight: 300;
+    }
+
+    .footer-link {
+      font-size: 11px;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 400;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .footer-link:hover { opacity: 1; }
+
+
+    .book-cover-wrap {
+      perspective: 1200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      padding: 4rem;
+    }
+
+    .book-cover-img {
+      width: 65%;
+      max-width: 340px;
+      border-radius: 3px 8px 8px 3px;
+      box-shadow:
+        -6px 0 12px rgba(0,0,0,0.2),
+        0 24px 80px rgba(58,13,12,0.35),
+        0 8px 24px rgba(0,0,0,0.15);
+      transform: rotateY(-8deg) rotateX(2deg);
+      transition: transform 0.4s ease;
+      display: block;
+    }
+
+    .book-cover-wrap:hover .book-cover-img {
+      transform: rotateY(-4deg) rotateX(1deg) scale(1.02);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow { animation: fadeUp 0.6s ease both; }
+    .hero-title { animation: fadeUp 0.6s 0.1s ease both; }
+    .hero-subtitle { animation: fadeUp 0.6s 0.2s ease both; }
+    .hero-desc { animation: fadeUp 0.6s 0.3s ease both; }
+    .hero-actions { animation: fadeUp 0.6s 0.4s ease both; }
+    .book-mockup { animation: fadeUp 0.8s 0.2s ease both; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 50vh; }
+      .hero-left { padding: 3rem 2rem; }
+      .inside { padding: 4rem 2rem; }
+      .sections-grid { grid-template-columns: 1fr; }
+      .for-who { grid-template-columns: 1fr; padding: 4rem 2rem; }
+      .author { grid-template-columns: 1fr; padding: 4rem 2rem; }
+      .cta-section { padding: 5rem 2rem; }
+      footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+      nav { padding: 1rem 1.5rem; }
+      .divider { padding: 0 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="logo.png" alt="The Crowned Confidence Guide" style="height:36px;width:auto;filter:brightness(0) saturate(100%) invert(8%) sepia(47%) saturate(3000%) hue-rotate(330deg) brightness(60%);">
+  </a>
+  <a href="#buy" class="nav-cta">Get Your Copy</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">By T'Dane Gordon</p>
+    <h1 class="hero-title">
+      <em>The</em>
+      <strong>Crowned</strong>
+    </h1>
+    <p class="hero-subtitle">Confidence Guide</p>
+    <p class="hero-desc">
+      Eight steps to confidence, leadership, clarity, and queen energy.
+      Your guide to building your brand and living in your purpose —
+      on stage and off it.
+    </p>
+    <div class="hero-actions">
+      <a href="#buy" class="btn-primary">Get Your Copy — $20</a>
+      <a href="#inside" class="btn-ghost">See what's inside →</a>
+    </div>
+    <p class="hero-price">
+      <strong>$20 USD</strong> &nbsp;·&nbsp; Instant digital access &nbsp;·&nbsp; Read anywhere
+    </p>
+  </div>
+
+  <div class="hero-right">
+    <div class="book-cover-wrap">
+      <img src="cover.jpg" alt="The Crowned Confidence Guide" class="book-cover-img"/>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <span class="divider-icon">✦</span>
+  <div class="divider-line"></div>
+</div>
+
+<!-- WHAT'S INSIDE -->
+<section class="inside" id="inside">
+  <p class="section-label">What's Inside</p>
+  <h2 class="section-title">Eight sections. One complete guide.</h2>
+
+  <div class="sections-grid">
+    <div class="section-card">
+      <p class="section-num">01</p>
+      <p class="section-name">Building Your Pageant Presence</p>
+      <p class="section-desc">Confidence begins before you step on stage.</p>
+    </div>
+    <div class="section-card">
+      <p class="section-num">02</p>
+      <p class="section-name">Mastering Pageant Q&A</p>
+      <p class="section-desc">Your voice is just as powerful as your appearance.</p>
+    </div>
+    <div class="section-card">
+      <p class="section-num">03</p>
+      <p class="section-name">Sponsorship & Personal Branding</p>
+      <p class="section-desc">Your personal brand speaks before you do.</p>
+    </div>
+    <div class="section-card">
+      <p class="section-num">04</p>
+      <p class="section-name">Social Media & Content Creation</p>
+      <p class="section-desc">Your content tells your story before you speak.</p>
+    </div>
+    <div class="section-card">
+      <p class="section-num">05</p>
+      <p class="section-name">The Investment Behind the Crown</p>
+      <p class="section-desc">Pageantry is more than glamour. It's preparation and purpose.</p>
+    </div>
+    <div class="section-card">
+      <p class="section-num">06</p>
+      <p class="section-name">Confidence & Mindset</p>
+      <p class="section-desc">Real confidence is built in the moments no one sees.</p>
+    </div>
+    <div class="section-card">
+      <p class="section-num">07</p>
+      <p class="section-name">Advocacy & Beauty With a Purpose</p>
+      <p class="section-desc">A crown means nothing without purpose behind it.</p>
+    </div>
+    <div class="section-card">
+      <p class="section-num">08</p>
+      <p class="section-name">Preparation Checklists</p>
+      <p class="section-desc">Everything you need to walk in ready.</p>
+    </div>
+    <div class="section-card">
+      <p class="section-num">✦</p>
+      <p class="section-name">Final Words</p>
+      <p class="section-desc">Keep believing. Keep growing. Keep becoming.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHO -->
+<section class="for-who">
+  <div>
+    <p class="section-label">Who It's For</p>
+    <h2 class="section-title">Made for the woman who is ready.</h2>
+    <p class="for-who-desc">
+      Whether you're preparing for your first pageant or your fifth, this guide meets you where you are and takes you further than you thought possible.
+    </p>
+    <ul class="for-who-list">
+      <li>First-time contestants who want to walk in prepared</li>
+      <li>Returning competitors ready to level up their presence</li>
+      <li>Young women building confidence and personal brand</li>
+      <li>Anyone who wants to live with more purpose and clarity</li>
+    </ul>
+  </div>
+
+  <div class="for-who-right">
+    <div class="quote-block">
+      <p class="quote-text">"The crown may shine on stage, but the work begins long before."</p>
+      <p class="quote-source">The Crowned Confidence Guide</p>
+    </div>
+    <div class="quote-block">
+      <p class="quote-text">"Confidence is not the absence of fear. It is the decision to move forward in spite of it."</p>
+      <p class="quote-source">The Crowned Confidence Guide</p>
+    </div>
+    <div class="quote-block">
+      <p class="quote-text">"Your voice matters and your presence has power in rooms you haven't even walked into yet."</p>
+      <p class="quote-source">The Crowned Confidence Guide</p>
+    </div>
+  </div>
+</section>
+
+<!-- AUTHOR -->
+<section class="author">
+  <div class="author-img-wrap">
+    <img src="tdane.jpeg" alt="T'Dane Gordon" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;"/>
+  </div>
+  <div>
+    <p class="author-tag">About the Author</p>
+    <h2 class="author-name">T'Dane<br/>Gordon</h2>
+    <p class="author-bio">
+      T'Dane Gordon is a pageant alumna, advocate, and the voice behind The Crowned Confidence Guide. Drawing from her personal journey competing in Miss Jamaica World, she created this guide to give every aspiring contestant the tools, mindset, and clarity she wishes she'd had when she started.
+    </p>
+    <p class="author-bio">
+      Her mission is simple — to make the pageant journey feel less overwhelming and more purposeful, one contestant at a time.
+    </p>
+    <p class="author-credential">Miss Jamaica World Alumna</p>
+    <p class="author-credential">Advocate for confidence and purpose-driven leadership</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="buy">
+  <span class="cta-crown">♛</span>
+  <h2 class="cta-title">Ready to wear<br/><em>your</em> crown?</h2>
+  <p class="cta-sub">Get instant digital access to The Crowned Confidence Guide and start building the presence, confidence, and purpose that gets you noticed.</p>
+
+  <div class="cta-price-wrap">
+    <p class="cta-price"><sup>$</sup>20 <span style="font-size:22px;color:var(--ink-light)">USD</span></p>
+    <p class="cta-price-note">One-time purchase · Instant access · Read on any device</p>
+  </div>
+
+  <a href="#" class="cta-btn" id="buy-btn">Get Instant Access</a>
+  <br/>
+  <p class="cta-note">Secure checkout · Delivered to your inbox immediately</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-logo">The Crowned Confidence Guide</p>
+  <p class="footer-copy">© 2026 T'Dane Gordon. All rights reserved.</p>
+  <a href="/tccg/login" class="footer-link">Already purchased? Sign in →</a>
+</footer>
+
+</body>
+</html>

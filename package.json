@@ -1,0 +1,12 @@
+{
+  "name": "tccg-api",
+  "version": "1.0.0",
+  "description": "The Crowned Confidence Guide — API functions",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "aws4fetch": "^1.0.20",
+    "resend": "^2.0.0",
+    "stripe": "^14.0.0"
+  }
+}

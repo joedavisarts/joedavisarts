@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign In — The Crowned Confidence Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --burgundy: #3a0d0c;
+      --gold: #cab84c;
+      --cream: #faf8f4;
+      --cream-dark: #f0ebe0;
+      --ink: #1c1c1c;
+      --ink-mid: #555;
+      --ink-light: #999;
+      --border: rgba(58,13,12,0.12);
+      --error: #c0392b;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      color: var(--ink);
+    }
+
+    body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+
+    /* LEFT PANEL */
+    .left {
+      background: var(--burgundy);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 60%, rgba(202,184,76,0.08) 0%, transparent 60%);
+    }
+
+    .left-logo {
+      position: relative;
+    }
+
+    .left-logo img {
+      height: 48px;
+      width: auto;
+      filter: brightness(0) invert(1);
+      opacity: 0.9;
+    }
+
+    .left-middle {
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem 0;
+    }
+
+    .left-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 3vw, 42px);
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.35;
+      margin-bottom: 1.5rem;
+    }
+
+    .left-quote-attr {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 400;
+      opacity: 0.8;
+    }
+
+    .left-cover {
+      position: relative;
+      margin-top: 2rem;
+    }
+
+    .left-cover img {
+      width: 55%;
+      max-width: 220px;
+      border-radius: 2px 6px 6px 2px;
+      box-shadow:
+        -4px 0 8px rgba(0,0,0,0.2),
+        0 16px 48px rgba(0,0,0,0.3);
+      transform: rotateY(-6deg);
+      display: block;
+    }
+
+    .left-bottom {
+      position: relative;
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      font-weight: 300;
+    }
+
+    /* RIGHT PANEL */
+    .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 5rem;
+      max-width: 560px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--ink-light);
+      text-decoration: none;
+      margin-bottom: 3rem;
+      transition: color 0.2s;
+      font-weight: 400;
+    }
+
+    .back-link:hover { color: var(--burgundy); }
+
+    .signin-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .signin-eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .signin-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 300;
+      color: var(--burgundy);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .signin-sub {
+      font-size: 14px;
+      color: var(--ink-mid);
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 13px 16px;
+      background: var(--cream-dark);
+      border: 0.5px solid var(--border);
+      border-radius: 2px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: var(--burgundy);
+      background: #fff;
+    }
+
+    input::placeholder { color: var(--ink-light); }
+
+    .password-wrap {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--ink-light);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+
+    .password-toggle:hover { color: var(--burgundy); }
+
+    .error-msg {
+      background: rgba(192,57,43,0.06);
+      border: 0.5px solid rgba(192,57,43,0.2);
+      border-radius: 2px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--error);
+      font-weight: 400;
+      margin-bottom: 1.25rem;
+      display: none;
+    }
+
+    .error-msg.visible { display: block; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--burgundy);
+      color: #faf8f4;
+      border: none;
+      border-radius: 2px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-top: 0.5rem;
+      position: relative;
+    }
+
+    .submit-btn:hover { opacity: 0.85; }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .submit-btn .btn-loading {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .submit-btn.loading .btn-text { display: none; }
+    .submit-btn.loading .btn-loading { display: flex; }
+
+    .spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .form-footer {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 0.5px solid var(--border);
+      font-size: 13px;
+      color: var(--ink-light);
+      font-weight: 300;
+      text-align: center;
+    }
+
+    .form-footer a {
+      color: var(--burgundy);
+      text-decoration: none;
+      font-weight: 400;
+    }
+
+    .form-footer a:hover { text-decoration: underline; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      body { grid-template-columns: 1fr; }
+      .left { display: none; }
+      .right { padding: 3rem 2rem; max-width: 100%; }
+    }
+
+    /* FADE IN */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .right > * { animation: fadeUp 0.5s ease both; }
+    .back-link { animation-delay: 0s; }
+    .signin-eyebrow { animation-delay: 0.05s; }
+    .signin-title { animation-delay: 0.1s; }
+    .signin-sub { animation-delay: 0.15s; }
+    .form-group { animation-delay: 0.2s; }
+    .submit-btn { animation-delay: 0.25s; }
+  </style>
+</head>
+<body>
+
+<!-- LEFT -->
+<div class="left">
+  <div class="left-logo">
+    <img src="logo.png" alt="The Crowned Confidence Guide"/>
+  </div>
+
+  <div class="left-middle">
+    <p class="left-quote">"The crown may shine on stage, but the work begins long before."</p>
+    <p class="left-quote-attr">The Crowned Confidence Guide</p>
+    <div class="left-cover">
+      <img src="cover.jpg" alt="The Crowned Confidence Guide"/>
+    </div>
+  </div>
+
+  <p class="left-bottom">© 2026 T'Dane Gordon. All rights reserved.</p>
+</div>
+
+<!-- RIGHT -->
+<div class="right">
+  <a href="/tccg" class="back-link">← Back to guide</a>
+
+  <p class="signin-eyebrow">Access Your Copy</p>
+  <h1 class="signin-title">Welcome<br/>back.</h1>
+  <p class="signin-sub">Enter your email and the password sent to your inbox after purchase.</p>
+
+  <div class="error-msg" id="errorMsg">
+    Incorrect email or password. Please check your inbox for your login details.
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input type="email" id="email" placeholder="you@example.com" autocomplete="email"/>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <div class="password-wrap">
+      <input type="password" id="password" placeholder="Your password" autocomplete="current-password"/>
+      <button class="password-toggle" id="pwToggle" type="button">show</button>
+    </div>
+  </div>
+
+  <button class="submit-btn" id="submitBtn">
+    <span class="btn-text">Sign In</span>
+    <span class="btn-loading">
+      <span class="spinner"></span>
+      Signing in...
+    </span>
+  </button>
+
+  <div class="form-footer">
+    Don't have access yet? <a href="/tccg#buy">Get your copy →</a>
+  </div>
+</div>
+
+<script>
+  // Password toggle
+  const pwToggle = document.getElementById('pwToggle')
+  const pwInput = document.getElementById('password')
+
+  pwToggle.addEventListener('click', () => {
+    if (pwInput.type === 'password') {
+      pwInput.type = 'text'
+      pwToggle.textContent = 'hide'
+    } else {
+      pwInput.type = 'password'
+      pwToggle.textContent = 'show'
+    }
+  })
+
+  // Sign in
+  const submitBtn = document.getElementById('submitBtn')
+  const errorMsg = document.getElementById('errorMsg')
+
+  submitBtn.addEventListener('click', async () => {
+    const email = document.getElementById('email').value.trim()
+    const password = document.getElementById('password').value
+
+    if (!email || !password) return
+
+    submitBtn.classList.add('loading')
+    submitBtn.disabled = true
+    errorMsg.classList.remove('visible')
+
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      })
+
+      if (res.ok) {
+        window.location.href = '/tccg/read'
+      } else {
+        errorMsg.classList.add('visible')
+        submitBtn.classList.remove('loading')
+        submitBtn.disabled = false
+      }
+    } catch (err) {
+      errorMsg.classList.add('visible')
+      submitBtn.classList.remove('loading')
+      submitBtn.disabled = false
+    }
+  })
+
+  // Allow enter key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') submitBtn.click()
+  })
+</script>
+
+</body>
+</html>
