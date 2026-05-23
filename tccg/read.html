@@ -202,10 +202,13 @@
     .page-slot {
       position: relative;
       background: #fff;
-      box-shadow: 0 8px 48px rgba(0,0,0,0.6), 0 2px 12px rgba(0,0,0,0.4);
+      box-shadow: 0 8px 48px rgba(0,0,0,0.5);
       overflow: hidden;
       flex-shrink: 0;
     }
+
+    #leftSlot { box-shadow: -8px 8px 48px rgba(0,0,0,0.5); }
+    #rightSlot { box-shadow: 8px 8px 48px rgba(0,0,0,0.5); }
 
     .page-slot canvas {
       display: block;
