@@ -542,13 +542,6 @@
     else if (x > rect.width * 0.8) goNext()
   })
 
-  // Progress scrub
-  document.getElementById('progressTrack').addEventListener('click', e => {
-    const rect = document.getElementById('progressTrack').getBoundingClientRect()
-    const pct = (e.clientX - rect.left) / rect.width
-    goTo(Math.round(1 + pct * (totalPages - 1)))
-  })
-
   // Sign out
   document.getElementById('signOutBtn').addEventListener('click', async () => {
     await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
