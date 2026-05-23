@@ -323,6 +323,7 @@
     <div class="loading-bar" id="loadingBar"></div>
   </div>
   <p class="loading-text" id="loadingText">loading your guide...</p>
+  <p style="font-size:11px;color:rgba(255,255,255,0.2);font-weight:300;text-align:center;max-width:280px;line-height:1.6;margin-top:0.5rem;">for the best experience, we recommend viewing on a laptop or tablet. phones work, but some layouts may be tight.</p>
 </div>
 
 <div class="topbar">
@@ -344,9 +345,6 @@
   </div>
 
   <div class="topbar-right">
-    <button class="icon-btn" id="zoomOut">−</button>
-    <button class="icon-btn" id="zoomReset">100%</button>
-    <button class="icon-btn" id="zoomIn">+</button>
     <button class="icon-btn active" id="spreadToggle" title="Toggle spread view">⊞ spread</button>
     <button class="sign-out-btn" id="signOutBtn">sign out</button>
   </div>
@@ -360,6 +358,11 @@
 </div>
 
 <div class="bottombar">
+  <div style="display:flex;align-items:center;gap:0.5rem;flex-shrink:0;padding-left:1.5rem;">
+    <button class="icon-btn" id="zoomOut">−</button>
+    <button class="icon-btn" id="zoomReset">100%</button>
+    <button class="icon-btn" id="zoomIn">+</button>
+  </div>
   <div class="progress-track" id="progressTrack">
     <div class="progress-fill" id="progressFill" style="width:0%"></div>
     <div class="progress-thumb" id="progressThumb" style="left:0%"></div>
