@@ -567,6 +567,26 @@
   }
 
   init()
+
+  // Silent URL refresh every 55 minutes
+  setInterval(async () => {
+    try {
+      const res = await fetch('/api/reader/urls', { credentials: 'include' })
+      if (!res.ok) return
+      const freshUrls = await res.json()
+      signedUrls = freshUrls
+      // Update src on any unloaded images silently
+      document.querySelectorAll('.page-img-wrap:not(.loaded) img').forEach(img => {
+        const pageNum = img.closest('.page-img-wrap')?.dataset.page
+        if (pageNum) {
+          const padded = String(pageNum).padStart(2, '0')
+          img.dataset.src = signedUrls[padded] || img.dataset.src
+        }
+      })
+    } catch (err) {
+      // fail silently
+    }
+  }, 55 * 60 * 1000)
 </script>
 </body>
 </html>
