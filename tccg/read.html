@@ -373,22 +373,28 @@
   function buildViews() {
     views = []
     if (spreadMode) {
-      // page 1 = cover (solo)
       views.push({ pages: [1], solo: true })
-      // pages 2-71 in pairs
       for (let i = 2; i <= TOTAL_PAGES - 1; i += 2) {
         const right = i + 1 <= TOTAL_PAGES - 1 ? i + 1 : null
         views.push({ pages: right ? [i, right] : [i], solo: !right })
       }
-      // page 72 = back cover (solo)
       views.push({ pages: [TOTAL_PAGES], solo: true })
     } else {
       for (let i = 1; i <= TOTAL_PAGES; i++) {
         views.push({ pages: [i], solo: true })
       }
     }
-    pageTotal.textContent = '/ ' + views.length
-    pageInput.max = views.length
+    // always show total as 72
+    pageTotal.textContent = '/ ' + TOTAL_PAGES
+    pageInput.max = TOTAL_PAGES
+  }
+
+  // find which view index contains a given page number
+  function viewForPage(pageNum) {
+    for (let i = 0; i < views.length; i++) {
+      if (views[i].pages.includes(pageNum)) return i + 1
+    }
+    return 1
   }
 
   function pageUrl(n) {
@@ -472,8 +478,15 @@
     updateNavUI()
   }
 
+  function scrollToPage(pageNum) {
+    const idx = viewForPage(pageNum)
+    scrollToView(idx)
+  }
+
   function updateNavUI() {
-    pageInput.value = currentView
+    // show actual page number (first page in current view)
+    const currentPageNum = views[currentView - 1]?.pages[0] || currentView
+    pageInput.value = currentPageNum
     document.getElementById('firstBtn').disabled = currentView <= 1
     document.getElementById('prevBtn').disabled = currentView <= 1
     document.getElementById('nextBtn').disabled = currentView >= views.length
@@ -488,7 +501,6 @@
         const idx = parseInt(entry.target.dataset.viewIndex)
         if (idx && idx !== currentView) {
           currentView = idx
-          pageInput.value = idx
           updateNavUI()
         }
       }
@@ -506,14 +518,14 @@
   document.getElementById('lastBtn').addEventListener('click', () => scrollToView(views.length))
 
   pageInput.addEventListener('change', () => {
-    const v = Math.max(1, Math.min(views.length, parseInt(pageInput.value) || 1))
-    scrollToView(v)
+    const p = Math.max(1, Math.min(TOTAL_PAGES, parseInt(pageInput.value) || 1))
+    scrollToPage(p)
   })
 
   pageInput.addEventListener('keydown', e => {
     if (e.key === 'Enter') {
-      const v = Math.max(1, Math.min(views.length, parseInt(pageInput.value) || 1))
-      scrollToView(v)
+      const p = Math.max(1, Math.min(TOTAL_PAGES, parseInt(pageInput.value) || 1))
+      scrollToPage(p)
     }
   })
 
