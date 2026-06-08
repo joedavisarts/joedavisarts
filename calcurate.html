@@ -95,6 +95,7 @@ const CALCURATE_CONFIG = {
           price: 0,
           hasQty: false,
           isInPerson: true,
+          transportationNote: true,
           subAddons: [
             { id: "perf_instrument", label: "Bring Own Instrument", price: 80, hasQty: false },
           ],
@@ -109,6 +110,14 @@ const CALCURATE_CONFIG = {
           qtyMin: 1,
           isRehearsal: true,
         },
+        // Rush booking
+        { id: "perf_rush", label: "Rush Booking", hasQty: false, isRushTiered: true, rushUnit: "set", rushTiers: [
+          { id: "perf_rush_standard", label: "Standard — 7+ days",  pct: 0,    note: "" },
+          { id: "perf_rush_3_7",      label: "Rush — 3–7 days",     pct: 0.35, note: "" },
+          { id: "perf_rush_2",        label: "Rush — 2 days",       pct: 0.50, note: "Availability not guaranteed" },
+          { id: "perf_rush_next",     label: "Rush — Next day",     pct: 0.75, note: "Availability not guaranteed" },
+          { id: "perf_rush_same",     label: "Rush — Same day",     pct: 1.00, note: "Availability not guaranteed" },
+        ]},
       ],
     },
 
@@ -160,7 +169,12 @@ const CALCURATE_CONFIG = {
         { id: "album",   label: "Album (12+)", songs: 12 },
       ],
       addons: [
-        { id: "arr_rush",    label: "Rush Delivery (+$100 per song)", price: 100, hasQty: false, isPerSong: true },
+        { id: "arr_rush", label: "Rush Delivery", hasQty: false, isRushTiered: true, rushUnit: "song", rushTiers: [
+          { id: "arr_rush_standard", label: "Standard — 4–6 days", pct: 0, note: "" },
+          { id: "arr_rush_2_3",      label: "Rush — 2–3 days",     pct: 0.50, note: "" },
+          { id: "arr_rush_next",     label: "Rush — Next day",      pct: 0.75, note: "Availability not guaranteed" },
+          { id: "arr_rush_same",     label: "Rush — Same day",      pct: 1.00, note: "Availability not guaranteed" },
+        ]},
         { id: "arr_consult", label: "Pre-Consultation Call",          price: 20,  hasQty: false },
         // Band-only flag — shows note, no price
         { id: "arr_nontrack", label: "Non-Track Arrangement (Band only — custom setup)", price: 0, hasQty: false, bandOnly: true, isFlag: true },
@@ -197,15 +211,20 @@ const CALCURATE_CONFIG = {
           id: "sess_inperson",
           label: "In-Person Recording",
           price: 0,
-          displayPrice: "To be confirmed",
+          displayPrice: "Free",
           hasQty: false,
           isInPerson: true,
+          transportationNote: true,
           subAddons: [
             { id: "sess_instrument", label: "Bring Own Instrument", price: 80, hasQty: false },
           ],
         },
         { id: "sess_revisions", label: "Additional Revisions (beyond 4)", price: 40, hasQty: true, qtyStep: 1, qtyMin: 1, isRevision: true },
-        { id: "sess_rush",      label: "Rush Delivery (+$100 per track)",  price: 100, hasQty: false, isPerSong: true },
+        { id: "sess_rush", label: "Rush Delivery", hasQty: false, isRushTiered: true, rushUnit: "track", rushTiers: [
+          { id: "sess_rush_standard", label: "Standard — 2–5 days", pct: 0, note: "" },
+          { id: "sess_rush_next",     label: "Rush — Next day",      pct: 0.33, note: "Availability not guaranteed" },
+          { id: "sess_rush_same",     label: "Rush — Same day",      pct: 0.66, note: "Availability not guaranteed" },
+        ]},
       ],
     },
 
@@ -260,7 +279,12 @@ const CALCURATE_CONFIG = {
       addons: [
         { id: "prod_exclusive", label: "Exclusive License / Buyout",         price: 350, hasQty: false },
         { id: "prod_revisions", label: "Additional Revisions (beyond 4)",    price: 50,  hasQty: true, qtyStep: 1, qtyMin: 1, isRevision: true },
-        { id: "prod_rush",      label: "Rush Delivery (+$150 per track)",    price: 150, hasQty: false, isPerSong: true },
+        { id: "prod_rush", label: "Rush Delivery", hasQty: false, isRushTiered: true, rushUnit: "track", rushTiers: [
+          { id: "prod_rush_standard", label: "Standard — 6–12 days", pct: 0, note: "" },
+          { id: "prod_rush_2_5",      label: "Rush — 2–5 days",      pct: 0.50, note: "" },
+          { id: "prod_rush_next",     label: "Rush — Next day",       pct: 0.75, note: "Availability not guaranteed" },
+          { id: "prod_rush_same",     label: "Rush — Same day",       pct: 1.00, note: "Availability not guaranteed" },
+        ]},
         { id: "prod_writing",   label: "Original Songwriting",               price: 0.4, hasQty: false, isMultiplier: true, jingleOnly: true },
         { id: "prod_vocal",     label: "Vocal Talent",                       price: 0.8, hasQty: false, isMultiplier: true, jingleOnly: true },
         { id: "prod_cc_license",label: "Exclusive License (Jingle)",         price: 300, hasQty: false, jingleOnly: true },
@@ -1988,6 +2012,7 @@ const CALCURATE_CONFIG = {
   function buildAddonRow(addon, isGlobal, onChange, catId) {
     // Rich builders for complex addon types
     if (addon.isPhoto)     return buildPhotoAddonRow(addon, catId);
+    if (addon.isRushTiered) return buildRushTieredRow(addon, catId);
     if (addon.isMD || addon.isInPerson) return buildSubAddonRow(addon, catId);
 
     const hasQty = addon.hasQty === true;
@@ -2037,6 +2062,156 @@ const CALCURATE_CONFIG = {
     });
 
     return row;
+  }
+
+
+  // ── Rush Tiered Row ─────────────────────────────────────
+  function buildRushTieredRow(addon, catId) {
+    const wrapper = el('div', { style: 'display:flex;flex-direction:column;gap:4px;' });
+
+    // Main toggle row
+    const row = el('div', { class: 'addon-row' });
+    row.dataset.addonId = addon.id;
+
+    const left = el('div', { class: 'addon-left' });
+    const toggle = el('div', { class: 'addon-toggle' });
+    const name = el('span', { class: 'addon-name' }, addon.label);
+    left.appendChild(toggle);
+    left.appendChild(name);
+
+    const right = el('div');
+    const priceEl = el('span', { class: 'addon-price', id: `rush-price-${addon.id}` }, 'Standard');
+    right.appendChild(priceEl);
+
+    row.appendChild(left);
+    row.appendChild(right);
+
+    // Dropdown panel — shown when toggled
+    const panel = el('div', { style: 'display:none; flex-direction:column; gap:4px; padding-left:16px;' });
+
+    // Song counter for arr/prod (per-song rush)
+    let urgentCounterEl = null;
+    let urgentQty = 1;
+    if (addon.rushUnit === 'song' || addon.rushUnit === 'track') {
+      const counterWrap = el('div', {
+        style: 'display:flex; align-items:center; justify-content:space-between; padding:8px 12px; background:var(--surface2); border-radius:6px; margin-bottom:4px;'
+      });
+      const counterLabel = el('span', { class: 'addon-name' }, `Urgent ${addon.rushUnit}s`);
+      const qtyDiv = el('div', { class: 'addon-qty' });
+      const valEl = el('span', { class: 'qty-val' }, '1');
+      valEl.dataset.rushUrgentQty = addon.id; valEl.setAttribute('data-rush-urgent-qty', addon.id);
+      const minus = el('button', { class: 'qty-btn', onclick: (e) => {
+        e.stopPropagation();
+        if (!state.selections[catId].rushUrgent) state.selections[catId].rushUrgent = {};
+        const cur = state.selections[catId].rushUrgent[addon.id] || 1;
+        const nv = Math.max(1, cur - 1);
+        state.selections[catId].rushUrgent[addon.id] = nv;
+        valEl.textContent = nv;
+        updateTotal();
+      }}, '−');
+      const plus = el('button', { class: 'qty-btn', onclick: (e) => {
+        e.stopPropagation();
+        if (!state.selections[catId].rushUrgent) state.selections[catId].rushUrgent = {};
+        const catObj = CALCURATE_CONFIG.categories.find(c => c.id === catId);
+        const max = catObj ? (catObj._counterQty || 99) : 99;
+        const cur = state.selections[catId].rushUrgent[addon.id] || 1;
+        const nv = Math.min(max, cur + 1);
+        state.selections[catId].rushUrgent[addon.id] = nv;
+        valEl.textContent = nv;
+        updateTotal();
+      }}, '+');
+      qtyDiv.appendChild(minus);
+      qtyDiv.appendChild(valEl);
+      qtyDiv.appendChild(plus);
+      counterWrap.appendChild(counterLabel);
+      counterWrap.appendChild(qtyDiv);
+      urgentCounterEl = counterWrap;
+      panel.appendChild(counterWrap);
+    }
+
+    // Tier options
+    addon.rushTiers.forEach(tier => {
+      const tRow = el('div', {
+        class: 'addon-row',
+        style: 'background:var(--surface3); cursor:pointer;',
+      });
+      tRow.dataset.rushTierId = tier.id;
+
+      const tLeft = el('div', { class: 'addon-left' });
+      const tToggle = el('div', { class: 'addon-toggle' });
+      const tName = el('span', { class: 'addon-name' }, tier.label);
+      tLeft.appendChild(tToggle);
+      tLeft.appendChild(tName);
+
+      const tRight = el('div', { style: 'display:flex;flex-direction:column;align-items:flex-end;gap:2px;' });
+      const tPrice = el('span', { class: 'addon-price' },
+        tier.pct === 0 ? 'No fee' : `+${Math.round(tier.pct * 100)}% of base`);
+      tRight.appendChild(tPrice);
+
+      if (tier.note) {
+        const tNote = el('span', { style: 'font-size:11px;color:var(--accent);' }, tier.note);
+        tRight.appendChild(tNote);
+      }
+
+      tRow.appendChild(tLeft);
+      tRow.appendChild(tRight);
+
+      tRow.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // Deselect all tiers, select this one
+        panel.querySelectorAll('[data-rush-tier-id]').forEach(r => r.classList.remove('selected'));
+        tRow.classList.add('selected');
+        // Store selected tier
+        if (!state.selections[catId].rushTiers) state.selections[catId].rushTiers = {};
+        state.selections[catId].rushTiers[addon.id] = tier.id;
+        // Update price display on main row
+        priceEl.textContent = tier.pct === 0 ? 'Standard' : `+${Math.round(tier.pct * 100)}%`;
+
+        // Show warning note if availability not guaranteed
+        const existingNote = wrapper.querySelector('.rush-avail-note');
+        if (existingNote) existingNote.remove();
+        if (tier.note) {
+          const noteEl = el('div', {
+            class: 'rush-avail-note',
+            style: 'margin-left:16px; padding:8px 12px; background:rgba(218,179,34,0.08); border-radius:6px; font-size:13px; color:var(--text-dim); border-left:3px solid var(--accent-2);'
+          }, `⚠️ ${tier.note} — we will confirm availability before finalising.`);
+          wrapper.appendChild(noteEl);
+        }
+        updateTotal();
+      });
+
+      panel.appendChild(tRow);
+    });
+
+    // Toggle main row
+    row.addEventListener('click', () => {
+      const store = state.selections[catId].addons;
+      const cur = store[addon.id] || 0;
+      if (cur > 0) {
+        delete store[addon.id];
+        if (state.selections[catId].rushTiers) delete state.selections[catId].rushTiers[addon.id];
+        row.classList.remove('selected');
+        panel.style.display = 'none';
+        priceEl.textContent = 'Standard';
+        wrapper.querySelector('.rush-avail-note')?.remove();
+      } else {
+        store[addon.id] = 1;
+        row.classList.add('selected');
+        panel.style.display = 'flex';
+        // Auto-select standard tier
+        const standardTier = addon.rushTiers[0];
+        if (standardTier && panel.querySelector('[data-rush-tier-id]')) {
+          panel.querySelectorAll('[data-rush-tier-id]')[0].classList.add('selected');
+          if (!state.selections[catId].rushTiers) state.selections[catId].rushTiers = {};
+          state.selections[catId].rushTiers[addon.id] = standardTier.id;
+        }
+      }
+      updateTotal();
+    });
+
+    wrapper.appendChild(row);
+    wrapper.appendChild(panel);
+    return wrapper;
   }
 
   // ── Generic Sub-Addon Row (MD, In-Person, etc.) ──────────
@@ -2141,6 +2316,21 @@ const CALCURATE_CONFIG = {
       }
       updateTotal();
     });
+
+    // Transportation note — shown when toggled on
+    if (addon.transportationNote) {
+      const noteEl = el('div', {
+        style: 'display:none; margin-left:16px; padding:8px 12px; background:var(--surface2); border-radius:6px; font-size:13px; color:var(--text-dim); border-left:3px solid var(--accent-2);'
+      }, '🚗 Transportation and catering are provided by the client and are not included in this estimate.');
+      noteEl.dataset.transportNote = addon.id;
+      // Show/hide with panel
+      const origClick = row.onclick;
+      row.addEventListener('click', () => {
+        const store = state.selections[catId].addons;
+        noteEl.style.display = store[addon.id] ? 'block' : 'none';
+      });
+      wrapper.appendChild(noteEl);
+    }
 
     wrapper.appendChild(row);
     wrapper.appendChild(subPanel);
@@ -2474,6 +2664,22 @@ const CALCURATE_CONFIG = {
           aTotal = addon.price * qty;
         } else if (addon.isMultiplier) {
           aTotal = baseTotal * addon.price;
+        } else if (addon.isRushTiered) {
+          // Rush tiered — percentage of base total
+          const rushTierId = state.selections[cat.id].rushTiers?.[addon.id];
+          const rushTier = addon.rushTiers?.find(t => t.id === rushTierId);
+          const pct = rushTier ? rushTier.pct : 0;
+          if (pct === 0) { aTotal = 0; }
+          else if (addon.rushUnit === 'song' || addon.rushUnit === 'track') {
+            // Per-song rush: pct × price-per-song × urgent song count
+            const urgentQty = state.selections[cat.id].rushUrgent?.[addon.id] || 1;
+            const baseOpt = cat.baseOptions?.find(o => o.id === state.selections[cat.id].baseId);
+            const perSongPrice = baseOpt ? baseOpt.price : 0;
+            aTotal = perSongPrice * pct * urgentQty;
+          } else {
+            // Percentage of entire category base total
+            aTotal = baseTotal * pct;
+          }
         } else if (addon.isPerSong) {
           // Rush per song/track — multiply by counter quantity
           const qty = cat._counterQty || 1;
@@ -2482,9 +2688,22 @@ const CALCURATE_CONFIG = {
           aTotal = addon.price * qty;
         }
 
-        if (aTotal > 0) grand += aTotal;
+        const _skipRush = addon.isRushTiered && (() => {
+          const tid = state.selections[cat.id].rushTiers?.[addon.id];
+          const tier = addon.rushTiers?.find(t => t.id === tid);
+          return !tier || tier.pct === 0;
+        })();
+        if (!_skipRush && aTotal > 0) grand += aTotal;
         lines.push({
-          name: addon.isPhoto ? `${addon.label} (${qty} images)` : addon.label + (qty > 1 ? ` ×${qty}` : ''),
+          name: addon.isPhoto ? `${addon.label} (${qty} images)` :
+            addon.isRushTiered ? (() => {
+              const tid = state.selections[cat.id].rushTiers?.[addon.id];
+              const tier = addon.rushTiers?.find(t => t.id === tid);
+              const urgentQty = state.selections[cat.id].rushUrgent?.[addon.id];
+              const urgentStr = urgentQty ? ` (${urgentQty} ${addon.rushUnit}${urgentQty > 1 ? 's' : ''})` : '';
+              return `Rush Delivery — ${tier?.label || 'Standard'}${urgentStr}`;
+            })() :
+            addon.label + (qty > 1 ? ` ×${qty}` : ''),
           detail: addon.isMultiplier ? `${Math.round(addon.price * 100)}% of base` : '',
           amount: aTotal,
           cat: cat.label,
