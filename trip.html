@@ -1291,10 +1291,6 @@
         document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
       });
     });
-    // register service worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js');
-    }
   </script>
 </body>
 </html>
