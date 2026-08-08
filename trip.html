@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" href="tripfavicon.png">
+  <link rel="apple-touch-icon" href="tripfavicon.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Trip 2026">
+  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141412" media="(prefers-color-scheme: dark)">
   <title>England & Europe Trip — Aug/Sep 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1283,6 +1291,10 @@
         document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
       });
     });
+    // register service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js');
+    }
   </script>
 </body>
 </html>
