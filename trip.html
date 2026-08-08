@@ -234,6 +234,26 @@
       .day-title { font-size: 13px; }
     }
 
+    .day-card.today {
+      border-color: var(--border-strong);
+      box-shadow: inset 3px 0 0 0 #1d9e75;
+      background: color-mix(in srgb, var(--surface) 92%, #1d9e75 8%);
+    }
+
+    .day-card.today .day-title {
+      color: #0f6e56;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .day-card.today {
+        box-shadow: inset 3px 0 0 0 #5dcaa5;
+        background: color-mix(in srgb, var(--surface) 88%, #085041 12%);
+      }
+      .day-card.today .day-title {
+        color: #9fe1cb;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .day-body, .chevron { transition: none; }
     }
@@ -472,6 +492,43 @@
       const isOpen = card.classList.contains('open');
       card.classList.toggle('open', !isOpen);
       header.setAttribute('aria-expanded', String(!isOpen));
+    }
+
+    // highlight today's card
+    const today = new Date();
+    const year = today.getFullYear();
+    const allCards = container.querySelectorAll('.day-card');
+    const ranges = [
+      { start: new Date(year, 7, 22), end: new Date(year, 7, 22), idx: 0 },
+      { start: new Date(year, 7, 23), end: new Date(year, 7, 23), idx: 1 },
+      { start: new Date(year, 7, 24), end: new Date(year, 7, 24), idx: 2 },
+      { start: new Date(year, 7, 25), end: new Date(year, 7, 25), idx: 3 },
+      { start: new Date(year, 7, 26), end: new Date(year, 7, 26), idx: 4 },
+      { start: new Date(year, 7, 27), end: new Date(year, 7, 27), idx: 5 },
+      { start: new Date(year, 7, 28), end: new Date(year, 7, 28), idx: 6 },
+      { start: new Date(year, 7, 29), end: new Date(year, 7, 29), idx: 7 },
+      { start: new Date(year, 7, 30), end: new Date(year, 7, 30), idx: 8 },
+      { start: new Date(year, 7, 31), end: new Date(year, 7, 31), idx: 9 },
+      { start: new Date(year, 8,  1), end: new Date(year, 8,  1), idx: 10 },
+      { start: new Date(year, 8,  2), end: new Date(year, 8,  2), idx: 11 },
+      { start: new Date(year, 8,  3), end: new Date(year, 8,  3), idx: 12 },
+      { start: new Date(year, 8,  4), end: new Date(year, 8,  4), idx: 13 },
+      { start: new Date(year, 8,  5), end: new Date(year, 8,  7), idx: 14 },
+      { start: new Date(year, 8,  8), end: new Date(year, 8,  8), idx: 15 },
+      { start: new Date(year, 8,  9), end: new Date(year, 8, 10), idx: 16 },
+    ];
+
+    today.setHours(0,0,0,0);
+    for (const r of ranges) {
+      if (today >= r.start && today <= r.end) {
+        const card = allCards[r.idx];
+        const header = card.querySelector('.day-header');
+        card.classList.add('today');
+        card.classList.add('open');
+        header.setAttribute('aria-expanded', 'true');
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        break;
+      }
     }
   </script>
 </body>
