@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" href="tripfavicon.png">
-  <title>England & Europe Trip — Aug/Sep 2025</title>
+  <title>England & Europe Trip — Aug/Sep 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
@@ -22,15 +22,13 @@
       --text-secondary: #6b6860;
       --text-muted: #a09e99;
       --radius: 8px;
+      --sidebar-w: 48px;
+      --drawer-w: min(560px, 92vw);
 
-      --green-bg: #e1f5ee;
-      --green-text: #085041;
-      --purple-bg: #eeedfe;
-      --purple-text: #26215c;
-      --coral-bg: #faece7;
-      --coral-text: #4a1b0c;
-      --blue-bg: #e6f1fb;
-      --blue-text: #042c53;
+      --green-bg: #e1f5ee; --green-text: #085041;
+      --purple-bg: #eeedfe; --purple-text: #26215c;
+      --coral-bg: #faece7; --coral-text: #4a1b0c;
+      --blue-bg: #e6f1fb; --blue-text: #042c53;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -42,15 +40,10 @@
         --text-primary: #e8e6e0;
         --text-secondary: #9c9a92;
         --text-muted: #6b6860;
-
-        --green-bg: #04342c;
-        --green-text: #9fe1cb;
-        --purple-bg: #26215c;
-        --purple-text: #cecdfa;
-        --coral-bg: #4a1b0c;
-        --coral-text: #f0997b;
-        --blue-bg: #042c53;
-        --blue-text: #b5d4f4;
+        --green-bg: #04342c; --green-text: #9fe1cb;
+        --purple-bg: #26215c; --purple-text: #cecdfa;
+        --coral-bg: #4a1b0c; --coral-text: #f0997b;
+        --blue-bg: #042c53; --blue-text: #b5d4f4;
       }
     }
 
@@ -61,6 +54,272 @@
       font-size: 15px;
       line-height: 1.6;
       min-height: 100vh;
+      display: flex;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--surface);
+      border-right: 0.5px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 1.5rem;
+      z-index: 100;
+    }
+
+    .sidebar-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 0.5px solid var(--border);
+      background: var(--bg);
+      color: var(--text-secondary);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, transform 0.35s ease;
+      font-size: 18px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .sidebar-btn:hover { background: var(--border); color: var(--text-primary); }
+    .sidebar-btn.open { color: var(--text-primary); }
+    .sidebar-btn.open i { transform: scaleX(-1); }
+
+    /* ── DRAWER ── */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 110;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: all; }
+
+    .drawer {
+      position: fixed;
+      left: var(--sidebar-w);
+      top: 0; bottom: 0;
+      width: var(--drawer-w);
+      background: var(--surface);
+      border-right: 0.5px solid var(--border);
+      z-index: 120;
+      transform: translateX(calc(-100% - var(--sidebar-w)));
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .drawer.open { transform: translateX(0); }
+
+    .drawer-header {
+      padding: 1.25rem 1.25rem 0;
+      flex-shrink: 0;
+    }
+    .drawer-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .drawer-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    /* tabs */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      padding: 0 1.25rem;
+      border-bottom: 0.5px solid var(--border);
+      flex-shrink: 0;
+    }
+    .tab-btn {
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      margin-bottom: -0.5px;
+      transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { color: var(--text-secondary); }
+    .tab-btn.active { color: var(--text-primary); border-bottom-color: #1d9e75; }
+
+    .tab-panels { flex: 1; overflow-y: auto; padding: 1rem 1.25rem 2rem; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* flight segments */
+    .flight-segment {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 12px;
+    }
+    .flight-segment + .flight-segment { }
+    .seg-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .seg-section-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 0.5px solid var(--border-strong);
+    }
+    .seg-route {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .seg-airport {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.02em;
+    }
+    .seg-arrow {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+    .seg-arrow-line {
+      flex: 1;
+      height: 0.5px;
+      background: var(--border-strong);
+    }
+    .seg-times {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .seg-time-block { }
+    .seg-time {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .seg-time-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .seg-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .seg-pill {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 20px;
+      background: var(--border);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .seg-pill i { font-size: 12px; }
+
+    .checkin-block {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 0.5px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 6px;
+    }
+    .checkin-field { }
+    .checkin-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .checkin-value {
+      font-size: 13px;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+    .checkin-value.empty { color: var(--text-muted); font-weight: 400; font-style: italic; }
+
+    .connection-pill {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .connection-pill::before, .connection-pill::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: var(--border);
+    }
+
+    .booking-ref {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .booking-ref code {
+      font-family: monospace;
+      font-size: 12px;
+      background: var(--bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 0.5px solid var(--border);
+      color: var(--text-primary);
+      letter-spacing: 0.08em;
+    }
+
+    .trip-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-width: 0;
     }
 
     .page {
@@ -69,9 +328,7 @@
       padding: 3rem 1.25rem 4rem;
     }
 
-    .trip-header {
-      margin-bottom: 2.5rem;
-    }
+    .trip-header { margin-bottom: 2.5rem; }
 
     .eyebrow {
       font-size: 11px;
@@ -91,10 +348,7 @@
       margin-bottom: 8px;
     }
 
-    .trip-sub {
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
+    .trip-sub { font-size: 14px; color: var(--text-secondary); }
 
     .legend {
       display: flex;
@@ -102,21 +356,8 @@
       gap: 10px;
       margin-bottom: 2rem;
     }
-
-    .leg-item {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-
-    .leg-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .leg-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-secondary); }
+    .leg-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
 
     .day-card {
       background: var(--surface);
@@ -126,10 +367,7 @@
       overflow: hidden;
       transition: box-shadow 0.15s;
     }
-
-    .day-card:hover {
-      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-    }
+    .day-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
 
     .day-header {
       display: flex;
@@ -152,34 +390,11 @@
     }
 
     .day-info { flex: 1; min-width: 0; }
+    .day-title { font-size: 14px; font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .day-loc { font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .day-title {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-primary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .day-loc {
-      font-size: 12px;
-      color: var(--text-muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .chevron {
-      font-size: 14px;
-      color: var(--text-muted);
-      transition: transform 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    .day-card.open .chevron {
-      transform: rotate(180deg);
-    }
+    .chevron { font-size: 14px; color: var(--text-muted); transition: transform 0.2s ease; flex-shrink: 0; }
+    .day-card.open .chevron { transform: rotate(180deg); }
 
     .day-body {
       padding: 0 16px;
@@ -187,165 +402,653 @@
       overflow: hidden;
       transition: max-height 0.3s ease, padding 0.2s ease;
     }
-
     .day-card.open .day-body {
-      max-height: 800px;
+      max-height: 1000px;
       padding: 0 16px 14px;
       border-top: 0.5px solid var(--border);
     }
 
-    .event {
-      display: flex;
-      gap: 10px;
-      padding: 9px 0;
-      border-bottom: 0.5px solid var(--border);
-    }
-
+    .event { display: flex; gap: 10px; padding: 9px 0; border-bottom: 0.5px solid var(--border); }
     .event:last-child { border-bottom: none; }
-
-    .event-icon {
-      font-size: 15px;
-      margin-top: 2px;
-      min-width: 18px;
-      color: var(--text-secondary);
-      flex-shrink: 0;
-    }
-
-    .event-text {
-      font-size: 14px;
-      color: var(--text-primary);
-      line-height: 1.5;
-    }
-
-    .event-note {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .footer {
-      margin-top: 3rem;
-      text-align: center;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    @media (max-width: 480px) {
-      .day-badge { min-width: 68px; font-size: 10px; }
-      .day-title { font-size: 13px; }
-    }
+    .event-icon { font-size: 15px; margin-top: 2px; min-width: 18px; color: var(--text-secondary); flex-shrink: 0; }
+    .event-text { font-size: 14px; color: var(--text-primary); line-height: 1.5; }
+    .event-note { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 
     .day-card.today {
       border-color: var(--border-strong);
       box-shadow: inset 3px 0 0 0 #1d9e75;
       background: color-mix(in srgb, var(--surface) 92%, #1d9e75 8%);
     }
-
-    .day-card.today .day-title {
-      color: #0f6e56;
-    }
+    .day-card.today .day-title { color: #0f6e56; }
 
     @media (prefers-color-scheme: dark) {
-      .day-card.today {
-        box-shadow: inset 3px 0 0 0 #5dcaa5;
-        background: color-mix(in srgb, var(--surface) 88%, #085041 12%);
-      }
-      .day-card.today .day-title {
-        color: #9fe1cb;
-      }
+      .day-card.today { box-shadow: inset 3px 0 0 0 #5dcaa5; background: color-mix(in srgb, var(--surface) 88%, #085041 12%); }
+      .day-card.today .day-title { color: #9fe1cb; }
     }
 
+    .footer { margin-top: 3rem; text-align: center; font-size: 12px; color: var(--text-muted); }
+
     @media (prefers-reduced-motion: reduce) {
-      .day-body, .chevron { transition: none; }
+      .day-body, .chevron, .drawer, .sidebar-btn i { transition: none; }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <div class="trip-header">
-      <p class="eyebrow">Family Itinerary</p>
-      <h1 class="trip-title">England &amp; Europe</h1>
-      <p class="trip-sub">Sat 22 Aug – Thu 10 Sep &nbsp;·&nbsp; Joe, Lilia, Mum, Dad</p>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <button class="sidebar-btn" id="drawerToggle" aria-label="Open flight info" aria-expanded="false">
+      <i class="ti ti-plane" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <!-- OVERLAY -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+
+  <!-- FLIGHT DRAWER -->
+  <div class="drawer" id="flightDrawer" aria-hidden="true">
+    <div class="drawer-header">
+      <div class="drawer-title">Flights</div>
     </div>
 
-    <div class="legend">
-      <div class="leg-item"><div class="leg-dot" style="background:#1d9e75"></div>Family</div>
-      <div class="leg-item"><div class="leg-dot" style="background:#7f77dd"></div>Europe leg</div>
-      <div class="leg-item"><div class="leg-dot" style="background:#d85a30"></div>Events</div>
-      <div class="leg-item"><div class="leg-dot" style="background:#378add"></div>Solo time</div>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="joe">Joe</button>
+      <button class="tab-btn" data-tab="dad-lilia">Dad &amp; Lilia</button>
+      <button class="tab-btn" data-tab="angela">Mum</button>
     </div>
 
-    <div id="days"></div>
+    <div class="tab-panels">
 
-    <div class="footer">tap any day to expand &nbsp;·&nbsp; made with love by joe</div>
+      <!-- JOE -->
+      <div class="tab-panel active" id="tab-joe">
+        <div style="margin-top:0.75rem">
+          <div class="booking-ref">Confirmation <code>SISIQI</code> &nbsp;·&nbsp; American Airlines</div>
+
+          <div class="seg-section-label">Outbound — Fri 21 Aug → Sat 22 Aug</div>
+
+          <div class="flight-segment">
+            <div class="seg-label">Leg 1 · AA 2388 · Economy</div>
+            <div class="seg-route">
+              <span class="seg-airport">MBJ</span>
+              <div class="seg-arrow">
+                <div class="seg-arrow-line"></div>
+                <i class="ti ti-plane" style="font-size:13px"></i>
+                <div class="seg-arrow-line"></div>
+              </div>
+              <span class="seg-airport">MIA</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block">
+                <div class="seg-time">2:52 PM</div>
+                <div class="seg-time-label">Departs Montego Bay</div>
+              </div>
+              <div class="seg-time-block">
+                <div class="seg-time">5:45 PM</div>
+                <div class="seg-time-label">Arrives Miami</div>
+              </div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 1h 53m</span>
+              <span class="seg-pill">No meal</span>
+            </div>
+            <div class="checkin-block">
+              <div class="checkin-field"><div class="checkin-label">Terminal (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Terminal (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Aircraft</div><div class="checkin-value">Boeing 737 MAX 8</div></div>
+              <div class="checkin-field"><div class="checkin-label">Seat</div><div class="checkin-value">28A</div></div>
+            </div>
+          </div>
+
+          <div class="connection-pill">2h 00m connection · Miami (MIA)</div>
+
+          <div class="flight-segment">
+            <div class="seg-label">Leg 2 · AA 38 · Economy · Overnight</div>
+            <div class="seg-route">
+              <span class="seg-airport">MIA</span>
+              <div class="seg-arrow">
+                <div class="seg-arrow-line"></div>
+                <i class="ti ti-plane" style="font-size:13px"></i>
+                <div class="seg-arrow-line"></div>
+              </div>
+              <span class="seg-airport">LHR</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block">
+                <div class="seg-time">7:45 PM</div>
+                <div class="seg-time-label">Departs Miami · Fri 21</div>
+              </div>
+              <div class="seg-time-block">
+                <div class="seg-time">9:25 AM</div>
+                <div class="seg-time-label">Arrives LHR T3 · Sat 22</div>
+              </div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 8h 40m</span>
+              <span class="seg-pill">Dinner + breakfast</span>
+              <span class="seg-pill">Terminal 3</span>
+            </div>
+            <div class="checkin-block">
+              <div class="checkin-field"><div class="checkin-label">Terminal (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Terminal (arr)</div><div class="checkin-value">T3</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Aircraft</div><div class="checkin-value">Boeing 777-300ER</div></div>
+              <div class="checkin-field"><div class="checkin-label">Seat</div><div class="checkin-value">40L</div></div>
+            </div>
+          </div>
+
+          <div class="seg-section-label" style="margin-top:1.25rem">Return — Thu 10 Sep → Fri 11 Sep</div>
+
+          <div class="flight-segment">
+            <div class="seg-label">Leg 1 · AA 39 · Economy · Nonstop</div>
+            <div class="seg-route">
+              <span class="seg-airport">LHR</span>
+              <div class="seg-arrow">
+                <div class="seg-arrow-line"></div>
+                <i class="ti ti-plane" style="font-size:13px"></i>
+                <div class="seg-arrow-line"></div>
+              </div>
+              <span class="seg-airport">MIA</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block">
+                <div class="seg-time">12:15 PM</div>
+                <div class="seg-time-label">Departs London · Thu 10</div>
+              </div>
+              <div class="seg-time-block">
+                <div class="seg-time">4:55 PM</div>
+                <div class="seg-time-label">Arrives Miami</div>
+              </div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 9h 40m</span>
+              <span class="seg-pill">Lunch + snack</span>
+            </div>
+            <div class="checkin-block">
+              <div class="checkin-field"><div class="checkin-label">Terminal (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Terminal (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Aircraft</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Seat</div><div class="checkin-value">26A</div></div>
+            </div>
+          </div>
+
+          <div class="connection-pill">Overnight connection · Miami (MIA)</div>
+
+          <div class="flight-segment">
+            <div class="seg-label">Leg 2 · AA 2079 · Economy · Nonstop</div>
+            <div class="seg-route">
+              <span class="seg-airport">MIA</span>
+              <div class="seg-arrow">
+                <div class="seg-arrow-line"></div>
+                <i class="ti ti-plane" style="font-size:13px"></i>
+                <div class="seg-arrow-line"></div>
+              </div>
+              <span class="seg-airport">KIN</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block">
+                <div class="seg-time">10:20 AM</div>
+                <div class="seg-time-label">Departs Miami · Fri 11</div>
+              </div>
+              <div class="seg-time-block">
+                <div class="seg-time">11:12 AM</div>
+                <div class="seg-time-label">Arrives Kingston</div>
+              </div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 1h 52m</span>
+              <span class="seg-pill">No meal</span>
+            </div>
+            <div class="checkin-block">
+              <div class="checkin-field"><div class="checkin-label">Terminal (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Terminal (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Aircraft</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Seat</div><div class="checkin-value">20F</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAD & LILIA -->
+      <div class="tab-panel" id="tab-dad-lilia">
+        <div style="margin-top:0.75rem">
+          <div class="booking-ref">Confirmation <code>USENJJ</code> &nbsp;·&nbsp; American Airlines &nbsp;·&nbsp; Sheldon + Lilia Davis</div>
+
+          <div class="seg-section-label">Outbound — Fri 21 Aug → Sat 22 Aug</div>
+
+          <div class="flight-segment">
+            <div class="seg-label">Leg 1 · AA 2388 · Economy</div>
+            <div class="seg-route">
+              <span class="seg-airport">MBJ</span>
+              <div class="seg-arrow">
+                <div class="seg-arrow-line"></div>
+                <i class="ti ti-plane" style="font-size:13px"></i>
+                <div class="seg-arrow-line"></div>
+              </div>
+              <span class="seg-airport">MIA</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block">
+                <div class="seg-time">2:52 PM</div>
+                <div class="seg-time-label">Departs Montego Bay</div>
+              </div>
+              <div class="seg-time-block">
+                <div class="seg-time">5:45 PM</div>
+                <div class="seg-time-label">Arrives Miami</div>
+              </div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 1h 53m</span>
+              <span class="seg-pill">No meal</span>
+            </div>
+            <div class="checkin-block">
+              <div class="checkin-field"><div class="checkin-label">Terminal (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Terminal (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Aircraft</div><div class="checkin-value">Boeing 737 MAX 8</div></div>
+              <div class="checkin-field"><div class="checkin-label">Seats</div><div class="checkin-value">28C & 28B</div></div>
+            </div>
+          </div>
+
+          <div class="connection-pill">2h 00m connection · Miami (MIA)</div>
+
+          <div class="flight-segment">
+            <div class="seg-label">Leg 2 · AA 38 · Economy · Overnight</div>
+            <div class="seg-route">
+              <span class="seg-airport">MIA</span>
+              <div class="seg-arrow">
+                <div class="seg-arrow-line"></div>
+                <i class="ti ti-plane" style="font-size:13px"></i>
+                <div class="seg-arrow-line"></div>
+              </div>
+              <span class="seg-airport">LHR</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block">
+                <div class="seg-time">7:45 PM</div>
+                <div class="seg-time-label">Departs Miami · Fri 21</div>
+              </div>
+              <div class="seg-time-block">
+                <div class="seg-time">9:25 AM</div>
+                <div class="seg-time-label">Arrives LHR T3 · Sat 22</div>
+              </div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 8h 40m</span>
+              <span class="seg-pill">Dinner + breakfast</span>
+              <span class="seg-pill">Terminal 3</span>
+            </div>
+            <div class="checkin-block">
+              <div class="checkin-field"><div class="checkin-label">Terminal (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Terminal (arr)</div><div class="checkin-value">T3</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Aircraft</div><div class="checkin-value">Boeing 777-300ER</div></div>
+              <div class="checkin-field"><div class="checkin-label">Seats</div><div class="checkin-value">40J & 40K</div></div>
+            </div>
+          </div>
+
+          <div class="seg-section-label" style="margin-top:1.25rem">Return — Fri 4 Sep → Sat 5 Sep</div>
+
+          <div class="flight-segment">
+            <div class="seg-label">Leg 1 · AA 91 · Economy</div>
+            <div class="seg-route">
+              <span class="seg-airport">LHR</span>
+              <div class="seg-arrow">
+                <div class="seg-arrow-line"></div>
+                <i class="ti ti-plane" style="font-size:13px"></i>
+                <div class="seg-arrow-line"></div>
+              </div>
+              <span class="seg-airport">ORD</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block">
+                <div class="seg-time">2:25 PM</div>
+                <div class="seg-time-label">Departs London · Fri 4</div>
+              </div>
+              <div class="seg-time-block">
+                <div class="seg-time">5:15 PM</div>
+                <div class="seg-time-label">Arrives Chicago T5</div>
+              </div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 8h 50m</span>
+              <span class="seg-pill">Lunch + snack</span>
+              <span class="seg-pill">Arr: Terminal T5</span>
+            </div>
+            <div class="checkin-block">
+              <div class="checkin-field"><div class="checkin-label">Terminal (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Terminal (arr)</div><div class="checkin-value">T5</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Aircraft</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Seats</div><div class="checkin-value">31L & 31K</div></div>
+            </div>
+          </div>
+
+          <div class="connection-pill" style="color:#d85a30">⚠ 15h 45m overnight connection · Chicago (ORD) · Terminal change required</div>
+
+          <div class="flight-segment">
+            <div class="seg-label">Leg 2 · AA 3228 · Economy</div>
+            <div class="seg-route">
+              <span class="seg-airport">ORD</span>
+              <div class="seg-arrow">
+                <div class="seg-arrow-line"></div>
+                <i class="ti ti-plane" style="font-size:13px"></i>
+                <div class="seg-arrow-line"></div>
+              </div>
+              <span class="seg-airport">MBJ</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block">
+                <div class="seg-time">9:00 AM</div>
+                <div class="seg-time-label">Departs Chicago · Sat 5</div>
+              </div>
+              <div class="seg-time-block">
+                <div class="seg-time">1:12 PM</div>
+                <div class="seg-time-label">Arrives Montego Bay</div>
+              </div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 4h 12m</span>
+              <span class="seg-pill">Food for purchase</span>
+              <span class="seg-pill">T3 · Gate K13</span>
+            </div>
+            <div class="checkin-block">
+              <div class="checkin-field"><div class="checkin-label">Terminal (dep)</div><div class="checkin-value">T3</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (dep)</div><div class="checkin-value">K13</div></div>
+              <div class="checkin-field"><div class="checkin-label">Terminal (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Aircraft</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Seats</div><div class="checkin-value">23A & 23B</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANGELA -->
+      <div class="tab-panel" id="tab-angela">
+        <div style="margin-top:0.75rem">
+          <div class="booking-ref">Confirmation <code>MLYARI</code> &nbsp;·&nbsp; American Airlines &nbsp;·&nbsp; Angela Davis</div>
+
+          <div class="seg-section-label">Outbound — Fri 21 Aug → Sat 22 Aug</div>
+
+          <div class="flight-segment">
+            <div class="seg-label">Leg 1 · AA 2388 · Economy</div>
+            <div class="seg-route">
+              <span class="seg-airport">MBJ</span>
+              <div class="seg-arrow">
+                <div class="seg-arrow-line"></div>
+                <i class="ti ti-plane" style="font-size:13px"></i>
+                <div class="seg-arrow-line"></div>
+              </div>
+              <span class="seg-airport">MIA</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block">
+                <div class="seg-time">2:52 PM</div>
+                <div class="seg-time-label">Departs Montego Bay</div>
+              </div>
+              <div class="seg-time-block">
+                <div class="seg-time">5:45 PM</div>
+                <div class="seg-time-label">Arrives Miami</div>
+              </div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 1h 53m</span>
+              <span class="seg-pill">No meal</span>
+            </div>
+            <div class="checkin-block">
+              <div class="checkin-field"><div class="checkin-label">Terminal (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Terminal (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Aircraft</div><div class="checkin-value">Boeing 737 MAX 8</div></div>
+              <div class="checkin-field"><div class="checkin-label">Seat</div><div class="checkin-value">29A</div></div>
+            </div>
+          </div>
+
+          <div class="connection-pill">2h 00m connection · Miami (MIA)</div>
+
+          <div class="flight-segment">
+            <div class="seg-label">Leg 2 · AA 38 · Economy · Overnight</div>
+            <div class="seg-route">
+              <span class="seg-airport">MIA</span>
+              <div class="seg-arrow">
+                <div class="seg-arrow-line"></div>
+                <i class="ti ti-plane" style="font-size:13px"></i>
+                <div class="seg-arrow-line"></div>
+              </div>
+              <span class="seg-airport">LHR</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block">
+                <div class="seg-time">7:45 PM</div>
+                <div class="seg-time-label">Departs Miami · Fri 21</div>
+              </div>
+              <div class="seg-time-block">
+                <div class="seg-time">9:25 AM</div>
+                <div class="seg-time-label">Arrives LHR T3 · Sat 22</div>
+              </div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 8h 40m</span>
+              <span class="seg-pill">Dinner + breakfast</span>
+              <span class="seg-pill">Terminal 3</span>
+            </div>
+            <div class="checkin-block">
+              <div class="checkin-field"><div class="checkin-label">Terminal (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Terminal (arr)</div><div class="checkin-value">T3</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Aircraft</div><div class="checkin-value">Boeing 777-300ER</div></div>
+              <div class="checkin-field"><div class="checkin-label">Seat</div><div class="checkin-value">39J</div></div>
+            </div>
+          </div>
+
+          <div class="seg-section-label" style="margin-top:1.25rem">Return — Tue 8 Sep → Wed 9 Sep</div>
+
+          <div class="flight-segment">
+            <div class="seg-label">Leg 1 · AA 39 · Economy · Nonstop</div>
+            <div class="seg-route">
+              <span class="seg-airport">LHR</span>
+              <div class="seg-arrow">
+                <div class="seg-arrow-line"></div>
+                <i class="ti ti-plane" style="font-size:13px"></i>
+                <div class="seg-arrow-line"></div>
+              </div>
+              <span class="seg-airport">MIA</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block">
+                <div class="seg-time">12:15 PM</div>
+                <div class="seg-time-label">Departs London · Tue 8</div>
+              </div>
+              <div class="seg-time-block">
+                <div class="seg-time">5:00 PM</div>
+                <div class="seg-time-label">Arrives Miami</div>
+              </div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 9h 45m</span>
+              <span class="seg-pill">Lunch + snack</span>
+            </div>
+            <div class="checkin-block">
+              <div class="checkin-field"><div class="checkin-label">Terminal (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Terminal (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Aircraft</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Seat</div><div class="checkin-value">28A</div></div>
+            </div>
+          </div>
+
+          <div class="connection-pill">Overnight connection · Miami (MIA)</div>
+
+          <div class="flight-segment">
+            <div class="seg-label">Leg 2 · AA 2079 · Economy · Nonstop</div>
+            <div class="seg-route">
+              <span class="seg-airport">MIA</span>
+              <div class="seg-arrow">
+                <div class="seg-arrow-line"></div>
+                <i class="ti ti-plane" style="font-size:13px"></i>
+                <div class="seg-arrow-line"></div>
+              </div>
+              <span class="seg-airport">KIN</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block">
+                <div class="seg-time">11:20 AM</div>
+                <div class="seg-time-label">Departs Miami · Wed 9</div>
+              </div>
+              <div class="seg-time-block">
+                <div class="seg-time">12:04 PM</div>
+                <div class="seg-time-label">Arrives Kingston</div>
+              </div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 1h 44m</span>
+              <span class="seg-pill">No meal</span>
+            </div>
+            <div class="checkin-block">
+              <div class="checkin-field"><div class="checkin-label">Terminal (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (dep)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Terminal (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Gate (arr)</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Aircraft</div><div class="checkin-value empty">TBD</div></div>
+              <div class="checkin-field"><div class="checkin-label">Seat</div><div class="checkin-value">15F</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="page">
+      <div class="trip-header">
+        <p class="eyebrow">Family Itinerary</p>
+        <h1 class="trip-title">England &amp; Europe</h1>
+        <p class="trip-sub">Fri 21 Aug – Fri 11 Sep &nbsp;·&nbsp; Joe, Lilia, Mum, Dad</p>
+        <p style="font-size:12px;color:var(--text-muted);margin-top:8px">tap any day to expand &nbsp;·&nbsp; ✈ icon on the left for flights</p>
+      </div>
+
+      <div class="legend">
+        <div class="leg-item"><div class="leg-dot" style="background:#1d9e75"></div>Family</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#7f77dd"></div>Europe leg</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#d85a30"></div>Events</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#378add"></div>Solo time</div>
+      </div>
+
+      <div id="days"></div>
+    </div>
   </div>
 
   <script>
     const days = [
       {
+        date: "Fri 21 Aug", label: "Departure", color: "coral",
+        loc: "Kingston → Montego Bay → Miami → London",
+        events: [
+          { icon: "ti-clock", text: "Leave Kingston at 7:30am — road trip to Mobay" },
+          { icon: "ti-map-pin", text: "Arrive Montego Bay ~11:00am" },
+          { icon: "ti-plane-departure", text: "AA 2388: MBJ → MIA, departs 2:52pm arrives 5:45pm" },
+          { icon: "ti-clock", text: "2hr connection in Miami" },
+          { icon: "ti-plane-departure", text: "AA 38: MIA → LHR, departs 7:45pm", note: "Overnight flight — dinner + breakfast served" },
+        ]
+      },
+      {
         date: "Sat 22 Aug", label: "Arrival", color: "green",
         loc: "Heathrow → Northampton",
         events: [
-          { icon: "ti-plane-arrival", text: "Everyone lands at Heathrow at 10am", note: "Rent car at Heathrow for the entire trip" },
-          { icon: "ti-car", text: "All drive to Northampton, sleep there" },
+          { icon: "ti-plane-arrival", text: "AA 38 arrives London Heathrow Terminal 3 at 9:25am" },
+          { icon: "ti-car", text: "Pick up rental car at Heathrow — for the entire trip" },
+          { icon: "ti-car", text: "Drive from Heathrow to Northampton, sleep there" },
           { icon: "ti-route", text: "Dad splits off to Portsmouth", note: "Overnights there" },
         ]
       },
       {
-        date: "Sun 23 Aug", label: "London", color: "green",
+        date: "Sun 23 Aug", label: "Shopping", color: "green",
         loc: "Northampton ↔ London",
         events: [
-          { icon: "ti-train", text: "Joe, Mum, Lilia train to London early morning" },
-          { icon: "ti-user", text: "Dad drives up from Portsmouth to meet us" },
-          { icon: "ti-sparkles", text: "Bridal shower in London (tentative)" },
-          { icon: "ti-building-store", text: "Shopping around London" },
-          { icon: "ti-car", text: "All drive back to Northampton to sleep", note: "No accommodation in London tonight" },
+          { icon: "ti-train", text: "Joe, Mum, Lilia train to London — dad drives up from Portsmouth" },
+          { icon: "ti-sparkles", text: "Bridal shower (tentative)" },
+          { icon: "ti-building-store", text: "Westfield Mall" },
+          { icon: "ti-walk", text: "Carnaby — Liberty, Oxford St, Regent St" },
+          { icon: "ti-basket", text: "Portobello Market" },
+          { icon: "ti-map-pin", text: "King's Road (if time permits)" },
+          { icon: "ti-car", text: "Back to Northampton", note: "Rest!!" },
         ]
       },
       {
         date: "Mon 24 Aug", label: "Scotland", color: "green",
-        loc: "Northampton → London → Edinburgh → Perth → Inverness",
+        loc: "Northampton → London → Edinburgh → Perth → Scenic Drive",
         events: [
-          { icon: "ti-alarm", text: "Leave Northampton at 6am, reach London early" },
-          { icon: "ti-train", text: "Train from London to Edinburgh (8/9am departure)" },
-          { icon: "ti-car", text: "Pick up 2nd rental car in Edinburgh" },
-          { icon: "ti-map-pin", text: "Drive to Perth, check in to Airbnb" },
-          { icon: "ti-camera", text: "Continue to Inverness — explore, shop, take pics" },
-          { icon: "ti-moon", text: "Drive back to Perth, overnight there" },
+          { icon: "ti-alarm", text: "Leave Northampton at 6am" },
+          { icon: "ti-train", text: "London → Edinburgh, departs 8:00am arrives 12:30pm" },
+          { icon: "ti-walk", text: "Edinburgh city stroll — lunch, walk around Victoria Street" },
+          { icon: "ti-car", text: "Pick up 2nd rental car at 2:30pm" },
+          { icon: "ti-map-pin", text: "Edinburgh → Perth, check in to Airbnb at 4:00pm" },
+          { icon: "ti-mountain", text: "Scenic drive begins at 5pm — stop at The Hermitage" },
+          { icon: "ti-road", text: "Drive towards Pitlochry, stop in Cairngorms (Loch Morlich)" },
+          { icon: "ti-tools-kitchen-2", text: "Dinner in Aviemore", note: "La Taverna or The Balavoulin" },
+          { icon: "ti-moon", text: "Drive back to Perth from 10pm" },
         ]
       },
       {
-        date: "Tue 25 Aug", label: "Perth → London", color: "green",
+        date: "Tue 25 Aug", label: "Edinburgh", color: "green",
         loc: "Perth → Edinburgh → London → Northampton",
         events: [
-          { icon: "ti-car", text: "Drive back to Edinburgh, arrive by ~2pm", note: "Time for sightseeing in Edinburgh or nearby" },
-          { icon: "ti-car", text: "Drop off 2nd rental car in Edinburgh" },
-          { icon: "ti-train", text: "Train back down to London" },
-          { icon: "ti-building-store", text: "Shop and explore London" },
-          { icon: "ti-moon", text: "Drive or train back up to Northampton" },
+          { icon: "ti-car", text: "Perth → Edinburgh, leave 8:00am" },
+          { icon: "ti-tools-kitchen-2", text: "Breakfast in Edinburgh", note: "McLarens on the Corner or The Standing Order" },
+          { icon: "ti-walk", text: "Dean Village / Circus Lane" },
+          { icon: "ti-building-store", text: "George Street / city centre" },
+          { icon: "ti-tools-kitchen-2", text: "Lunch", note: "Chez Jules or Tigerlily" },
+          { icon: "ti-train", text: "Edinburgh → London, departs 3:00pm arrives 7:30pm" },
+          { icon: "ti-car", text: "London → Northampton", note: "Rest!" },
         ]
       },
       {
         date: "Wed 26 Aug", label: "Paris", color: "purple",
-        loc: "London → Paris",
+        loc: "Northampton → London → Paris",
         events: [
-          { icon: "ti-car", text: "Drive (probably) from Northampton to London" },
-          { icon: "ti-train", text: "Eurostar to Paris, arrive ~midday" },
-          { icon: "ti-home", text: "Train to Paris Airbnb, get settled" },
+          { icon: "ti-car", text: "Northampton → London, leave 6:00am" },
+          { icon: "ti-train", text: "Eurostar St Pancras → Paris, departs 8:01am arrives 11:23am" },
+          { icon: "ti-luggage", text: "Drop off luggage" },
+          { icon: "ti-tools-kitchen-2", text: "Brunch at Café Carrousel" },
           { icon: "ti-tools-kitchen-2", text: "Lunch with Aunty Jane (Mum's friend)" },
-          { icon: "ti-camera", text: "Louvre, Arc de Triomphe — tour and vibe" },
-          { icon: "ti-building", text: "Eiffel Tower lookout at 9pm" },
-          { icon: "ti-moon", text: "Back to Airbnb" },
+          { icon: "ti-hanger", text: "Thrifting — Five Vintage or Episode" },
+          { icon: "ti-camera", text: "Pics at Rue de Buenos Ayres" },
+          { icon: "ti-camera", text: "Photobooth at Palais de Tokyo" },
+          { icon: "ti-walk", text: "Stroll along Champs-Élysées" },
+          { icon: "ti-home", text: "Check in to Airbnb, get ready for dinner" },
+          { icon: "ti-tools-kitchen-2", text: "Dinner ~5:30pm", note: "Bouillon Pigalle or Bistrot des Victoires" },
+          { icon: "ti-building", text: "Summit of Eiffel Tower at sunset" },
+          { icon: "ti-sparkles", text: "Watch the sparkles at Champ de Mars" },
+          { icon: "ti-camera", text: "Night pics at Pont de Bir-Hakeim" },
         ]
       },
       {
         date: "Thu 27 Aug", label: "Brussels", color: "purple",
         loc: "Paris → Brussels → London → Northampton",
         events: [
-          { icon: "ti-train", text: "Eurostar Paris → Brussels" },
-          { icon: "ti-camera", text: "Sightsee Brussels, be tourists" },
-          { icon: "ti-train", text: "Eurostar Brussels → London" },
-          { icon: "ti-car", text: "Drive back to Northampton (probably)" },
+          { icon: "ti-tools-kitchen-2", text: "Breakfast in Paris", note: "Café Carrousel or Café Ella" },
+          { icon: "ti-train", text: "Paris → Brussels, departs 11:25am arrives 1:00pm" },
+          { icon: "ti-walk", text: "Stroll around Grand Place" },
+          { icon: "ti-cookie", text: "Maison Dandoy (Belgian waffles) + Frites Atelier (fries)" },
+          { icon: "ti-map-pin", text: "Explore Place du Jeu de Balle (?)" },
+          { icon: "ti-gift", text: "Elisabeth Chocolate" },
+          { icon: "ti-train", text: "Brussels → London, departs 6:00pm arrives 7:00pm" },
+          { icon: "ti-car", text: "London → Northampton" },
         ]
       },
       {
@@ -411,12 +1114,14 @@
       },
       {
         date: "Fri 4 Sep", label: "Dad & Lils fly", color: "coral",
-        loc: "Streatham → Heathrow",
+        loc: "Streatham → Heathrow → Chicago (overnight)",
         events: [
           { icon: "ti-luggage", text: "Check out of Streatham Airbnb" },
           { icon: "ti-car", text: "All head to Heathrow, return rental car" },
-          { icon: "ti-plane-departure", text: "Dad and Lilia fly home to Jamaica" },
-          { icon: "ti-heart", text: "Joe and Mum say their goodbyes, go separate ways" },
+          { icon: "ti-heart", text: "Joe and Mum say their goodbyes to Dad & Lils, go their separate ways" },
+          { icon: "ti-plane-departure", text: "Dad & Lilia: AA 91 LHR → ORD, departs 2:25pm arrives 5:15pm Chicago T5", note: "Confirmation: USENJJ · Seats 31L & 31K · Lunch + snack" },
+          { icon: "ti-moon", text: "Dad & Lilia overnight in Chicago — terminal change required (arrive T5, depart T3)" },
+          { icon: "ti-plane-departure", text: "Dad & Lilia: AA 3228 ORD → MBJ, departs 9:00am arrives 1:12pm · Sat 5 Sep", note: "Seats 23A & 23B · T3 Gate K13" },
         ]
       },
       {
@@ -431,15 +1136,27 @@
         date: "Tue 8 Sep", label: "Mum flies", color: "coral",
         loc: "London → Heathrow",
         events: [
-          { icon: "ti-plane-departure", text: "Head to Heathrow with Mum, see her off" },
-          { icon: "ti-arrow-back", text: "Head back into London, back to doing Joe things" },
+          { icon: "ti-heart", text: "Joe sees Mum off at Heathrow" },
+          { icon: "ti-plane-departure", text: "Mum: AA 39 LHR → MIA, departs 12:15pm arrives 5:00pm", note: "Confirmation: MLYARI · Seat 28A · Lunch + snack" },
+          { icon: "ti-moon", text: "Mum overnights in Miami" },
+          { icon: "ti-plane-departure", text: "Mum: AA 2079 MIA → KIN, departs 11:20am arrives 12:04pm · Wed 9 Sep", note: "Seat 15F" },
+          { icon: "ti-arrow-back", text: "Joe heads back into London, continues doing his thing" },
         ]
       },
       {
         date: "Wed 9 – Thu 10 Sep", label: "Solo time", color: "blue",
-        loc: "London — Solo time",
+        loc: "London — Joe's time",
         events: [
           { icon: "ti-sunglasses", text: "Joe solo in London doing whatever he wants", note: "Earned it fr" },
+        ]
+      },
+      {
+        date: "Thu 10 Sep", label: "Joe flies", color: "coral",
+        loc: "London → Miami → Kingston (Fri 11)",
+        events: [
+          { icon: "ti-plane-departure", text: "AA 39: LHR → MIA, departs 12:15pm arrives 4:55pm" },
+          { icon: "ti-moon", text: "Overnight in Miami" },
+          { icon: "ti-plane-departure", text: "AA 2079: MIA → KIN, departs 10:20am arrives 11:12am · Fri 11 Sep" },
         ]
       },
     ];
@@ -457,7 +1174,6 @@
       const c = colorMap[day.color];
       const card = document.createElement('div');
       card.className = 'day-card';
-
       card.innerHTML = `
         <div class="day-header" role="button" tabindex="0" aria-expanded="false">
           <span class="day-badge" style="background:${c.bg};color:${c.text}">${day.label}</span>
@@ -479,58 +1195,94 @@
           `).join('')}
         </div>
       `;
-
       const header = card.querySelector('.day-header');
-      header.addEventListener('click', () => toggle(card, header));
+      header.addEventListener('click', () => toggleCard(card, header));
       header.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(card, header); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCard(card, header); }
       });
-
       container.appendChild(card);
     });
 
-    function toggle(card, header) {
+    function toggleCard(card, header) {
       const isOpen = card.classList.contains('open');
       card.classList.toggle('open', !isOpen);
       header.setAttribute('aria-expanded', String(!isOpen));
     }
 
-    // highlight today's card
+    // today highlight
     const today = new Date();
-    const year = today.getFullYear();
+    const yr = today.getFullYear();
     const allCards = container.querySelectorAll('.day-card');
     const ranges = [
-      { start: new Date(year, 7, 22), end: new Date(year, 7, 22), idx: 0 },
-      { start: new Date(year, 7, 23), end: new Date(year, 7, 23), idx: 1 },
-      { start: new Date(year, 7, 24), end: new Date(year, 7, 24), idx: 2 },
-      { start: new Date(year, 7, 25), end: new Date(year, 7, 25), idx: 3 },
-      { start: new Date(year, 7, 26), end: new Date(year, 7, 26), idx: 4 },
-      { start: new Date(year, 7, 27), end: new Date(year, 7, 27), idx: 5 },
-      { start: new Date(year, 7, 28), end: new Date(year, 7, 28), idx: 6 },
-      { start: new Date(year, 7, 29), end: new Date(year, 7, 29), idx: 7 },
-      { start: new Date(year, 7, 30), end: new Date(year, 7, 30), idx: 8 },
-      { start: new Date(year, 7, 31), end: new Date(year, 7, 31), idx: 9 },
-      { start: new Date(year, 8,  1), end: new Date(year, 8,  1), idx: 10 },
-      { start: new Date(year, 8,  2), end: new Date(year, 8,  2), idx: 11 },
-      { start: new Date(year, 8,  3), end: new Date(year, 8,  3), idx: 12 },
-      { start: new Date(year, 8,  4), end: new Date(year, 8,  4), idx: 13 },
-      { start: new Date(year, 8,  5), end: new Date(year, 8,  7), idx: 14 },
-      { start: new Date(year, 8,  8), end: new Date(year, 8,  8), idx: 15 },
-      { start: new Date(year, 8,  9), end: new Date(year, 8, 10), idx: 16 },
+      { start: new Date(yr, 7, 21), end: new Date(yr, 7, 21), idx: 0 },
+      { start: new Date(yr, 7, 22), end: new Date(yr, 7, 22), idx: 1 },
+      { start: new Date(yr, 7, 23), end: new Date(yr, 7, 23), idx: 2 },
+      { start: new Date(yr, 7, 24), end: new Date(yr, 7, 24), idx: 3 },
+      { start: new Date(yr, 7, 25), end: new Date(yr, 7, 25), idx: 4 },
+      { start: new Date(yr, 7, 26), end: new Date(yr, 7, 26), idx: 5 },
+      { start: new Date(yr, 7, 27), end: new Date(yr, 7, 27), idx: 6 },
+      { start: new Date(yr, 7, 28), end: new Date(yr, 7, 28), idx: 7 },
+      { start: new Date(yr, 7, 29), end: new Date(yr, 7, 29), idx: 8 },
+      { start: new Date(yr, 7, 30), end: new Date(yr, 7, 30), idx: 9 },
+      { start: new Date(yr, 7, 31), end: new Date(yr, 7, 31), idx: 10 },
+      { start: new Date(yr, 8,  1), end: new Date(yr, 8,  1), idx: 11 },
+      { start: new Date(yr, 8,  2), end: new Date(yr, 8,  2), idx: 12 },
+      { start: new Date(yr, 8,  3), end: new Date(yr, 8,  3), idx: 13 },
+      { start: new Date(yr, 8,  4), end: new Date(yr, 8,  4), idx: 14 },
+      { start: new Date(yr, 8,  5), end: new Date(yr, 8,  7), idx: 15 },
+      { start: new Date(yr, 8,  8), end: new Date(yr, 8,  8), idx: 16 },
+      { start: new Date(yr, 8,  9), end: new Date(yr, 8,  9), idx: 17 },
+      { start: new Date(yr, 8, 10), end: new Date(yr, 8, 10), idx: 18 },
     ];
-
     today.setHours(0,0,0,0);
     for (const r of ranges) {
       if (today >= r.start && today <= r.end) {
         const card = allCards[r.idx];
         const header = card.querySelector('.day-header');
-        card.classList.add('today');
-        card.classList.add('open');
+        card.classList.add('today', 'open');
         header.setAttribute('aria-expanded', 'true');
         card.scrollIntoView({ behavior: 'smooth', block: 'center' });
         break;
       }
     }
+
+    // drawer
+    const toggle = document.getElementById('drawerToggle');
+    const drawer = document.getElementById('flightDrawer');
+    const overlay = document.getElementById('drawerOverlay');
+
+    function openDrawer() {
+      drawer.classList.add('open');
+      overlay.classList.add('open');
+      toggle.classList.add('open');
+      drawer.setAttribute('aria-hidden', 'false');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close flight info');
+    }
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      overlay.classList.remove('open');
+      toggle.classList.remove('open');
+      drawer.setAttribute('aria-hidden', 'true');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open flight info');
+    }
+
+    toggle.addEventListener('click', () => {
+      drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+    });
+    overlay.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+    // tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      });
+    });
   </script>
 </body>
 </html>
