@@ -1,16 +1,15 @@
 const CACHE = 'trip-2026-v1';
-const ASSETS = [
+const LOCAL_ASSETS = [
   '/trip.html',
   '/manifest.json',
   '/tripfavicon.png',
   '/icon-192.png',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@500;600&display=swap',
-  'https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css',
+  '/sw.js',
 ];
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())
+    caches.open(CACHE).then(c => c.addAll(LOCAL_ASSETS)).then(() => self.skipWaiting())
   );
 });
 
@@ -23,6 +22,13 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
+  const url = new URL(e.request.url);
+  // let external requests (fonts, cdn) go straight to network
+  if (url.origin !== self.location.origin) {
+    e.respondWith(fetch(e.request));
+    return;
+  }
+  // local: cache-first
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request))
   );
