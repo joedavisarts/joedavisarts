@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>England & Europe Trip — Aug/Sep 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f6f2;
+      --surface: #ffffff;
+      --border: rgba(0,0,0,0.08);
+      --border-strong: rgba(0,0,0,0.13);
+      --text-primary: #1a1917;
+      --text-secondary: #6b6860;
+      --text-muted: #a09e99;
+      --radius: 8px;
+
+      --green-bg: #e1f5ee;
+      --green-text: #085041;
+      --purple-bg: #eeedfe;
+      --purple-text: #26215c;
+      --coral-bg: #faece7;
+      --coral-text: #4a1b0c;
+      --blue-bg: #e6f1fb;
+      --blue-text: #042c53;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #141412;
+        --surface: #1e1d1b;
+        --border: rgba(255,255,255,0.07);
+        --border-strong: rgba(255,255,255,0.12);
+        --text-primary: #e8e6e0;
+        --text-secondary: #9c9a92;
+        --text-muted: #6b6860;
+
+        --green-bg: #04342c;
+        --green-text: #9fe1cb;
+        --purple-bg: #26215c;
+        --purple-text: #cecdfa;
+        --coral-bg: #4a1b0c;
+        --coral-text: #f0997b;
+        --blue-bg: #042c53;
+        --blue-text: #b5d4f4;
+      }
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 1.25rem 4rem;
+    }
+
+    .trip-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .trip-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .trip-sub {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 2rem;
+    }
+
+    .leg-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .leg-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .day-card {
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      transition: box-shadow 0.15s;
+    }
+
+    .day-card:hover {
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+
+    .day-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .day-badge {
+      min-width: 82px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: var(--radius);
+      flex-shrink: 0;
+    }
+
+    .day-info { flex: 1; min-width: 0; }
+
+    .day-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .day-loc {
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chevron {
+      font-size: 14px;
+      color: var(--text-muted);
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .day-card.open .chevron {
+      transform: rotate(180deg);
+    }
+
+    .day-body {
+      padding: 0 16px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.2s ease;
+    }
+
+    .day-card.open .day-body {
+      max-height: 800px;
+      padding: 0 16px 14px;
+      border-top: 0.5px solid var(--border);
+    }
+
+    .event {
+      display: flex;
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .event:last-child { border-bottom: none; }
+
+    .event-icon {
+      font-size: 15px;
+      margin-top: 2px;
+      min-width: 18px;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    .event-text {
+      font-size: 14px;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    .event-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 480px) {
+      .day-badge { min-width: 68px; font-size: 10px; }
+      .day-title { font-size: 13px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .day-body, .chevron { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="trip-header">
+      <p class="eyebrow">Family Itinerary</p>
+      <h1 class="trip-title">England &amp; Europe</h1>
+      <p class="trip-sub">Sat 22 Aug – Thu 10 Sep &nbsp;·&nbsp; Joe, Lilia, Mum, Dad</p>
+    </div>
+
+    <div class="legend">
+      <div class="leg-item"><div class="leg-dot" style="background:#1d9e75"></div>Family</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#7f77dd"></div>Europe leg</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#d85a30"></div>Events</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#378add"></div>Solo time</div>
+    </div>
+
+    <div id="days"></div>
+
+    <div class="footer">tap any day to expand &nbsp;·&nbsp; made with love by joe</div>
+  </div>
+
+  <script>
+    const days = [
+      {
+        date: "Sat 22 Aug", label: "Arrival", color: "green",
+        loc: "Heathrow → Northampton",
+        events: [
+          { icon: "ti-plane-arrival", text: "Everyone lands at Heathrow at 10am", note: "Rent car at Heathrow for the entire trip" },
+          { icon: "ti-car", text: "All drive to Northampton, sleep there" },
+          { icon: "ti-route", text: "Dad splits off to Portsmouth", note: "Overnights there" },
+        ]
+      },
+      {
+        date: "Sun 23 Aug", label: "London", color: "green",
+        loc: "Northampton ↔ London",
+        events: [
+          { icon: "ti-train", text: "Joe, Mum, Lilia train to London early morning" },
+          { icon: "ti-user", text: "Dad drives up from Portsmouth to meet us" },
+          { icon: "ti-sparkles", text: "Bridal shower in London (tentative)" },
+          { icon: "ti-building-store", text: "Shopping around London" },
+          { icon: "ti-car", text: "All drive back to Northampton to sleep", note: "No accommodation in London tonight" },
+        ]
+      },
+      {
+        date: "Mon 24 Aug", label: "Scotland", color: "green",
+        loc: "Northampton → London → Edinburgh → Perth → Inverness",
+        events: [
+          { icon: "ti-alarm", text: "Leave Northampton at 6am, reach London early" },
+          { icon: "ti-train", text: "Train from London to Edinburgh (8/9am departure)" },
+          { icon: "ti-car", text: "Pick up 2nd rental car in Edinburgh" },
+          { icon: "ti-map-pin", text: "Drive to Perth, check in to Airbnb" },
+          { icon: "ti-camera", text: "Continue to Inverness — explore, shop, take pics" },
+          { icon: "ti-moon", text: "Drive back to Perth, overnight there" },
+        ]
+      },
+      {
+        date: "Tue 25 Aug", label: "Perth → London", color: "green",
+        loc: "Perth → Edinburgh → London → Northampton",
+        events: [
+          { icon: "ti-car", text: "Drive back to Edinburgh, arrive by ~2pm", note: "Time for sightseeing in Edinburgh or nearby" },
+          { icon: "ti-car", text: "Drop off 2nd rental car in Edinburgh" },
+          { icon: "ti-train", text: "Train back down to London" },
+          { icon: "ti-building-store", text: "Shop and explore London" },
+          { icon: "ti-moon", text: "Drive or train back up to Northampton" },
+        ]
+      },
+      {
+        date: "Wed 26 Aug", label: "Paris", color: "purple",
+        loc: "London → Paris",
+        events: [
+          { icon: "ti-car", text: "Drive (probably) from Northampton to London" },
+          { icon: "ti-train", text: "Eurostar to Paris, arrive ~midday" },
+          { icon: "ti-home", text: "Train to Paris Airbnb, get settled" },
+          { icon: "ti-tools-kitchen-2", text: "Lunch with Aunty Jane (Mum's friend)" },
+          { icon: "ti-camera", text: "Louvre, Arc de Triomphe — tour and vibe" },
+          { icon: "ti-building", text: "Eiffel Tower lookout at 9pm" },
+          { icon: "ti-moon", text: "Back to Airbnb" },
+        ]
+      },
+      {
+        date: "Thu 27 Aug", label: "Brussels", color: "purple",
+        loc: "Paris → Brussels → London → Northampton",
+        events: [
+          { icon: "ti-train", text: "Eurostar Paris → Brussels" },
+          { icon: "ti-camera", text: "Sightsee Brussels, be tourists" },
+          { icon: "ti-train", text: "Eurostar Brussels → London" },
+          { icon: "ti-car", text: "Drive back to Northampton (probably)" },
+        ]
+      },
+      {
+        date: "Fri 28 Aug", label: "Link Up", color: "coral",
+        loc: "London (Streatham / Brixton)",
+        events: [
+          { icon: "ti-car", text: "All drive to London, arrive ~midday" },
+          { icon: "ti-home", text: "Check in to Airbnb in Streatham" },
+          { icon: "ti-users", text: "Massive link up in Brixton — family and friends", note: "Afternoon into night" },
+          { icon: "ti-moon", text: "Back to Streatham Airbnb" },
+        ]
+      },
+      {
+        date: "Sat 29 Aug", label: "Birmingham", color: "green",
+        loc: "London → Birmingham → London",
+        events: [
+          { icon: "ti-car", text: "Drive to Birmingham, leave ~9am" },
+          { icon: "ti-users", text: "Visit Aunty Mink and other family/friends in Brummy" },
+          { icon: "ti-car", text: "Drive back to London late night", note: "Leave ~10/11pm" },
+        ]
+      },
+      {
+        date: "Sun 30 Aug", label: "Carnival", color: "coral",
+        loc: "London — everyone on their own",
+        events: [
+          { icon: "ti-user-circle", text: "Everyone doing their own thing" },
+          { icon: "ti-walk", text: "Joe leaves early → Joshua's (cousin) in Selhurst" },
+          { icon: "ti-confetti", text: "Notting Hill Carnival" },
+          { icon: "ti-moon", text: "Joe heads back or stays at Joshua's", note: "Link up with family in the morning" },
+        ]
+      },
+      {
+        date: "Mon 31 Aug", label: "Rehearsal", color: "coral",
+        loc: "Wedding venue → Leytonstone",
+        events: [
+          { icon: "ti-building-arch", text: "Wedding venue — drop off Lilia / Joe if needed" },
+          { icon: "ti-car", text: "Head to Leytonstone, stay with Uncle Kenneth overnight" },
+        ]
+      },
+      {
+        date: "Tue 1 Sep", label: "Wedding", color: "coral",
+        loc: "Wedding venue",
+        events: [
+          { icon: "ti-heart", text: "Big day, big tings" },
+          { icon: "ti-moon", text: "Head back to Uncle Ken late", note: "Knowing the family it'll be looong" },
+        ]
+      },
+      {
+        date: "Wed 2 Sep", label: "Family", color: "green",
+        loc: "London (Streatham Airbnb)",
+        events: [
+          { icon: "ti-users", text: "Visit family and friends, gallivant around" },
+          { icon: "ti-moon", text: "Back to Streatham Airbnb" },
+        ]
+      },
+      {
+        date: "Thu 3 Sep", label: "Family", color: "green",
+        loc: "London (Streatham Airbnb)",
+        events: [
+          { icon: "ti-users", text: "More family and friends — pt. 2" },
+          { icon: "ti-moon", text: "Back to Streatham Airbnb" },
+        ]
+      },
+      {
+        date: "Fri 4 Sep", label: "Dad & Lils fly", color: "coral",
+        loc: "Streatham → Heathrow",
+        events: [
+          { icon: "ti-luggage", text: "Check out of Streatham Airbnb" },
+          { icon: "ti-car", text: "All head to Heathrow, return rental car" },
+          { icon: "ti-plane-departure", text: "Dad and Lilia fly home to Jamaica" },
+          { icon: "ti-heart", text: "Joe and Mum say their goodbyes, go separate ways" },
+        ]
+      },
+      {
+        date: "Sat 5 – Mon 7 Sep", label: "Solo Joe", color: "blue",
+        loc: "London — Joe's time",
+        events: [
+          { icon: "ti-sunglasses", text: "Joe solo in London doing whatever he wants", note: "Earned it fr" },
+        ]
+      },
+      {
+        date: "Tue 8 Sep", label: "Mum flies", color: "coral",
+        loc: "London → Heathrow",
+        events: [
+          { icon: "ti-plane-departure", text: "Head to Heathrow with Mum, see her off" },
+          { icon: "ti-arrow-back", text: "Head back into London, back to doing Joe things" },
+        ]
+      },
+      {
+        date: "Wed 9 – Thu 10 Sep", label: "Solo Joe", color: "blue",
+        loc: "London — Joe's time",
+        events: [
+          { icon: "ti-sunglasses", text: "Last stretch — London solo, full send" },
+        ]
+      },
+    ];
+
+    const colorMap = {
+      green:  { bg: "var(--green-bg)",  text: "var(--green-text)" },
+      purple: { bg: "var(--purple-bg)", text: "var(--purple-text)" },
+      coral:  { bg: "var(--coral-bg)",  text: "var(--coral-text)" },
+      blue:   { bg: "var(--blue-bg)",   text: "var(--blue-text)" },
+    };
+
+    const container = document.getElementById('days');
+
+    days.forEach(day => {
+      const c = colorMap[day.color];
+      const card = document.createElement('div');
+      card.className = 'day-card';
+
+      card.innerHTML = `
+        <div class="day-header" role="button" tabindex="0" aria-expanded="false">
+          <span class="day-badge" style="background:${c.bg};color:${c.text}">${day.label}</span>
+          <div class="day-info">
+            <div class="day-title">${day.date}</div>
+            <div class="day-loc">${day.loc}</div>
+          </div>
+          <i class="ti ti-chevron-down chevron" aria-hidden="true"></i>
+        </div>
+        <div class="day-body">
+          ${day.events.map(e => `
+            <div class="event">
+              <i class="ti ${e.icon} event-icon" aria-hidden="true"></i>
+              <div>
+                <div class="event-text">${e.text}</div>
+                ${e.note ? `<div class="event-note">${e.note}</div>` : ''}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      const header = card.querySelector('.day-header');
+      header.addEventListener('click', () => toggle(card, header));
+      header.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(card, header); }
+      });
+
+      container.appendChild(card);
+    });
+
+    function toggle(card, header) {
+      const isOpen = card.classList.contains('open');
+      card.classList.toggle('open', !isOpen);
+      header.setAttribute('aria-expanded', String(!isOpen));
+    }
+  </script>
+</body>
+</html>
