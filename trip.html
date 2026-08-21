@@ -448,6 +448,9 @@
     <button class="sidebar-btn" id="drawerToggle" aria-label="Open flight info" aria-expanded="false">
       <i class="ti ti-plane" aria-hidden="true"></i>
     </button>
+    <button class="sidebar-btn" id="trainDrawerToggle" aria-label="Open train info" aria-expanded="false" style="margin-top:10px">
+      <i class="ti ti-train" aria-hidden="true"></i>
+    </button>
   </div>
 
   <!-- OVERLAY -->
@@ -940,6 +943,138 @@
     </div>
   </div>
 
+  <!-- TRAIN DRAWER -->
+  <div class="drawer" id="trainDrawer" aria-hidden="true">
+    <div class="drawer-header">
+      <div class="drawer-title">Trains</div>
+    </div>
+
+    <div class="tab-panels">
+      <div class="tab-panel active" style="display:block">
+        <div style="margin-top:0.75rem">
+          <div class="booking-ref">16-25 Railcard · Advance Single · LNR &amp; WMR · No specific seat</div>
+
+          <div class="seg-section-label">Mon 24 Aug — Northampton → London</div>
+          <div class="flight-segment">
+            <div class="seg-label">NMP → EUS · Ref TTB2SYG39HB</div>
+            <div class="seg-route">
+              <span class="seg-airport">NMP</span>
+              <div class="seg-arrow">
+                <div class="seg-arrow-line"></div>
+                <i class="ti ti-train" style="font-size:13px"></i>
+                <div class="seg-arrow-line"></div>
+              </div>
+              <span class="seg-airport">EUS</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block">
+                <div class="seg-time">05:34</div>
+                <div class="seg-time-label">Departs Northampton</div>
+              </div>
+              <div class="seg-time-block">
+                <div class="seg-time">06:53</div>
+                <div class="seg-time-label">Arrives London Euston</div>
+              </div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 1h 19m</span>
+              <span class="seg-pill">LNR &amp; WMR</span>
+              <span class="seg-pill">No specific seat</span>
+            </div>
+          </div>
+
+          <div class="seg-section-label" style="margin-top:1.25rem">Tue 25 Aug — London → Northampton</div>
+          <div class="flight-segment">
+            <div class="seg-label">EUS → NMP</div>
+            <div class="seg-route">
+              <span class="seg-airport">EUS</span>
+              <div class="seg-arrow">
+                <div class="seg-arrow-line"></div>
+                <i class="ti ti-train" style="font-size:13px"></i>
+                <div class="seg-arrow-line"></div>
+              </div>
+              <span class="seg-airport">NMP</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block">
+                <div class="seg-time">20:19</div>
+                <div class="seg-time-label">Departs London Euston</div>
+              </div>
+              <div class="seg-time-block">
+                <div class="seg-time">21:24</div>
+                <div class="seg-time-label">Arrives Northampton</div>
+              </div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 1h 05m</span>
+              <span class="seg-pill">LNR &amp; WMR</span>
+              <span class="seg-pill">No specific seat</span>
+            </div>
+          </div>
+
+          <div class="seg-section-label" style="margin-top:1.25rem">Wed 26 Aug — Northampton → London</div>
+          <div class="flight-segment">
+            <div class="seg-label">NMP → EUS · Ref TTB2SYG39HB</div>
+            <div class="seg-route">
+              <span class="seg-airport">NMP</span>
+              <div class="seg-arrow">
+                <div class="seg-arrow-line"></div>
+                <i class="ti ti-train" style="font-size:13px"></i>
+                <div class="seg-arrow-line"></div>
+              </div>
+              <span class="seg-airport">EUS</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block">
+                <div class="seg-time">05:34</div>
+                <div class="seg-time-label">Departs Northampton</div>
+              </div>
+              <div class="seg-time-block">
+                <div class="seg-time">06:53</div>
+                <div class="seg-time-label">Arrives London Euston</div>
+              </div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 1h 19m</span>
+              <span class="seg-pill">LNR &amp; WMR</span>
+              <span class="seg-pill">No specific seat</span>
+            </div>
+          </div>
+
+          <div class="seg-section-label" style="margin-top:1.25rem">Thu 27 Aug — London → Northampton</div>
+          <div class="flight-segment">
+            <div class="seg-label">EUS → NMP</div>
+            <div class="seg-route">
+              <span class="seg-airport">EUS</span>
+              <div class="seg-arrow">
+                <div class="seg-arrow-line"></div>
+                <i class="ti ti-train" style="font-size:13px"></i>
+                <div class="seg-arrow-line"></div>
+              </div>
+              <span class="seg-airport">NMP</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block">
+                <div class="seg-time">20:19</div>
+                <div class="seg-time-label">Departs London Euston</div>
+              </div>
+              <div class="seg-time-block">
+                <div class="seg-time">21:24</div>
+                <div class="seg-time-label">Arrives Northampton</div>
+              </div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 1h 05m</span>
+              <span class="seg-pill">LNR &amp; WMR</span>
+              <span class="seg-pill">No specific seat</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- MAIN -->
   <div class="main">
     <div class="page">
@@ -947,7 +1082,7 @@
         <p class="eyebrow">Family Itinerary</p>
         <h1 class="trip-title">England &amp; Europe</h1>
         <p class="trip-sub">Fri 21 Aug – Fri 11 Sep &nbsp;·&nbsp; Joe, Lilia, Mum, Dad</p>
-        <p style="font-size:12px;color:var(--text-muted);margin-top:8px">tap any day to expand &nbsp;·&nbsp; ✈ icon on the left for flights</p>
+        <p style="font-size:12px;color:var(--text-muted);margin-top:8px">tap any day to expand &nbsp;·&nbsp; ✈ flights &amp; 🚂 trains on the left</p>
       </div>
 
       <div class="legend">
@@ -1002,7 +1137,7 @@
         loc: "Northampton → London → Edinburgh → Perth → Scenic Drive",
         events: [
           { icon: "ti-alarm", text: "Leave Northampton at 6am" },
-          { icon: "ti-train", text: "London → Edinburgh, departs 8:00am arrives 12:30pm" },
+          { icon: "ti-train", text: "Train NMP → London Euston, departs 05:34 arrives 06:53", note: "LNR & WMR · Advance Single · No specific seat" },
           { icon: "ti-walk", text: "Edinburgh city stroll — lunch, walk around Victoria Street" },
           { icon: "ti-car", text: "Pick up 2nd rental car at 2:30pm" },
           { icon: "ti-map-pin", text: "Edinburgh → Perth, check in to Airbnb at 4:00pm" },
@@ -1022,14 +1157,14 @@
           { icon: "ti-building-store", text: "George Street / city centre" },
           { icon: "ti-tools-kitchen-2", text: "Lunch", note: "Chez Jules or Tigerlily" },
           { icon: "ti-train", text: "Edinburgh → London, departs 3:00pm arrives 7:30pm" },
-          { icon: "ti-car", text: "London → Northampton", note: "Rest!" },
+          { icon: "ti-train", text: "London Euston → Northampton, departs 20:19 arrives 21:24", note: "LNR & WMR · Advance Single · No specific seat" },
         ]
       },
       {
         date: "Wed 26 Aug", label: "Paris", color: "purple",
         loc: "Northampton → London → Paris",
         events: [
-          { icon: "ti-car", text: "Northampton → London, leave 6:00am" },
+          { icon: "ti-train", text: "Train NMP → London Euston, departs 05:34 arrives 06:53", note: "LNR & WMR · Advance Single · No specific seat" },
           { icon: "ti-train", text: "Eurostar St Pancras → Paris, departs 8:01am arrives 11:23am" },
           { icon: "ti-luggage", text: "Drop off luggage" },
           { icon: "ti-tools-kitchen-2", text: "Brunch at Café Carrousel" },
@@ -1056,7 +1191,7 @@
           { icon: "ti-map-pin", text: "Explore Place du Jeu de Balle (?)" },
           { icon: "ti-gift", text: "Elisabeth Chocolate" },
           { icon: "ti-train", text: "Brussels → London, departs 6:00pm arrives 7:00pm" },
-          { icon: "ti-car", text: "London → Northampton" },
+          { icon: "ti-train", text: "London Euston → Northampton, departs 20:19 arrives 21:24", note: "LNR & WMR · Advance Single · No specific seat" },
         ]
       },
       {
@@ -1254,12 +1389,25 @@
       }
     }
 
-    // drawer
+    // flight drawer
     const toggle = document.getElementById('drawerToggle');
     const drawer = document.getElementById('flightDrawer');
     const overlay = document.getElementById('drawerOverlay');
 
+    // train drawer
+    const trainToggle = document.getElementById('trainDrawerToggle');
+    const trainDrawer = document.getElementById('trainDrawer');
+
+    function closeAll() {
+      [drawer, trainDrawer].forEach(d => { d.classList.remove('open'); d.setAttribute('aria-hidden', 'true'); });
+      overlay.classList.remove('open');
+      [toggle, trainToggle].forEach(t => { t.classList.remove('open'); t.setAttribute('aria-expanded', 'false'); });
+      toggle.setAttribute('aria-label', 'Open flight info');
+      trainToggle.setAttribute('aria-label', 'Open train info');
+    }
+
     function openDrawer() {
+      closeAll();
       drawer.classList.add('open');
       overlay.classList.add('open');
       toggle.classList.add('open');
@@ -1267,20 +1415,26 @@
       toggle.setAttribute('aria-expanded', 'true');
       toggle.setAttribute('aria-label', 'Close flight info');
     }
-    function closeDrawer() {
-      drawer.classList.remove('open');
-      overlay.classList.remove('open');
-      toggle.classList.remove('open');
-      drawer.setAttribute('aria-hidden', 'true');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Open flight info');
+    function closeDrawer() { closeAll(); }
+
+    function openTrainDrawer() {
+      closeAll();
+      trainDrawer.classList.add('open');
+      overlay.classList.add('open');
+      trainToggle.classList.add('open');
+      trainDrawer.setAttribute('aria-hidden', 'false');
+      trainToggle.setAttribute('aria-expanded', 'true');
+      trainToggle.setAttribute('aria-label', 'Close train info');
     }
 
     toggle.addEventListener('click', () => {
-      drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+      drawer.classList.contains('open') ? closeAll() : openDrawer();
     });
-    overlay.addEventListener('click', closeDrawer);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+    trainToggle.addEventListener('click', () => {
+      trainDrawer.classList.contains('open') ? closeAll() : openTrainDrawer();
+    });
+    overlay.addEventListener('click', closeAll);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
 
     // tabs
     document.querySelectorAll('.tab-btn').forEach(btn => {
