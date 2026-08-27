@@ -195,6 +195,35 @@
       padding-bottom: 6px;
       border-bottom: 0.5px solid var(--border-strong);
     }
+
+    .seg-section-label.today-flight {
+      color: #d85a30;
+      border-bottom-color: #d85a30;
+    }
+
+    .seg-section-label.today-train {
+      color: #d85a30;
+      border-bottom-color: #d85a30;
+    }
+
+    .flight-segment.today-flight {
+      border-color: #d85a30;
+      box-shadow: inset 3px 0 0 0 #d85a30;
+      background: color-mix(in srgb, var(--bg) 92%, #d85a30 8%);
+    }
+
+    .flight-segment.today-train {
+      border-color: #d85a30;
+      box-shadow: inset 3px 0 0 0 #d85a30;
+      background: color-mix(in srgb, var(--bg) 92%, #d85a30 8%);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .seg-section-label.today-flight { color: #f0997b; border-bottom-color: #f0997b; }
+      .seg-section-label.today-train { color: #f0997b; border-bottom-color: #f0997b; }
+      .flight-segment.today-flight { border-color: #f0997b; box-shadow: inset 3px 0 0 0 #f0997b; }
+      .flight-segment.today-train { border-color: #f0997b; box-shadow: inset 3px 0 0 0 #f0997b; }
+    }
     .seg-route {
       display: flex;
       align-items: center;
@@ -954,61 +983,7 @@
         <div style="margin-top:0.75rem">
           <div class="booking-ref">16-25 Railcard · Advance Single · LNR &amp; WMR · No specific seat</div>
 
-          <div class="seg-section-label">Eurostar — Wed 26 Aug · London → Paris</div>
-          <div class="flight-segment">
-            <div class="seg-label">ES 9008 · PNR R6WXJ3 · Carriage 6 · Seats 41/42/45/46 · All 4 passengers</div>
-            <div class="seg-route">
-              <span class="seg-airport" style="font-size:16px">STP</span>
-              <div class="seg-arrow"><div class="seg-arrow-line"></div><i class="ti ti-train" style="font-size:13px"></i><div class="seg-arrow-line"></div></div>
-              <span class="seg-airport" style="font-size:16px">CDG</span>
-            </div>
-            <div class="seg-times">
-              <div class="seg-time-block"><div class="seg-time">08:01</div><div class="seg-time-label">Departs St Pancras · arrive by 07:01</div></div>
-              <div class="seg-time-block"><div class="seg-time">11:29</div><div class="seg-time-label">Arrives Paris Gare du Nord</div></div>
-            </div>
-            <div class="seg-meta">
-              <span class="seg-pill"><i class="ti ti-clock"></i> 2h 28m</span>
-              <span class="seg-pill">Eurostar Standard</span>
-            </div>
-          </div>
-
-          <div class="seg-section-label" style="margin-top:1.25rem">Eurostar — Thu 27 Aug · Paris → Brussels</div>
-          <div class="flight-segment">
-            <div class="seg-label">ES 9333 · PNR 2GTRM7 · Carriage 7 · Seats 51/52/55/56 · All 4 passengers</div>
-            <div class="seg-route">
-              <span class="seg-airport" style="font-size:16px">CDG</span>
-              <div class="seg-arrow"><div class="seg-arrow-line"></div><i class="ti ti-train" style="font-size:13px"></i><div class="seg-arrow-line"></div></div>
-              <span class="seg-airport" style="font-size:16px">BRU</span>
-            </div>
-            <div class="seg-times">
-              <div class="seg-time-block"><div class="seg-time">11:25</div><div class="seg-time-label">Departs Paris Gare du Nord · arrive by 11:10</div></div>
-              <div class="seg-time-block"><div class="seg-time">12:47</div><div class="seg-time-label">Arrives Brussels Midi/Zuid</div></div>
-            </div>
-            <div class="seg-meta">
-              <span class="seg-pill"><i class="ti ti-clock"></i> 1h 22m</span>
-              <span class="seg-pill">Eurostar Standard</span>
-            </div>
-          </div>
-
-          <div class="seg-section-label" style="margin-top:1.25rem">Eurostar — Thu 27 Aug · Brussels → London</div>
-          <div class="flight-segment">
-            <div class="seg-label">ES 9153 · PNR QXJRHK · Carriage 2 · Seats 65/66/71/72 · All 4 passengers</div>
-            <div class="seg-route">
-              <span class="seg-airport" style="font-size:16px">BRU</span>
-              <div class="seg-arrow"><div class="seg-arrow-line"></div><i class="ti ti-train" style="font-size:13px"></i><div class="seg-arrow-line"></div></div>
-              <span class="seg-airport" style="font-size:16px">STP</span>
-            </div>
-            <div class="seg-times">
-              <div class="seg-time-block"><div class="seg-time">17:56</div><div class="seg-time-label">Departs Brussels · arrive by 16:56</div></div>
-              <div class="seg-time-block"><div class="seg-time">18:57</div><div class="seg-time-label">Arrives London St Pancras</div></div>
-            </div>
-            <div class="seg-meta">
-              <span class="seg-pill"><i class="ti ti-clock"></i> 2h 01m</span>
-              <span class="seg-pill">Eurostar Standard</span>
-            </div>
-          </div>
-
-          <div class="seg-section-label" style="margin-top:1.25rem">Mon 24 Aug — Northampton → London</div>
+          <div class="seg-section-label">Mon 24 Aug — Northampton → London</div>
           <div class="flight-segment">
             <div class="seg-label">NMP → EUS · Ref TTB2SYG39HB</div>
             <div class="seg-route">
@@ -1092,6 +1067,60 @@
               <span class="seg-pill"><i class="ti ti-clock"></i> 1h 19m</span>
               <span class="seg-pill">LNR &amp; WMR</span>
               <span class="seg-pill">No specific seat</span>
+            </div>
+          </div>
+
+          <div class="seg-section-label" style="margin-top:1.25rem">Eurostar — Wed 26 Aug · London → Paris</div>
+          <div class="flight-segment">
+            <div class="seg-label">ES 9008 · PNR R6WXJ3 · Carriage 6 · Seats 41/42/45/46 · All 4 passengers</div>
+            <div class="seg-route">
+              <span class="seg-airport" style="font-size:16px">STP</span>
+              <div class="seg-arrow"><div class="seg-arrow-line"></div><i class="ti ti-train" style="font-size:13px"></i><div class="seg-arrow-line"></div></div>
+              <span class="seg-airport" style="font-size:16px">CDG</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block"><div class="seg-time">08:01</div><div class="seg-time-label">Departs St Pancras · arrive by 07:01</div></div>
+              <div class="seg-time-block"><div class="seg-time">11:29</div><div class="seg-time-label">Arrives Paris Gare du Nord</div></div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 2h 28m</span>
+              <span class="seg-pill">Eurostar Standard</span>
+            </div>
+          </div>
+
+          <div class="seg-section-label" style="margin-top:1.25rem">Eurostar — Thu 27 Aug · Paris → Brussels</div>
+          <div class="flight-segment">
+            <div class="seg-label">ES 9333 · PNR 2GTRM7 · Carriage 7 · Seats 51/52/55/56 · All 4 passengers</div>
+            <div class="seg-route">
+              <span class="seg-airport" style="font-size:16px">CDG</span>
+              <div class="seg-arrow"><div class="seg-arrow-line"></div><i class="ti ti-train" style="font-size:13px"></i><div class="seg-arrow-line"></div></div>
+              <span class="seg-airport" style="font-size:16px">BRU</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block"><div class="seg-time">11:25</div><div class="seg-time-label">Departs Paris Gare du Nord · arrive by 11:10</div></div>
+              <div class="seg-time-block"><div class="seg-time">12:47</div><div class="seg-time-label">Arrives Brussels Midi/Zuid</div></div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 1h 22m</span>
+              <span class="seg-pill">Eurostar Standard</span>
+            </div>
+          </div>
+
+          <div class="seg-section-label" style="margin-top:1.25rem">Eurostar — Thu 27 Aug · Brussels → London</div>
+          <div class="flight-segment">
+            <div class="seg-label">ES 9153 · PNR QXJRHK · Carriage 2 · Seats 65/66/71/72 · All 4 passengers</div>
+            <div class="seg-route">
+              <span class="seg-airport" style="font-size:16px">BRU</span>
+              <div class="seg-arrow"><div class="seg-arrow-line"></div><i class="ti ti-train" style="font-size:13px"></i><div class="seg-arrow-line"></div></div>
+              <span class="seg-airport" style="font-size:16px">STP</span>
+            </div>
+            <div class="seg-times">
+              <div class="seg-time-block"><div class="seg-time">17:56</div><div class="seg-time-label">Departs Brussels · arrive by 16:56</div></div>
+              <div class="seg-time-block"><div class="seg-time">18:57</div><div class="seg-time-label">Arrives London St Pancras</div></div>
+            </div>
+            <div class="seg-meta">
+              <span class="seg-pill"><i class="ti ti-clock"></i> 2h 01m</span>
+              <span class="seg-pill">Eurostar Standard</span>
             </div>
           </div>
 
@@ -1500,6 +1529,77 @@
         document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
       });
     });
+
+    // highlight today's flight sections (date-based)
+    (function() {
+      const t = new Date();
+      t.setHours(0,0,0,0);
+      const m = t.getMonth();
+      const d = t.getDate();
+
+      const flightDates = {
+        'Outbound — Fri 21 Aug': [7, 21],
+        'Return — Thu 10 Sep':   [8, 10],
+        'Return — Fri 4 Sep':    [8,  4],
+        'Return — Tue 8 Sep':    [8,  8],
+      };
+
+      document.querySelectorAll('#flightDrawer .seg-section-label').forEach(label => {
+        for (const [key, [fm, fd]] of Object.entries(flightDates)) {
+          if (label.textContent.trim().startsWith(key) && m === fm && d === fd) {
+            label.classList.add('today-flight');
+            let next = label.nextElementSibling;
+            while (next && next.classList.contains('flight-segment')) {
+              next.classList.add('today-flight');
+              next = next.nextElementSibling;
+            }
+          }
+        }
+      });
+    })();
+
+    // highlight next upcoming train segment (time-aware)
+    (function() {
+      // all train departures: [month(0-idx), day, hour, minute, sectionLabelStartsWith]
+      const trainDepartures = [
+        [7, 24,  5, 34, 'Mon 24 Aug — Northampton'],
+        [7, 25, 20, 19, 'Tue 25 Aug — London'],
+        [7, 26,  5, 34, 'Wed 26 Aug — Northampton'],
+        [7, 26,  8,  1, 'Eurostar — Wed 26 Aug'],
+        [7, 27, 11, 25, 'Eurostar — Thu 27 Aug · Paris'],
+        [7, 27, 17, 56, 'Eurostar — Thu 27 Aug · Brussels'],
+        [7, 27, 20, 19, 'Thu 27 Aug — London'],
+      ];
+
+      const now = new Date();
+      const nowMs = now.getTime();
+
+      // convert each departure to a Date object
+      const withTimes = trainDepartures.map(([mo, dy, hr, mn, key]) => {
+        const dep = new Date(now.getFullYear(), mo, dy, hr, mn, 0, 0);
+        const expiry = new Date(dep.getTime() + 90 * 60 * 1000); // +90 min
+        return { dep, expiry, key };
+      });
+
+      // find the active one: dep <= now+2h AND now < expiry
+      // "next upcoming" = smallest dep that hasn't expired yet
+      const active = withTimes
+        .filter(t => nowMs < t.expiry.getTime())
+        .sort((a, b) => a.dep - b.dep)[0];
+
+      if (!active) return;
+
+      document.querySelectorAll('#trainDrawer .seg-section-label').forEach(label => {
+        if (label.textContent.trim().startsWith(active.key)) {
+          label.classList.add('today-train');
+          let next = label.nextElementSibling;
+          while (next && next.classList.contains('flight-segment')) {
+            next.classList.add('today-train');
+            next = next.nextElementSibling;
+          }
+        }
+      });
+    })();
   </script>
 </body>
 </html>
