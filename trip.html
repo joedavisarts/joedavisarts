@@ -463,7 +463,24 @@
       .day-card.today .day-title { color: #9fe1cb; }
     }
 
-    .footer { margin-top: 3rem; text-align: center; font-size: 12px; color: var(--text-muted); }
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 8px;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: background 0.15s;
+    }
+    .file-item:hover { background: color-mix(in srgb, var(--bg) 85%, var(--text-primary) 15%); }
+    .file-icon { font-size: 20px; color: var(--text-secondary); flex-shrink: 0; }
+    .file-name { font-size: 13px; flex: 1; word-break: break-word; line-height: 1.4; }
+    .file-download { font-size: 16px; color: var(--text-muted); flex-shrink: 0; }
+    .file-error { font-size: 13px; color: var(--text-muted); padding: 8px 0; }
 
     @media (prefers-reduced-motion: reduce) {
       .day-body, .chevron, .drawer, .sidebar-btn i { transition: none; }
@@ -479,6 +496,9 @@
     </button>
     <button class="sidebar-btn" id="trainDrawerToggle" aria-label="Open train info" aria-expanded="false" style="margin-top:10px">
       <i class="ti ti-train" aria-hidden="true"></i>
+    </button>
+    <button class="sidebar-btn" id="fileDrawerToggle" aria-label="Open files" aria-expanded="false" style="margin-top:10px">
+      <i class="ti ti-folder" aria-hidden="true"></i>
     </button>
   </div>
 
@@ -1158,6 +1178,18 @@
     </div>
   </div>
 
+  <!-- FILE DRAWER -->
+  <div class="drawer" id="fileDrawer" aria-hidden="true">
+    <div class="drawer-header">
+      <div class="drawer-title">Files</div>
+    </div>
+    <div class="tab-panels">
+      <div style="margin-top:0.75rem" id="fileList">
+        <div class="booking-ref" id="fileLoadingMsg">Loading files...</div>
+      </div>
+    </div>
+  </div>
+
   <!-- MAIN -->
   <div class="main">
     <div class="page">
@@ -1483,11 +1515,12 @@
     const trainDrawer = document.getElementById('trainDrawer');
 
     function closeAll() {
-      [drawer, trainDrawer].forEach(d => { d.classList.remove('open'); d.setAttribute('aria-hidden', 'true'); });
+      [drawer, trainDrawer, fileDrawer].forEach(d => { d.classList.remove('open'); d.setAttribute('aria-hidden', 'true'); });
       overlay.classList.remove('open');
-      [toggle, trainToggle].forEach(t => { t.classList.remove('open'); t.setAttribute('aria-expanded', 'false'); });
+      [toggle, trainToggle, fileToggle].forEach(t => { t.classList.remove('open'); t.setAttribute('aria-expanded', 'false'); });
       toggle.setAttribute('aria-label', 'Open flight info');
       trainToggle.setAttribute('aria-label', 'Open train info');
+      fileToggle.setAttribute('aria-label', 'Open files');
     }
 
     function openDrawer() {
@@ -1530,7 +1563,75 @@
       });
     });
 
-    // highlight today's flight sections (date-based)
+    // file drawer
+    const fileToggle = document.getElementById('fileDrawerToggle');
+    const fileDrawer = document.getElementById('fileDrawer');
+
+    fileToggle.addEventListener('click', () => {
+      fileDrawer.classList.contains('open') ? closeAll() : openFileDrawer();
+    });
+
+    function openFileDrawer() {
+      closeAll();
+      fileDrawer.classList.add('open');
+      overlay.classList.add('open');
+      fileToggle.classList.add('open');
+      fileDrawer.setAttribute('aria-hidden', 'false');
+      fileToggle.setAttribute('aria-expanded', 'true');
+      fileToggle.setAttribute('aria-label', 'Close files');
+      loadFiles();
+    }
+
+    let filesLoaded = false;
+    async function loadFiles() {
+      if (filesLoaded) return;
+      const list = document.getElementById('fileList');
+      const msg = document.getElementById('fileLoadingMsg');
+      try {
+        const res = await fetch('/trip-files/');
+        const html = await res.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        // grab all links that aren't parent directory
+        const links = [...doc.querySelectorAll('a[href]')]
+          .map(a => a.getAttribute('href'))
+          .filter(href => !href.startsWith('?') && !href.startsWith('/') && href !== '../');
+
+        if (links.length === 0) {
+          msg.textContent = 'No files found in /trip-files/';
+          return;
+        }
+
+        msg.remove();
+        links.forEach(href => {
+          const name = decodeURIComponent(href.replace(/\/$/, ''));
+          const ext = name.split('.').pop().toLowerCase();
+          const iconMap = {
+            pdf: 'ti-file-type-pdf',
+            jpg: 'ti-photo', jpeg: 'ti-photo', png: 'ti-photo', webp: 'ti-photo', heic: 'ti-photo',
+            doc: 'ti-file-type-doc', docx: 'ti-file-type-doc',
+            xls: 'ti-file-type-xls', xlsx: 'ti-file-type-xls',
+            zip: 'ti-file-zip', ics: 'ti-calendar',
+          };
+          const icon = iconMap[ext] || 'ti-file';
+          const a = document.createElement('a');
+          a.className = 'file-item';
+          a.href = '/trip-files/' + href;
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.download = name;
+          a.innerHTML = `
+            <i class="ti ${icon} file-icon"></i>
+            <span class="file-name">${name}</span>
+            <i class="ti ti-download file-download"></i>
+          `;
+          list.appendChild(a);
+        });
+        filesLoaded = true;
+      } catch (e) {
+        msg.textContent = 'Could not load files. Make sure /trip-files/ exists in the repo.';
+      }
+    }
     (function() {
       const t = new Date();
       t.setHours(0,0,0,0);
