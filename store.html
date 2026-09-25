@@ -39,11 +39,12 @@
     }
     .store-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 20px;
     }
-    @media (max-width: 900px) { .store-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 600px) { .store-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 1100px) { .store-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 800px) { .store-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .store-grid { grid-template-columns: 1fr; } }
 
     .product-card {
       background: var(--bg-card);
@@ -53,6 +54,9 @@
       display: flex;
       flex-direction: column;
       transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
     }
     .product-card:hover {
       transform: translateY(-4px);
@@ -78,33 +82,18 @@
       object-fit: cover;
     }
     .product-body {
-      padding: 22px 22px 24px;
+      padding: 20px 20px 22px;
       display: flex;
       flex-direction: column;
       flex: 1;
     }
-    .product-tag {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 8px;
-    }
     .product-title {
       font-family: var(--font-heading);
-      font-size: 34px;
+      font-size: 28px;
       letter-spacing: 0.02em;
       color: var(--heading-color);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       line-height: 1.0;
-    }
-    .product-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.65;
-      margin-bottom: 20px;
-      flex: 1;
     }
     .product-footer {
       display: flex;
@@ -115,53 +104,19 @@
     }
     .product-price {
       font-family: var(--font-heading);
-      font-size: 28px;
+      font-size: 24px;
       color: var(--gold);
       letter-spacing: 0.02em;
     }
     .product-price.free {
       color: #4CAF50;
     }
-    .btn-buy {
+    .product-view-hint {
       font-family: 'Plus Jakarta Sans', Arial, sans-serif;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
-      background: #1a1a1a;
-      color: #DAB322;
-      border: none;
-      border-radius: 8px;
-      padding: 11px 22px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }
-    [data-theme="dark"] .btn-buy {
-      background: #DAB322;
-      color: #0D0D0B;
-    }
-    .btn-buy:hover {
-      opacity: 0.9;
-      transform: scale(1.02);
-    }
-    .btn-free {
-      font-family: 'Plus Jakarta Sans', Arial, sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      background: rgba(76,175,80,0.12);
-      color: #4CAF50;
-      border: 1px solid rgba(76,175,80,0.3);
-      border-radius: 8px;
-      padding: 11px 22px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }
-    .btn-free:hover {
-      background: rgba(76,175,80,0.2);
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
     }
     /* List view */
     .store-list {
@@ -174,8 +129,8 @@
       align-items: stretch;
     }
     .store-list .product-img {
-      width: 180px;
-      min-width: 180px;
+      width: 140px;
+      min-width: 140px;
       aspect-ratio: 1;
       border-radius: 0;
       flex-shrink: 0;
@@ -188,19 +143,14 @@
     }
     .store-list .product-body > *:not(.product-footer) {
       flex: 1;
-      min-width: 200px;
+      min-width: 160px;
     }
     .store-list .product-footer {
       flex-shrink: 0;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 10px;
+      gap: 16px;
       margin-top: 0;
     }
-    .store-list .product-desc {
-      margin-bottom: 0;
-    }
-    @media (max-width: 700px) {
+    @media (max-width: 600px) {
       .store-list .product-card { flex-direction: column; }
       .store-list .product-img { width: 100%; min-width: unset; }
     }
@@ -213,6 +163,7 @@
       background: #DAB322 !important;
       color: #0D0D0B !important;
     }
+    .store-note {
       border: 1px solid rgba(218,179,34,0.15);
       border-radius: 10px;
       padding: 16px 20px;
@@ -253,7 +204,7 @@
         <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
         <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
-      
+
     </div>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
   </div>
@@ -279,82 +230,77 @@
 
     <!-- View toggle -->
     <div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:24px;">
-      <button id="btn-list" onclick="setView('list')" style="background:#1a1a1a; color:#DAB322; border:none; border-radius:8px; padding:8px 16px; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        List
-      </button>
-      <button id="btn-grid" onclick="setView('grid')" style="background:var(--bg-card); color:var(--text-muted); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
+      <button id="btn-grid" onclick="setView('grid')" style="background:#1a1a1a; color:#DAB322; border:none; border-radius:8px; padding:8px 16px; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
         Grid
       </button>
+      <button id="btn-list" onclick="setView('list')" style="background:var(--bg-card); color:var(--text-muted); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        List
+      </button>
     </div>
 
-    <div class="store-grid store-list" id="store-products">
+    <div class="store-grid" id="store-products">
 
       <!-- Photoshop Banner Pack -->
-      <div class="product-card stagger-item">
-        <div class="product-img" id="img-photoshop"><img src="assets/images/store/ps_banner_pack.avif" alt="Photoshop Banner Pack" style="width:100%;height:100%;object-fit:cover;"></div>
+      <a href="store/photoshop-banner-pack.html" class="product-card stagger-item">
+        <div class="product-img"><img src="assets/images/store/ps_banner_pack.avif" alt="Photoshop Banner Pack" style="width:100%;height:100%;object-fit:cover;"></div>
         <div class="product-body">
           <div class="product-title">Photoshop Banner Pack</div>
-          <p class="product-desc">Create flawless 3-post and multi-post Instagram banners with precise, ready-to-use Photoshop templates. Drag, drop, done.</p>
           <div class="product-footer">
             <span class="product-price">£9.99</span>
-            <a href="https://buy.stripe.com/4gMeVd0T46cNamB0LLabK02" class="btn-buy" target="_blank">Buy now →</a>
+            <span class="product-view-hint">View →</span>
           </div>
         </div>
-      </div>
+      </a>
 
       <!-- 4:5 / 3:4 Overlay Pack — FREE -->
-      <div class="product-card stagger-item">
-        <div class="product-img" id="img-overlay"><img src="assets/images/store/overlay_pack.avif" alt="4:5 3:4 Overlay Pack" style="width:100%;height:100%;object-fit:cover;"></div>
+      <a href="store/overlay-pack.html" class="product-card stagger-item">
+        <div class="product-img"><img src="assets/images/store/overlay_pack.avif" alt="4:5 3:4 Overlay Pack" style="width:100%;height:100%;object-fit:cover;"></div>
         <div class="product-body">
           <div class="product-title">4:5 — 3:4 Overlay Pack</div>
-          <p class="product-desc">Perfectly sized overlays to keep your reels, photos, and carousels aligned across Instagram's layout. Free, no strings attached.</p>
           <div class="product-footer">
             <span class="product-price free">FREE</span>
-            <a href="assets/downloads/JDA_-_4-5_3-4_Overlay_Pack.zip" class="btn-free" download>Download →</a>
+            <span class="product-view-hint">View →</span>
           </div>
         </div>
-      </div>
+      </a>
 
       <!-- Tyla Stems — Musicians -->
-      <div class="product-card stagger-item">
-        <div class="product-img" id="img-stems"><img src="assets/images/store/tyla_stems.avif" alt="Tyla Water Stems" style="width:100%;height:100%;object-fit:cover;"></div>
+      <a href="store/tyla-water-stems.html" class="product-card stagger-item">
+        <div class="product-img"><img src="assets/images/store/tyla_stems.avif" alt="Tyla Water Stems" style="width:100%;height:100%;object-fit:cover;"></div>
         <div class="product-body">
           <div class="product-title">Tyla — "Water" Stems for Musicians</div>
-          <p class="product-desc">The full mixed arrangement of "Water" by Tyla, exactly as heard in my video — delivered as individual stems for musicians. Bass, keys, drums, pads, and more, all separated and ready to use.</p>
           <div class="product-footer">
             <span class="product-price">£44.99</span>
-            <a href="https://buy.stripe.com/6oUcN59pA44FeCR9ihabK00" class="btn-buy" target="_blank">Buy now →</a>
+            <span class="product-view-hint">View →</span>
           </div>
         </div>
-      </div>
+      </a>
 
       <!-- Tyla Instrumental — Vocalists -->
-      <div class="product-card stagger-item">
-        <div class="product-img" id="img-inst"><img src="assets/images/store/tyla_inst.avif" alt="Tyla Water Instrumental" style="width:100%;height:100%;object-fit:cover;"></div>
+      <a href="store/tyla-water-instrumental.html" class="product-card stagger-item">
+        <div class="product-img"><img src="assets/images/store/tyla_inst.avif" alt="Tyla Water Instrumental" style="width:100%;height:100%;object-fit:cover;"></div>
         <div class="product-body">
           <div class="product-title">Tyla — "Water" Instrumental for Vocalists</div>
-          <p class="product-desc">The full mixed instrumental of my arrangement of "Water" by Tyla, exactly as heard in my video. Perfect for vocalists who want to perform or record over it.</p>
           <div class="product-footer">
             <span class="product-price">£19.99</span>
-            <a href="https://buy.stripe.com/6oU00jeJUat3amBgKJabK01" class="btn-buy" target="_blank">Buy now →</a>
+            <span class="product-view-hint">View →</span>
           </div>
         </div>
-      </div>
+      </a>
 
       <!-- PDF Resources -->
-      <div class="product-card stagger-item">
-        <div class="product-img" id="img-pdf"><img src="assets/images/store/pdf.avif" alt="PDF Resources" style="width:100%;height:100%;object-fit:cover;"></div>
+      <a href="store/pdf-resources.html" class="product-card stagger-item">
+        <div class="product-img"><img src="assets/images/store/pdf.avif" alt="PDF Resources" style="width:100%;height:100%;object-fit:cover;"></div>
         <div class="product-body">
           <div class="product-title">PDF Resources</div>
-          <p class="product-desc">All the PDF resources referenced across my YouTube channel and Instagram — charts, templates, and guides. £3.99 per file.</p>
           <div class="product-footer">
             <span class="product-price">£3.99</span>
-            <a href="https://buy.stripe.com/3cIfZhfNYgRr7ap7a9abK03" class="btn-buy" target="_blank">Buy now →</a>
+            <span class="product-view-hint">View →</span>
           </div>
         </div>
-      </div>
+      </a>
 
     </div>
   </div>
@@ -398,7 +344,6 @@
         <a href="#">YouTube</a>
         <a href="#">LinkedIn</a>
         <a href="https://twitter.com/joedavismusicja" target="_blank">Twitter</a>
-        <a href="https://twitter.com/joedavismusicja" target="_blank">Twitter</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -431,8 +376,9 @@
     }
     localStorage.setItem('store-view', view);
   }
-  // Default to list view
-  const savedView = localStorage.getItem('store-view') || 'list';
+  // Default to grid view
+  const savedView = localStorage.getItem('store-view') || 'grid';
   setView(savedView);
 </script>
+</body>
 </html>
