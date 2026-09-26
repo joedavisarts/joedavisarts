@@ -134,9 +134,9 @@
     .pdf-list { display: flex !important; flex-direction: column; gap: 16px; }
     .pdf-list .pdf-card { flex-direction: row; align-items: stretch; }
     .pdf-list .pdf-img { width: 140px; min-width: 140px; aspect-ratio: 1; flex-shrink: 0; }
-    .pdf-list .pdf-body { flex-direction: row; align-items: center; gap: 24px; flex-wrap: wrap; }
-    .pdf-list .pdf-body > *:not(.pdf-footer) { flex: 1; min-width: 160px; }
-    .pdf-list .pdf-title { margin-bottom: 0; }
+    .pdf-list .pdf-body { flex-direction: row; align-items: center; gap: 24px; }
+    .pdf-list .pdf-title-group { flex: 1; min-width: 160px; }
+    .pdf-list .pdf-title { margin-bottom: 4px; }
     .pdf-list .pdf-footer { flex-shrink: 0; gap: 16px; margin-top: 0; }
     @media (max-width: 600px) {
       .pdf-list .pdf-card { flex-direction: column; }
@@ -164,7 +164,7 @@
       text-decoration: none;
     }
     .pdf-video-link a:hover { text-decoration: underline; }
-    .pdf-list .pdf-video-link { margin-bottom: 0; flex-basis: 100%; order: 5; }
+    .pdf-list .pdf-video-link { margin-bottom: 0; }
 
     .pdf-controls {
       display: flex;
@@ -282,8 +282,10 @@
       <div class="pdf-card stagger-item" data-title="Getting Paid As A Musician: The Essential Paperwork Guide" data-video="Stop Getting Finessed: Paperwork You NEED As A Musician">
         <div class="pdf-img"><img src="../assets/images/store/pdf/getting-paid-as-a-musician.avif" alt="Getting Paid As A Musician: The Essential Paperwork Guide"></div>
         <div class="pdf-body">
-          <div class="pdf-title">Getting Paid As A Musician: The Essential Paperwork Guide</div>
-          <div class="pdf-video-link">Video: <a href="https://www.youtube.com/watch?v=sWCeI5LcFYQ" target="_blank">Stop Getting Finessed: Paperwork You NEED As A Musician</a></div>
+          <div class="pdf-title-group">
+            <div class="pdf-title">Getting Paid As A Musician: The Essential Paperwork Guide</div>
+            <div class="pdf-video-link">Video: <a href="https://www.youtube.com/watch?v=sWCeI5LcFYQ" target="_blank">Stop Getting Finessed: Paperwork You NEED As A Musician</a></div>
+          </div>
           <div class="pdf-footer">
             <span class="pdf-price">£3.99</span>
             <a href="https://buy.stripe.com/3cIfZhfNYgRr7ap7a9abK03" class="pdf-buy" target="_blank">Buy now →</a>
@@ -364,10 +366,9 @@
       btnGrid.classList.add('view-btn-active');
       btnList.classList.remove('view-btn-active');
     }
-    localStorage.setItem('pdf-catalog-view', view);
   }
-  const savedView = localStorage.getItem('pdf-catalog-view') || 'list';
-  setView(savedView);
+  // Always opens in list view — this is intentionally not remembered across visits.
+  setView('list');
 
   function applyPdfFilters() {
     const query = (document.getElementById('pdf-search-input').value || '').trim().toLowerCase();
