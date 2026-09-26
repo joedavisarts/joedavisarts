@@ -174,6 +174,91 @@
     .store-note strong {
       color: var(--gold);
     }
+
+    /* Controls row: search + filter + view toggle */
+    .store-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .store-controls-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .store-search {
+      position: relative;
+    }
+    .store-search input {
+      font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+      font-size: 13px;
+      background: var(--bg-card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 14px 9px 34px;
+      width: 220px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .store-search input:focus { border-color: rgba(218,179,34,0.5); }
+    .store-search svg {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    .store-filter { position: relative; }
+    .store-filter-btn {
+      font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--bg-card);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .store-filter-btn.has-active {
+      color: var(--gold);
+      border-color: rgba(218,179,34,0.4);
+    }
+    .store-filter-panel {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      min-width: 180px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+      z-index: 20;
+      display: none;
+    }
+    .store-filter-panel.open { display: block; }
+    .store-filter-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text);
+      padding: 6px 0;
+      cursor: pointer;
+    }
+    .store-filter-option input { accent-color: #DAB322; cursor: pointer; }
+    .store-view-toggle { display: flex; gap: 8px; }
+    .product-card.is-hidden { display: none !important; }
   </style>
 <link rel="icon" type="image/png" href="assets/images/Logo head_Gold400px.png">
 </head>
@@ -228,22 +313,54 @@
       <strong>Instant delivery.</strong> All purchases are digital and delivered immediately after checkout. Questions? Email <a href="mailto:contact@joedavisarts.com" style="color:var(--gold);">contact@joedavisarts.com</a>
     </div>
 
-    <!-- View toggle -->
-    <div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:24px;">
-      <button id="btn-grid" onclick="setView('grid')" style="background:#1a1a1a; color:#DAB322; border:none; border-radius:8px; padding:8px 16px; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        Grid
-      </button>
-      <button id="btn-list" onclick="setView('list')" style="background:var(--bg-card); color:var(--text-muted); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        List
-      </button>
+    <!-- Controls: search, filter, view toggle -->
+    <div class="store-controls">
+      <div class="store-controls-left">
+        <div class="store-search">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="store-search-input" placeholder="Search products..." oninput="applyStoreFilters()">
+        </div>
+        <div class="store-filter">
+          <button class="store-filter-btn" id="store-filter-btn" onclick="toggleFilterPanel(event)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+            Filters
+          </button>
+          <div class="store-filter-panel" id="store-filter-panel">
+            <label class="store-filter-option">
+              <input type="checkbox" class="store-tag-filter" value="arrangements" onchange="applyStoreFilters()">
+              Arrangements
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="store-view-toggle">
+        <button id="btn-grid" onclick="setView('grid')" style="background:#1a1a1a; color:#DAB322; border:none; border-radius:8px; padding:8px 16px; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Grid
+        </button>
+        <button id="btn-list" onclick="setView('list')" style="background:var(--bg-card); color:var(--text-muted); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          List
+        </button>
+      </div>
     </div>
 
     <div class="store-grid" id="store-products">
 
+      <!-- PDF Resources (pinned first) -->
+      <a href="store/pdf-resources.html" class="product-card stagger-item" data-title="PDF Resources" data-desc="All the PDF guides, charts, and templates referenced across my YouTube channel and Instagram." data-tags="">
+        <div class="product-img"><img src="assets/images/store/pdf.avif" alt="PDF Resources" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="product-body">
+          <div class="product-title">PDF Resources</div>
+          <div class="product-footer">
+            <span class="product-price">£3.99</span>
+            <span class="product-view-hint">View →</span>
+          </div>
+        </div>
+      </a>
+
       <!-- Photoshop Banner Pack -->
-      <a href="store/photoshop-banner-pack.html" class="product-card stagger-item">
+      <a href="store/photoshop-banner-pack.html" class="product-card stagger-item" data-title="Photoshop Banner Pack" data-desc="Create flawless 3-post and multi-post Instagram banners with precise, ready-to-use Photoshop templates. Drag, drop, done." data-tags="">
         <div class="product-img"><img src="assets/images/store/ps_banner_pack.avif" alt="Photoshop Banner Pack" style="width:100%;height:100%;object-fit:cover;"></div>
         <div class="product-body">
           <div class="product-title">Photoshop Banner Pack</div>
@@ -255,7 +372,7 @@
       </a>
 
       <!-- 4:5 / 3:4 Overlay Pack — FREE -->
-      <a href="store/overlay-pack.html" class="product-card stagger-item">
+      <a href="store/overlay-pack.html" class="product-card stagger-item" data-title="4:5 — 3:4 Overlay Pack" data-desc="Perfectly sized overlays to keep your reels, photos, and carousels aligned across Instagram's layout. Free, no strings attached." data-tags="">
         <div class="product-img"><img src="assets/images/store/overlay_pack.avif" alt="4:5 3:4 Overlay Pack" style="width:100%;height:100%;object-fit:cover;"></div>
         <div class="product-body">
           <div class="product-title">4:5 — 3:4 Overlay Pack</div>
@@ -267,7 +384,7 @@
       </a>
 
       <!-- Tyla Stems — Musicians -->
-      <a href="store/tyla-water-stems.html" class="product-card stagger-item">
+      <a href="store/tyla-water-stems.html" class="product-card stagger-item" data-title="Tyla — Water Stems for Musicians" data-desc="The full mixed arrangement of Water by Tyla, exactly as heard in my video, delivered as individual stems for musicians. Bass, keys, drums, pads, and more, all separated and ready to use." data-tags="arrangements">
         <div class="product-img"><img src="assets/images/store/tyla_stems.avif" alt="Tyla Water Stems" style="width:100%;height:100%;object-fit:cover;"></div>
         <div class="product-body">
           <div class="product-title">Tyla — "Water" Stems for Musicians</div>
@@ -279,24 +396,12 @@
       </a>
 
       <!-- Tyla Instrumental — Vocalists -->
-      <a href="store/tyla-water-instrumental.html" class="product-card stagger-item">
+      <a href="store/tyla-water-instrumental.html" class="product-card stagger-item" data-title="Tyla — Water Instrumental for Vocalists" data-desc="The full mixed instrumental of my arrangement of Water by Tyla, exactly as heard in my video. Perfect for vocalists who want to perform or record over it." data-tags="arrangements">
         <div class="product-img"><img src="assets/images/store/tyla_inst.avif" alt="Tyla Water Instrumental" style="width:100%;height:100%;object-fit:cover;"></div>
         <div class="product-body">
           <div class="product-title">Tyla — "Water" Instrumental for Vocalists</div>
           <div class="product-footer">
             <span class="product-price">£19.99</span>
-            <span class="product-view-hint">View →</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- PDF Resources -->
-      <a href="store/pdf-resources.html" class="product-card stagger-item">
-        <div class="product-img"><img src="assets/images/store/pdf.avif" alt="PDF Resources" style="width:100%;height:100%;object-fit:cover;"></div>
-        <div class="product-body">
-          <div class="product-title">PDF Resources</div>
-          <div class="product-footer">
-            <span class="product-price">£3.99</span>
             <span class="product-view-hint">View →</span>
           </div>
         </div>
@@ -379,6 +484,34 @@
   // Default to grid view
   const savedView = localStorage.getItem('store-view') || 'grid';
   setView(savedView);
+
+  function toggleFilterPanel(e) {
+    e.stopPropagation();
+    document.getElementById('store-filter-panel').classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    const panel = document.getElementById('store-filter-panel');
+    const btn = document.getElementById('store-filter-btn');
+    if (panel && panel.classList.contains('open') && !panel.contains(e.target) && e.target !== btn) {
+      panel.classList.remove('open');
+    }
+  });
+
+  function applyStoreFilters() {
+    const query = (document.getElementById('store-search-input').value || '').trim().toLowerCase();
+    const checkedTags = Array.from(document.querySelectorAll('.store-tag-filter:checked')).map(cb => cb.value);
+    const cards = document.querySelectorAll('#store-products .product-card');
+    cards.forEach(card => {
+      const title = (card.dataset.title || '').toLowerCase();
+      const desc = (card.dataset.desc || '').toLowerCase();
+      const tags = (card.dataset.tags || '').split(',').map(t => t.trim()).filter(Boolean);
+      const matchesQuery = !query || title.includes(query) || desc.includes(query);
+      const matchesTags = checkedTags.length === 0 || checkedTags.some(t => tags.includes(t));
+      card.classList.toggle('is-hidden', !(matchesQuery && matchesTags));
+    });
+    const filterBtn = document.getElementById('store-filter-btn');
+    filterBtn.classList.toggle('has-active', checkedTags.length > 0);
+  }
 </script>
 </body>
 </html>

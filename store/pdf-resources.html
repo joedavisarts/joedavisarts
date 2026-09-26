@@ -152,6 +152,58 @@
       background: #DAB322 !important;
       color: #0D0D0B !important;
     }
+
+    .pdf-video-link {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+    .pdf-video-link a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .pdf-video-link a:hover { text-decoration: underline; }
+    .pdf-list .pdf-video-link { margin-bottom: 0; flex-basis: 100%; order: 5; }
+
+    .pdf-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .pdf-search { position: relative; }
+    .pdf-search input {
+      font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+      font-size: 13px;
+      background: var(--bg-card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 14px 9px 34px;
+      width: 240px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .pdf-search input:focus { border-color: rgba(218,179,34,0.5); }
+    .pdf-search svg {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    .pdf-card.is-hidden { display: none !important; }
+    .pdf-empty {
+      font-size: 14px;
+      color: var(--text-muted);
+      padding: 40px 0;
+      text-align: center;
+      display: none;
+    }
   </style>
 <link rel="icon" type="image/png" href="../assets/images/Logo head_Gold400px.png">
 </head>
@@ -200,29 +252,38 @@
 <section class="section" style="padding-top:24px;">
   <div class="container">
 
-    <!-- View toggle -->
-    <div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:24px;">
-      <button id="btn-grid" onclick="setView('grid')" style="background:#1a1a1a; color:#DAB322; border:none; border-radius:8px; padding:8px 16px; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        Grid
-      </button>
-      <button id="btn-list" onclick="setView('list')" style="background:var(--bg-card); color:var(--text-muted); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        List
-      </button>
+    <!-- Controls: search + view toggle -->
+    <div class="pdf-controls">
+      <div class="pdf-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="pdf-search-input" placeholder="Search PDFs or videos..." oninput="applyPdfFilters()">
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button id="btn-grid" onclick="setView('grid')" style="background:var(--bg-card); color:var(--text-muted); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Grid
+        </button>
+        <button id="btn-list" onclick="setView('list')" style="background:#1a1a1a; color:#DAB322; border:none; border-radius:8px; padding:8px 16px; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          List
+        </button>
+      </div>
     </div>
 
     <!--
       TO ADD A NEW PDF: copy one <div class="pdf-card">...</div> block below,
-      change the image, title, and the Stripe link. That's it.
+      change the image, title, video link, video title, and the Stripe link. That's it.
+      data-title and data-video are used by the search box, keep them in sync
+      with what's visibly shown.
     -->
     <div class="pdf-grid" id="pdf-products">
 
       <!-- Getting Paid As A Musician: The Essential Paperwork Guide -->
-      <div class="pdf-card stagger-item">
+      <div class="pdf-card stagger-item" data-title="Getting Paid As A Musician: The Essential Paperwork Guide" data-video="Stop Getting Finessed: Paperwork You NEED As A Musician">
         <div class="pdf-img"><img src="../assets/images/store/pdf/getting-paid-as-a-musician.avif" alt="Getting Paid As A Musician: The Essential Paperwork Guide"></div>
         <div class="pdf-body">
           <div class="pdf-title">Getting Paid As A Musician: The Essential Paperwork Guide</div>
+          <div class="pdf-video-link">Video: <a href="https://www.youtube.com/watch?v=sWCeI5LcFYQ" target="_blank">Stop Getting Finessed: Paperwork You NEED As A Musician</a></div>
           <div class="pdf-footer">
             <span class="pdf-price">£3.99</span>
             <a href="https://buy.stripe.com/3cIfZhfNYgRr7ap7a9abK03" class="pdf-buy" target="_blank">Buy now →</a>
@@ -231,6 +292,7 @@
       </div>
 
     </div>
+    <div class="pdf-empty" id="pdf-empty">No PDFs match your search.</div>
   </div>
 </section>
 
@@ -304,8 +366,22 @@
     }
     localStorage.setItem('pdf-catalog-view', view);
   }
-  const savedView = localStorage.getItem('pdf-catalog-view') || 'grid';
+  const savedView = localStorage.getItem('pdf-catalog-view') || 'list';
   setView(savedView);
+
+  function applyPdfFilters() {
+    const query = (document.getElementById('pdf-search-input').value || '').trim().toLowerCase();
+    const cards = document.querySelectorAll('#pdf-products .pdf-card');
+    let visibleCount = 0;
+    cards.forEach(card => {
+      const title = (card.dataset.title || '').toLowerCase();
+      const video = (card.dataset.video || '').toLowerCase();
+      const matches = !query || title.includes(query) || video.includes(query);
+      card.classList.toggle('is-hidden', !matches);
+      if (matches) visibleCount++;
+    });
+    document.getElementById('pdf-empty').style.display = visibleCount === 0 ? 'block' : 'none';
+  }
 </script>
 </body>
 </html>
