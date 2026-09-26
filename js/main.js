@@ -74,3 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// Fix: browser back/forward can restore a page from cache while it's
+// still mid fade-out (opacity 0), leaving it looking blank. Force it
+// visible again whenever the page is restored this way.
+window.addEventListener('pageshow', (e) => {
+  if (e.persisted) {
+    document.body.style.transition = 'none';
+    document.body.style.opacity = '1';
+  }
+});
