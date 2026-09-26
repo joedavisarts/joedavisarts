@@ -15,71 +15,142 @@
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/animations.css">
   <style>
-    .product-hero {
-      padding: 56px 44px 0;
+    .catalog-hero {
+      padding: 56px 44px 40px;
     }
     .breadcrumb {
       font-size: 13px;
       color: var(--text-muted);
-      margin-bottom: 28px;
+      margin-bottom: 20px;
       letter-spacing: 0.01em;
     }
     .breadcrumb a { color: var(--gold); }
-    .product-detail {
+    .catalog-title {
+      font-family: var(--font-heading);
+      font-size: clamp(40px, 6vw, 64px);
+      letter-spacing: 0.02em;
+      color: var(--heading-color);
+      line-height: 1.0;
+      margin-bottom: 14px;
+    }
+    .catalog-desc {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+    .catalog-price-note {
+      display: inline-block;
+      margin-top: 18px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .pdf-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 56px;
-      align-items: start;
-      padding-bottom: 80px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
     }
-    @media (max-width: 860px) {
-      .product-detail { grid-template-columns: 1fr; gap: 32px; }
+    @media (max-width: 1100px) { .pdf-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 800px) { .pdf-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .pdf-grid { grid-template-columns: 1fr; } }
+
+    .pdf-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
-    .product-detail-img {
+    .pdf-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(218,179,34,0.1);
+      border-color: rgba(218,179,34,0.3);
+    }
+    .pdf-img {
       width: 100%;
       aspect-ratio: 1;
-      border-radius: 20px;
       overflow: hidden;
-      background: linear-gradient(145deg, #1a1a1a, #111);
     }
-    .product-detail-img img {
+    .pdf-img img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
-    .product-detail-tag {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 12px;
+    .pdf-body {
+      padding: 18px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
     }
-    .product-detail-title {
+    .pdf-title {
       font-family: var(--font-heading);
-      font-size: clamp(40px, 5vw, 60px);
-      letter-spacing: 0.02em;
+      font-size: 22px;
+      letter-spacing: 0.01em;
       color: var(--heading-color);
-      line-height: 1.0;
-      margin-bottom: 20px;
+      line-height: 1.15;
+      margin-bottom: 10px;
     }
-    .product-detail-desc {
-      font-size: 16px;
-      color: var(--text-secondary);
-      line-height: 1.75;
-      margin-bottom: 32px;
-      max-width: 480px;
+    .pdf-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: auto;
     }
-    .product-detail-price {
+    .pdf-price {
       font-family: var(--font-heading);
-      font-size: 40px;
+      font-size: 22px;
       color: var(--gold);
       letter-spacing: 0.02em;
-      margin-bottom: 24px;
     }
-    .product-detail-price.free { color: #4CAF50; }
-    .product-detail-actions a {
+    .pdf-buy {
+      font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      background: #1a1a1a;
+      color: #DAB322;
+      border: none;
+      border-radius: 8px;
+      padding: 11px 20px;
+      cursor: pointer;
+      text-decoration: none;
       display: inline-block;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    [data-theme="dark"] .pdf-buy {
+      background: #DAB322;
+      color: #0D0D0B;
+    }
+    .pdf-buy:hover { opacity: 0.9; transform: scale(1.02); }
+
+    /* List view */
+    .pdf-list { display: flex !important; flex-direction: column; gap: 16px; }
+    .pdf-list .pdf-card { flex-direction: row; align-items: stretch; }
+    .pdf-list .pdf-img { width: 140px; min-width: 140px; aspect-ratio: 1; flex-shrink: 0; }
+    .pdf-list .pdf-body { flex-direction: row; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .pdf-list .pdf-body > *:not(.pdf-footer) { flex: 1; min-width: 160px; }
+    .pdf-list .pdf-title { margin-bottom: 0; }
+    .pdf-list .pdf-footer { flex-shrink: 0; gap: 16px; margin-top: 0; }
+    @media (max-width: 600px) {
+      .pdf-list .pdf-card { flex-direction: column; }
+      .pdf-list .pdf-img { width: 100%; min-width: unset; }
+    }
+
+    .view-btn-active {
+      background: #1a1a1a !important;
+      color: #DAB322 !important;
+      border-color: transparent !important;
+    }
+    [data-theme="dark"] .view-btn-active {
+      background: #DAB322 !important;
+      color: #0D0D0B !important;
     }
   </style>
 <link rel="icon" type="image/png" href="../assets/images/Logo head_Gold400px.png">
@@ -117,25 +188,51 @@
   </div>
 </nav>
 
-<div class="product-hero">
+<div class="catalog-hero">
   <div class="container">
     <div class="breadcrumb"><a href="../store.html">Store</a> / PDF Resources</div>
-    <div class="product-detail">
-      <div class="product-detail-img">
-        <img src="../assets/images/store/pdf.avif" alt="PDF Resources">
-      </div>
-      <div>
-        <div class="product-detail-tag">Digital Download · PDF</div>
-        <h1 class="product-detail-title">PDF Resources</h1>
-        <p class="product-detail-desc">All the PDF resources referenced across my YouTube channel and Instagram — charts, templates, and guides.</p>
-        <div class="product-detail-price">£3.99</div>
-        <div class="product-detail-actions">
-          <a href="https://buy.stripe.com/3cIfZhfNYgRr7ap7a9abK03" class="btn btn-gold" target="_blank">Buy now →</a>
-        </div>
-      </div>
-    </div>
+    <h1 class="catalog-title">PDF<br><span style="color:#DAB322;">RESOURCES.</span></h1>
+    <p class="catalog-desc">All the PDF guides, charts, and templates referenced across my YouTube channel and Instagram. Grab exactly the ones you need.</p>
+    <div class="catalog-price-note">£3.99 per file · instant download</div>
   </div>
 </div>
+
+<section class="section" style="padding-top:24px;">
+  <div class="container">
+
+    <!-- View toggle -->
+    <div style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:24px;">
+      <button id="btn-grid" onclick="setView('grid')" style="background:#1a1a1a; color:#DAB322; border:none; border-radius:8px; padding:8px 16px; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Grid
+      </button>
+      <button id="btn-list" onclick="setView('list')" style="background:var(--bg-card); color:var(--text-muted); border:1px solid var(--border); border-radius:8px; padding:8px 16px; font-family:'Plus Jakarta Sans',Arial,sans-serif; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        List
+      </button>
+    </div>
+
+    <!--
+      TO ADD A NEW PDF: copy one <div class="pdf-card">...</div> block below,
+      change the image, title, and the Stripe link. That's it.
+    -->
+    <div class="pdf-grid" id="pdf-products">
+
+      <!-- Getting Paid As A Musician: The Essential Paperwork Guide -->
+      <div class="pdf-card stagger-item">
+        <div class="pdf-img"><img src="../assets/images/store/pdf/getting-paid-as-a-musician.avif" alt="Getting Paid As A Musician: The Essential Paperwork Guide"></div>
+        <div class="pdf-body">
+          <div class="pdf-title">Getting Paid As A Musician: The Essential Paperwork Guide</div>
+          <div class="pdf-footer">
+            <span class="pdf-price">£3.99</span>
+            <a href="https://buy.stripe.com/3cIfZhfNYgRr7ap7a9abK03" class="pdf-buy" target="_blank">Buy now →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- CTA -->
 <section class="section section-dark" style="text-align:center; padding:72px 44px;">
@@ -189,5 +286,26 @@
 
 <script src="../js/main.js"></script>
 <script src="../js/animations.js"></script>
+<script>
+  function setView(view) {
+    const grid = document.getElementById('pdf-products');
+    const btnList = document.getElementById('btn-list');
+    const btnGrid = document.getElementById('btn-grid');
+    if (view === 'list') {
+      grid.classList.add('pdf-list');
+      grid.classList.remove('pdf-grid');
+      btnList.classList.add('view-btn-active');
+      btnGrid.classList.remove('view-btn-active');
+    } else {
+      grid.classList.add('pdf-grid');
+      grid.classList.remove('pdf-list');
+      btnGrid.classList.add('view-btn-active');
+      btnList.classList.remove('view-btn-active');
+    }
+    localStorage.setItem('pdf-catalog-view', view);
+  }
+  const savedView = localStorage.getItem('pdf-catalog-view') || 'grid';
+  setView(savedView);
+</script>
 </body>
 </html>
