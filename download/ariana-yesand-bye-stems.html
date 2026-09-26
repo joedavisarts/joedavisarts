@@ -97,24 +97,47 @@
       color: var(--gold);
       text-decoration: none;
     }
-    .dl-check {
-      width: 56px;
-      height: 56px;
-      background: rgba(76,175,80,0.12);
-      border: 1px solid rgba(76,175,80,0.3);
+    .dl-cover {
+      width: 84px;
+      height: 84px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 0 auto 20px;
+      position: relative;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+      border: 1px solid var(--border);
+    }
+    .dl-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .dl-cover-badge {
+      position: absolute;
+      bottom: -6px;
+      right: -6px;
+      width: 26px;
+      height: 26px;
+      background: #4CAF50;
+      border: 2px solid var(--bg-card);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 20px;
-      font-size: 24px;
+      font-size: 13px;
+      color: #fff;
+      font-weight: 700;
     }
   </style>
 </head>
 <body>
 <div class="dl-page">
   <div class="dl-card">
-    <div class="dl-check">✓</div>
+    <div class="dl-cover">
+      <img src="../assets/images/store/ariana_stems.avif" alt="Ariana Grande — &quot;yes, and? / bye&quot; Stems">
+      <div class="dl-cover-badge">✓</div>
+    </div>
     <div class="dl-tag">Stems · Arrangement</div>
     <div class="dl-title">Ariana Grande — "yes, and? / bye" Stems</div>
     <p class="dl-desc">Your stems are ready to download. Extract the zip to find all individual stems — bass, keys, drums, pads, and more — ready to use in your DAW.</p>
